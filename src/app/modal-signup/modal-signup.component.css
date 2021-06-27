@@ -29,7 +29,7 @@
 
 .model .login-div {
     width: 15rem;
-    background-color: #2874f0;
+    background-color: #900000;
     position: relative;
     color: white;
 }
@@ -81,11 +81,20 @@
     text-align: right;
 }
 
+.error {
+    color: #FF3636;
+    height: 40px;
+}
+
 .model .login-right-div .field-wrapper {
     position: relative;
     /* margin-right: 10px; */
-    margin-bottom: 25px;
+    /* margin-bottom: 20px; */
     width: 200px;
+}
+
+.model .login-right-div .form-add .field-wrapper input.ng-invalid.ng-touched {
+    border: 1px solid red;
 }
 
 .model .login-right-div .field-wrapper input {
@@ -162,4 +171,9 @@
 
 .model .login-right-div .signup button {
     cursor: pointer;
+}
+
+.model .login-right-div .signup button[disabled]:hover {
+    background-color: black;
+    cursor: not-allowed;
 }

@@ -29,7 +29,7 @@
 
 .model .login-div {
     width: 15rem;
-    background-color: #2874f0;
+    background-color: #900000;
     position: relative;
     color: white;
 }
@@ -84,7 +84,6 @@
     font-size: 16px;
     position: absolute;
     pointer-events: none;
-    /* background-color: #00000080; */
     bottom: 17px;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;

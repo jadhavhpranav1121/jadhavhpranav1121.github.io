@@ -9,10 +9,15 @@ import { Router } from '@angular/router';
 export class ModalLoginComponent implements OnInit {
 
   constructor(private router:Router) { }
-
+  ispopUpShow:any;
   ngOnInit(): void {
   }
   closetoggle(){
     this.router.navigate(['']);
   }
+  closePop() {
+    this.ispopUpShow = false;
+ }
+
+
 }

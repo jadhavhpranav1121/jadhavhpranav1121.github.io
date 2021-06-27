@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LogincustomerComponent } from './logincustomer/logincustomer.component';
@@ -9,6 +8,7 @@ import { SignupadminComponent } from './signupadmin/signupadmin.component';
 import { LoginadminComponent } from './loginadmin/loginadmin.component';
 import { ModalLoginComponent } from './modal-login/modal-login.component';
 import { ModalSignupComponent } from './modal-signup/modal-signup.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -18,11 +18,12 @@ import { ModalSignupComponent } from './modal-signup/modal-signup.component';
     SignupadminComponent,
     LoginadminComponent,
     ModalLoginComponent,
-    ModalSignupComponent
+    ModalSignupComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -8,6 +8,11 @@
         align-items: center;
     }
     
+    .navigation a {
+        text-decoration: none;
+        color: rgb(255, 0, 0);
+    }
+    
     .navigation .links {
         margin-right: 3vw;
         display: flex;
@@ -20,6 +25,7 @@
         margin-left: 3vw;
         display: flex;
         align-items: center;
+        cursor: pointer;
         background: white;
     }
     
