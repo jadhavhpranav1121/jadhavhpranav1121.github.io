@@ -11,6 +11,11 @@
     box-shadow: 0 0 0 100vw #00000080;
 }
 
+.error {
+    color: #FF3636;
+    height: 35px;
+}
+
 .model .close {
     position: absolute;
     right: -4%;
@@ -69,7 +74,7 @@
 
 .model .login-right-div .field-wrapper {
     position: relative;
-    margin-bottom: 25px;
+    /* margin-bottom: 25px; */
 }
 
 .model .login-right-div .field-wrapper input {
@@ -87,20 +92,20 @@
     bottom: 17px;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
-    color: #80868b;
+    color: #008cff;
     background-color: transparent;
     left: 8px;
     padding: 0 8px;
-    -webkit-transition: transform 150ms cubic-bezier(0.4, 0, 0.2, 1), opacity 150ms cubic-bezier(0.4, 0, 0.2, 1);
-    transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1), opacity 150ms cubic-bezier(0.4, 0, 0.2, 1);
+    -webkit-transform: scale(.75) translateY(-39px) translateX(-60px);
+    transform: scale(.75) translateY(-39px) translateX(-60px);
     z-index: 1;
     text-align: left;
     width: 100%;
 }
 
-.model .login-right-div .field-wrapper input:not(:placeholder-shown)~.field-placeholder {
-    -webkit-transform: scale(.75) translateY(-39px) translateX(-60px);
-    transform: scale(.75) translateY(-39px) translateX(-60px);
+.login-right-div button[disabled]:hover {
+    background-color: black;
+    cursor: not-allowed;
 }
 
 .model .login-right-div .field-wrapper .field-placeholder span {
@@ -132,4 +137,10 @@
     cursor: pointer;
     height: 35px;
     background-color: orangered;
+}
+
+.model .login-right-div .form-wrapper-outer .field-wrapper button[disabled] {
+    cursor: not-allowed;
+    color: rgba(0, 0, 0, 0.3)
+    /* background-color: black; */
 }

@@ -8,14 +8,23 @@
             </div>
         </a>
         <div class="links">
-            <a routerLink="login" class="login">Login</a>
-            <a routerLink="signup" class="signup">Sign up</a>
+            <strong *ngIf="loginOrNot">Hello,</strong>
+            <p *ngIf="loginOrNot">{{loginData["name"]}}&nbsp;&nbsp;&nbsp;</p>
+            <a *ngIf="!loginOrNot" routerLink="login" class="login">Login</a>
+            <a *ngIf="!loginOrNot" routerLink="signup" class="signup">Sign up</a>
+            <a *ngIf="loginOrNot" routerLink="" (click)="logout()">LogOut</a>
         </div>
     </nav>
     <router-outlet></router-outlet>
     <section>
-        <div class="home">
+        <div class="home" *ngIf="loginOrNot"></div>
+        <div class="dataShowing" *ngIf="!loginOrNot">
+            <div class="cardData">
+                <div class="card" *ngFor="let item of CartDetails;index as i">
+                    <img src="{{item['images']}}" width="100%" height="45%">
+                </div>
 
+            </div>
         </div>
     </section>
 </div>
