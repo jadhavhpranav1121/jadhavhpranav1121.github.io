@@ -5,11 +5,21 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class DataServiceService {
+  loginData: any;
+  loginOrNot: any;
+  OrdersOpenOrNot: any;
 
   constructor() { }
-  signData=new BehaviorSubject<Array<Object>>([{}]);
-  loginOrNot=new BehaviorSubject<boolean>(false);
-  loginData=new BehaviorSubject<any>({});
+  signDataCustomer=new BehaviorSubject<Array<Object>>([]);
+  signDataAdmin=new BehaviorSubject<Array<Object>>([]);
+  customerData=new BehaviorSubject<any>({});
+  adminData=new BehaviorSubject<any>({});
+  customerloginOrNot=new BehaviorSubject<boolean>(false);
+  adminloginOrNot=new BehaviorSubject<boolean>(false);
+  CartOpenOrNot=new BehaviorSubject<any>(false);
+  BuyingCartDetail=new BehaviorSubject<Array<Object>>([]);
+  OrderDetails=new BehaviorSubject<Array<Array<Object>>>([]);
+  OrderOpenOrNot=new BehaviorSubject<boolean>(false);
   CartDetails=new BehaviorSubject<Array<Object>>([
     {
         "name": "Margherita",

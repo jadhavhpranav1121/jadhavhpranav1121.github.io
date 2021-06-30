@@ -8,68 +8,12 @@
         <img src="../../assets/images/pizzaSmallImage.png" width="100%">
     </div>
     <div class="login-right-div">
-        <form #f="ngForm" (ngSubmit)="data(f)" ngNativeValidate>
-            <div class="form-add">
-                <div class="form-wrapper-outer">
-                    <div class="field-wrapper">
-                        <input type="text" name="first-name" class="form-control" ngModel autocomplete="off" placeholder="&nbsp;" #firstname="ngModel" required>
-                        <div class="field-placeholder"><span>Enter your First Name</span></div>
-                    </div>
-                    <div class="error">
-                        <div *ngIf="firstname.invalid && (firstname.dirty || firstname.touched)">Please Enter first Name</div>
-                        <div *ngIf="!(firstname.invalid && (firstname.dirty || firstname.touched))" style="margin-bottom: 0px;"></div>
-                        <!-- <div *ngIf="firstname.errors?.required  && firstname.dirty">Please enter first name</div> -->
-                    </div>
+        <div class="tabLayout">
+            <a class="tab" routerLink="customer" routerLinkActive="active">Customer</a>
+            <a class="tab" routerLink="admin" routerLinkActive="active">Admin</a>
+        </div>
+        <router-outlet></router-outlet>
 
-                    <div class="field-wrapper">
-                        <input type="mail" autocomplete="off" ngModel placeholder="&nbsp;" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" name="mail" #mail="ngModel" required>
-                        <div class="field-placeholder"><span>Enter your mail</span></div>
-                    </div>
-                    <div class="error">
-                        <div *ngIf="mail.invalid && (mail.dirty || mail.touched) || mail.errors?.pattern">Please Enter Mail</div>
-                        <div *ngIf="!(mail.invalid && (mail.dirty || mail.touched))"></div>
-                    </div>
-                    <div class="field-wrapper">
-                        <input type="number" autocomplete="off" ngModel placeholder="&nbsp;" name="phonenumber" pattern="^((\\+91-?) |0)?[0-9]{10}$" #phonenumber="ngModel" required>
-                        <div class="field-placeholder"><span>Enter your Phone Number</span></div>
-                    </div>
-                    <div class="error">
-                        <div *ngIf="phonenumber.invalid && (phonenumber.dirty || phonenumber.touched) || phonenumber.errors?.pattern">Please Enter phonenumber </div>
-                        <div *ngIf="!((phonenumber.invalid && (phonenumber.dirty || phonenumber.touched))|| phonenumber.errors?.pattern)" style="margin-bottom: 0px;"></div>
-                    </div>
-                </div>
-                <div class="form-wrapper-outer">
-                    <div class="field-wrapper">
-                        <!-- ngClass="{'has-danger':Last_name.invalid && (Last_name.dirty || Last_name.touched)}" -->
-                        <input type="text" autocomplete="off" ngModel placeholder="&nbsp;" #Last_name="ngModel" name="Last_name" required>
-                        <div class="field-placeholder"><span>Enter your Last Name</span></div>
-                    </div>
-                    <div class="error">
-                        <div *ngIf="Last_name.invalid && (Last_name.dirty || Last_name.touched)">Please Enter Last name</div>
-                        <div *ngIf="!(Last_name.invalid && (Last_name.dirty || Last_name.touched))" style="margin-bottom: 0px;"></div>
-                    </div>
-                    <div class="field-wrapper">
-                        <input type="password" autocomplete="off" ngModel placeholder="&nbsp;" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$" #password="ngModel" name="password" required>
-                        <div class="field-placeholder"><span>Enter your password</span></div>
-                    </div>
-                    <div class="error">
-                        <div *ngIf="password.invalid && (password.dirty || password.touched) || password.errors?.pattern" style="font-size: 10px;text-align: center;">Please Enter Password in minimum 8 letters,at least one uppercase,one lowercase,one special character</div>
-                        <!-- <div *ngIf="!(password.invalid && (password.dirty || password.touched)||  password.errors?.pattern)"></div> -->
-                    </div>
-                    <div class="field-wrapper">
-                        <input type="text" autocomplete="off" ngModel placeholder="&nbsp;" #address="ngModel" name="address" required>
-                        <div class="field-placeholder"><span>Enter your Address</span></div>
-                    </div>
-                    <div class="error">
-                        <div *ngIf="address.invalid && (address.dirty || address.touched)">Please Enter address</div>
-                        <div *ngIf="!(address.invalid && (address.dirty || address.touched))" style="margin-bottom: 0px;"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="signup">
-                <button type="submit" [disabled]="f.invalid" style="width: 90%;height:40px;border: none;background-color: #9d0000a0;border-radius: 10px;">Sign Up</button>
-            </div>
-        </form>
     </div>
 
 </div>

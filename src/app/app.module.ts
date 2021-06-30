@@ -9,6 +9,9 @@ import { LoginadminComponent } from './loginadmin/loginadmin.component';
 import { ModalLoginComponent } from './modal-login/modal-login.component';
 import { ModalSignupComponent } from './modal-signup/modal-signup.component';
 import { FormsModule } from '@angular/forms';
+import { CartComponent } from './cart/cart.component';
+import { CustomerOrdersComponent } from './customer-orders/customer-orders.component';
+import { AdminSideOrdersComponent } from './admin-side-orders/admin-side-orders.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +22,10 @@ import { FormsModule } from '@angular/forms';
     LoginadminComponent,
     ModalLoginComponent,
     ModalSignupComponent,
+    CartComponent,
+    CustomerOrdersComponent,
+    AdminSideOrdersComponent,
+
   ],
   imports: [
     BrowserModule,

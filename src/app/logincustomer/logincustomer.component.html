@@ -1,1 +1,23 @@
-<p>logincustomer works!</p>
+<div class="form-wrapper-outer">
+    <form #f="ngForm" (ngSubmit)="verify(f)" style="width: 80%;height: 80%;">
+        <div class="field-wrapper ">
+            <input type="email " name="email " ngModel placeholder="&nbsp;" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" name="mail" #mail="ngModel" required>
+            <div class="field-placeholder "><span>Enter your email</span></div>
+        </div>
+        <div class="error">
+            <div *ngIf="mail.invalid && (mail.dirty || mail.touched) || mail.errors?.pattern">Please Enter Mail</div>
+        </div>
+        <div class="field-wrapper">
+            <input type="password" autocomplete="off" ngModel placeholder="&nbsp;" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$" #password="ngModel" name="password" required>
+            <div class="field-placeholder"><span>Enter your password</span></div>
+        </div>
+        <div class="error">
+            <div *ngIf="password.invalid && (password.dirty || password.touched) || password.errors?.pattern" style="font-size: 10px;text-align: center;">Please Enter Password in minimum 8 letters,at least one uppercase,one lowercase,one special character</div>
+        </div>
+
+        <div class="field-wrapper">
+            <button type="submit" style="color:white;" [disabled]="f.invalid">Log in</button>
+        </div>
+
+    </form>
+</div>

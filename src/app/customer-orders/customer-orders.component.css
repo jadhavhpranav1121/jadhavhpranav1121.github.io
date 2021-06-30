@@ -1,0 +1,130 @@
+.container {
+    width: 90vw;
+    margin: 20px auto;
+}
+
+.container .backtoHome {
+    padding: 10px;
+    border: none;
+    outline: none;
+    border-radius: 20px;
+    cursor: pointer;
+    background-color: green;
+    color: white;
+}
+
+.container .cardData .CartTitle {
+    position: relative;
+    font-weight: 1000;
+    margin-left: 5%;
+    margin-bottom: 15px;
+    font-size: 20px;
+    width: 100%;
+}
+
+.container .cardData .card .CartData {
+    margin: 20px;
+}
+
+.container .cardData .card .CartData .CartItems {
+    width: 90%;
+    border: 1px solid rgba(0, 0, 0, 0.199);
+    height: 150px;
+    margin-left: 10%;
+    margin-top: 30px;
+    display: flex;
+}
+
+.container .cardData .card .CartData .CartItems .imageSide {
+    width: 250px;
+    height: 100%;
+    background-color: yellow;
+}
+
+div {
+    pointer-events: auto !important;
+}
+
+.buy {
+    margin-top: 10px;
+    padding: 8px 20px;
+    color: white;
+    background-color: red;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.container .cardData .card .CartData .CartItems .infoSide {
+    width: calc(100% - 250px);
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.container .cardData .card .CartData .CartItems .close {
+    background-color: red;
+    width: 20px;
+    cursor: pointer;
+    height: 20px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    transform: translate(7px, -7px);
+}
+
+.fa-times {
+    color: white;
+    font-size: 15px;
+}
+
+.container .cardData .card .CartData .CartItems .infoSide .DataShow {
+    margin: 8%;
+}
+
+.priceAndQuantity {
+    margin: 8%;
+}
+
+@media screen and (max-width:680px) {
+    .container .cardData .card .CartData .CartItems {
+        flex-direction: column;
+        height: 300px;
+        position: relative;
+    }
+    .container .cardData .card .CartData .CartItems .imageSide {
+        width: 100%;
+        height: 150px;
+    }
+    .container .cardData .card .CartData .CartItems .infoSide {
+        width: 100%;
+    }
+    .container .cardData .card .CartData .CartItems .close {
+        position: absolute;
+        right: 0px;
+        top: 0px;
+    }
+}
+
+.container .cardData .CartTitle::before {
+    content: '';
+    position: absolute;
+    width: 100px;
+    height: 3px;
+    background-color: orange;
+    bottom: -4px;
+}
+
+.container .cardData {
+    width: 100%;
+    margin: 10px auto;
+}
+
+.container .cardData .card {
+    width: 90%;
+    margin: 0 auto;
+    border: 1px solid rgba(0, 0, 0, 0.199);
+    /* background-color: rgba(58, 35, 35, 0.651); */
+}

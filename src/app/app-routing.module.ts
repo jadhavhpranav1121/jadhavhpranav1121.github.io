@@ -1,13 +1,27 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { CartComponent } from './cart/cart.component';
+import { CustomerOrdersComponent } from './customer-orders/customer-orders.component';
+import { LoginadminComponent } from './loginadmin/loginadmin.component';
+import { LogincustomerComponent } from './logincustomer/logincustomer.component';
 import { ModalLoginComponent } from './modal-login/modal-login.component';
 import { ModalSignupComponent } from './modal-signup/modal-signup.component';
+import { SignupadminComponent } from './signupadmin/signupadmin.component';
+import { SignupcustomerComponent } from './signupcustomer/signupcustomer.component';
 
 const routes: Routes = [
-  {path:'login',component:ModalLoginComponent},
-  {path:'signup',component:ModalSignupComponent}
+  // {path:'',component:BodyComponent},
+  {path:'login',component:ModalLoginComponent, children: [
+    {path: 'customer', component: LogincustomerComponent}, 
+    {path: 'admin', component:LoginadminComponent }, 
+  ]},
+  {path:'signup',component:ModalSignupComponent, children: [
+    {path: 'customer', component: SignupcustomerComponent}, 
+    {path: 'admin', component:SignupadminComponent }, 
+  ]},
+  {path:'carts',component:CartComponent},
+  {path:'orders',component:CustomerOrdersComponent},
 ];
-
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]

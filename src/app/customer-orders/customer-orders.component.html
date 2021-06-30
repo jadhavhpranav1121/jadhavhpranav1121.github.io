@@ -1,0 +1,27 @@
+<div class="container" *ngIf="adminloginOrNot || customerloginOrNot">
+    <button class="backtoHome" (click)="goToHome()">Go To Home</button>
+    <div class="cardData">
+        <h1 class="CartTitle">My Orders</h1>
+        <div class="card">
+            <h1 *ngIf="!(OrderDetails.length>0)" style="text-align: center;font-size:50px;">Orders is Empty</h1>
+            <div class="CartData" *ngIf="OrderDetails.length>0">
+                <h3 *ngIf="OrderDetails.length>0" class="numberOfBuyCart" style="font-size:20px;">{{OrderDetails.length}} Orders added to your Account</h3>
+                <div class="ordersShowDetails" *ngFor="let BuyingCartDetail of OrderDetails;index as j">
+                    <h1 style="margin-top:20px;font-size:30px;">{{j+1}}:-</h1>
+                    <div class="CartItems" *ngFor="let item of BuyingCartDetail;index as i">
+                        <div class="imageSide">
+                            <img src="{{item['images']}}" width="100%" height="100%" style="object-fit: cover;">
+                        </div>
+                        <div class="infoSide">
+                            <div class="DataShow">
+                                <h1 style="font-size: 20px;margin-bottom:5%;">{{item['name']}}</h1>
+                                <p style="opacity: 0.8;font-size: 13px;">{{item['Pass']}}</p>
+                            </div>
+                            <div class="priceAndQuantity"><strong>&#8377;{{item['price']}}</strong></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -48,6 +48,7 @@
             border-radius: 5px;
             letter-spacing: 1px;
             background: white;
+            background-color: rgba(76, 241, 139, 0.527);
             font-size: 1.3rem;
         }
         
@@ -55,6 +56,16 @@
             background-color: rgb(245, 78, 128);
             color: white;
             margin-right: 0px;
+        }
+        
+        @media screen and (max-width:716px) {
+            .navigation .links a {
+                padding: 0.5rem;
+                font-size: 1rem;
+            }
+            .navigation .logo span {
+                font-size: 1rem;
+            }
         }
         
         section .home {
@@ -75,21 +86,52 @@
         section .dataShowing .cardData {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            grid-gap: 6vw;
+            grid-gap: 3vw 6vw;
             margin: 20px auto;
         }
         
         section .dataShowing .cardData .card {
             width: 250px;
             border-radius: 5px;
+            border: 0.2px solid rgba(0, 0, 0, 0.05);
             height: 300px;
-            background-color: rgb(196, 196, 196);
+            background-color: rgba(255, 255, 255, 0.651);
             box-shadow: 0 10px 15px rgba(40, 44, 59, 0.315), 0 15px 40px rgba(166, 173, 201, 0.616);
         }
         
-        section .dataShowing .cardData .card img {
-            border-top-left-radius: 5px;
-            border-top-right-radius: 5px;
+        section .dataShowing .cardData .card .cardInfo1 {
+            height: 30%;
+            margin: 20px 20px 0px 20px;
+            border-bottom: 0.7px solid rgba(0, 0, 0, 0.103);
+        }
+        
+        section .dataShowing .cardData .card .cardInfo1 .title {
+            font-weight: 400;
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+        
+        section .dataShowing .cardData .card .bottomInfo {
+            display: flex;
+            height: calc(calc(100% - 33%) - 45% - 20px);
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        section .dataShowing .cardData .card .bottomInfo .price {
+            margin-left: 8%;
+        }
+        
+        section .dataShowing .cardData .card .bottomInfo .addToCart {
+            width: 40%;
+            height: 70%;
+            margin-right: 8%;
+            border: none;
+            outline: red;
+            background-color: rgb(211, 0, 0);
+            border-radius: 4px;
+            color: white;
+            cursor: pointer;
         }
         
         @media screen and (max-width:1000px) {
@@ -102,13 +144,6 @@
         @media screen and (max-width:716px) {
             section .home {
                 background-position: top;
-            }
-            .navigation .links a {
-                padding: 0.5rem;
-                font-size: 1rem;
-            }
-            .navigation .logo span {
-                font-size: 1rem;
             }
             section .dataShowing .cardData {
                 grid-template-columns: repeat(1, 1fr);
