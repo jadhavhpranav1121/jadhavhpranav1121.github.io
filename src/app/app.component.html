@@ -21,7 +21,7 @@
         <div class="links" *ngIf="adminloginOrNot">
             <strong *ngIf="adminloginOrNot">Hello,</strong>
             <p *ngIf="adminloginOrNot">{{adminData["name"]}}&nbsp;&nbsp;&nbsp;</p>
-            <a *ngIf="adminloginOrNot" routerLink="carts" class="Cart" (click)="ChangeCartOpeningStatus()">All Orders</a>
+            <a *ngIf="adminloginOrNot" routerLink="Adminorders" class="Cart" (click)="ChangeCartOpeningStatus()">All Orders</a>
             <a *ngIf="adminloginOrNot" (click)="logout()">LogOut</a>
         </div>
     </nav>

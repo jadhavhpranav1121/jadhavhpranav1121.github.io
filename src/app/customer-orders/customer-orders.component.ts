@@ -31,8 +31,6 @@ export class CustomerOrdersComponent implements OnInit {
       this.CartOpenOrNot=res;
     })
     this._dataservice.OrderOpenOrNot.next(true);
-    console.log(this.OrderDetails[0]['name']);
-
    }
 
   ngOnInit(): void {

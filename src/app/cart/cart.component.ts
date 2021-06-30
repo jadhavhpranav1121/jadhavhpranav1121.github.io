@@ -34,7 +34,7 @@ export class CartComponent implements OnInit {
     this._dataservice.OrderOpenOrNot.subscribe((res)=>{
       this.OrderOpenOrNot=res;
     })
-    
+    console.log(this._dataservice.customerdataToAdmin);
    }
 
   ngOnInit(): void {

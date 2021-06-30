@@ -23,6 +23,8 @@ export class AppComponent {
   adminloginOrNot: any;
   customerloginOrNot: any;
   OrderOpenOrNot: boolean | undefined;
+  OrderDetails: Object[][]=[];
+  customerdataToAdmin: Object[]=[];
   
   constructor(private router:Router,private _dataService:DataServiceService){
     this._dataService.adminloginOrNot.subscribe((res)=>{
@@ -49,9 +51,17 @@ export class AppComponent {
     });
     this._dataService.BuyingCartDetail.subscribe((res)=>{
       this.BuyingCartDetail=res;
+    });
+    this._dataService.OrderDetails.subscribe((res)=>{
+      this.OrderDetails=res;
+    });
+    this._dataService.customerdataToAdmin.subscribe((res)=>{
+      this.customerdataToAdmin=res;
     })
   } 
   logout(){
+    this.customerdataToAdmin.push({"Customer Name":this.customerData["name"],"Data":this.OrderDetails});
+    this._dataService.customerdataToAdmin.next(this.customerdataToAdmin);
     this._dataService.customerData.next({});
     this._dataService.customerloginOrNot.next(false);
     this._dataService.adminData.next({});
@@ -64,11 +74,11 @@ export class AppComponent {
   }
   ChangeCartOpeningStatus(){
     this.CartOpenOrNot=true;
-    this._dataService.CartOpenOrNot.next(true);
+    this._dataService.CartOpenOrNot.next(this.CartOpenOrNot);
   }
   ChangeOrdersOpeningStatus(){
     this.OrderOpenOrNot=true;
-    this._dataService.OrderOpenOrNot.next(true);
+    this._dataService.OrderOpenOrNot.next(this.OrderOpenOrNot);
   }
   AddToBuyingCart(Data:any){
     for(let i=0;i<this.BuyingCartDetail.length;i++){

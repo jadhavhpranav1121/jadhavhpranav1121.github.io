@@ -1,0 +1,20 @@
+<div class="cardData">
+    <h1 class="CartTitle">My Cart</h1>
+    <div class="card">
+        <div *ngFor="let first of customerdataToAdmin">
+            {{first['Customer Name']}}
+            <div class="card">
+                <div *ngFor="let second of first['Data']">
+                    {{second.length}}
+                    <div class="card">
+                        <div *ngFor="let third of second">
+                            {{third['name']}}
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

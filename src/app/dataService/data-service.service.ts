@@ -12,6 +12,7 @@ export class DataServiceService {
   constructor() { }
   signDataCustomer=new BehaviorSubject<Array<Object>>([]);
   signDataAdmin=new BehaviorSubject<Array<Object>>([]);
+  customerdataToAdmin=new BehaviorSubject<Array<Object>>([]);
   customerData=new BehaviorSubject<any>({});
   adminData=new BehaviorSubject<any>({});
   customerloginOrNot=new BehaviorSubject<boolean>(false);
