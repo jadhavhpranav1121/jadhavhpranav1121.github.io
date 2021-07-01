@@ -9,6 +9,7 @@
                 <div class="ordersShowDetails" *ngFor="let BuyingCartDetail of OrderDetails;index as j">
                     <h1 style="margin-top:20px;font-size:30px;">{{j+1}}:-</h1>
                     <div class="CartItems" *ngFor="let item of BuyingCartDetail;index as i">
+
                         <div class="imageSide">
                             <img src="{{item['images']}}" width="100%" height="100%" style="object-fit: cover;">
                         </div>
@@ -22,9 +23,13 @@
                                 <br>
                                 <br>
                                 <strong>Quantity:-</strong> {{item['count']}}
+                                <br>
+                                <br>
+                                <strong>Status:-</strong> {{item['status']}}
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>

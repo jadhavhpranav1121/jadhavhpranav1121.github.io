@@ -7,6 +7,7 @@
             <div class="CartData" *ngIf="BuyingCartDetail.length>0">
                 <h3 *ngIf="BuyingCartDetail.length>0" class="numberOfBuyCart" style="font-size:20px;">{{BuyingCartDetail.length}} Item added to your cart</h3>
                 <div class="CartItems" *ngFor="let items of BuyingCartDetail;index as i">
+                    <!-- <div class="CasrdAddOrNot" *ngIf="items['count']>0"> -->
                     <div class="imageSide">
                         <img src="{{items['images']}}" width="100%" height="100%" style="object-fit: cover;">
                     </div>
@@ -19,13 +20,18 @@
                         <div class="priceAndQuantity"><strong>&#8377;{{items['price']}}</strong>
                             <div class="quantity" style="margin-right: 8%;" *ngIf="items['count']>0">
                                 <button class="styleButton" (click)="decrease(items)">-</button>
-                                <input type="number" style="width: 50px;border:0.4 solid rgba(0,0,0,.5);padding:4px 10px;" disabled value="{{items['count']}}">
+                                <input type="text" style="width: 40px;text-align:center;border:0.4 solid rgba(0,0,0,.5);padding:4px 10px;" disabled value="{{items['count']}}">
                                 <button class="styleButton2" (click)="increase(items)">+</button>
                             </div>
+
+                            <!-- <div class="status">{{items['status']}}</div> -->
                         </div>
                     </div>
 
                     <div class="close"><i class="fas fa-times" (click)="deleteItems(i)"></i></div>
+                    <!-- </div> -->
+                    <div class="CardAddOrNotChange" *ngIf="items['count']<0">
+                    </div>
                 </div>
                 <button class="buy" (click)="addToCustomerOrders()">Buy Now</button>
             </div>

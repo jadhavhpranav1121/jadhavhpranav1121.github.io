@@ -130,3 +130,24 @@
       /* background-color: rgba(58, 35, 35, 0.651);
 }
 */
+
+
+/* .card {
+    width: 80%;
+    border: 1px solid black;
+} */
+
+.statusDiv {
+    display: flex;
+}
+
+.statusDiv .status {
+    padding: 4px 10px;
+    margin-left: 4px;
+    border: none;
+    border: 0.5px solid rgba(0, 0, 0, .3);
+    background: red;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}

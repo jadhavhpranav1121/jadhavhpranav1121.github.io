@@ -13,11 +13,12 @@ export class AdminSideOrdersComponent implements OnInit {
       this._dataService.customerdataToAdmin.subscribe((res)=>{
         this.customerdataToAdmin=res;
       })
-    
   }
 
   ngOnInit(): void {
     console.log(this.customerdataToAdmin);
   }
-
+  valueChange(value:any,third:any){
+    third['status']=value;
+  }
 }

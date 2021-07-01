@@ -48,22 +48,31 @@ export class CartComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    console.log(this.BuyingCartDetail);
+    for(let i=0;i<this.BuyingCartDetail.length;i++){
+      this.BuyingCartDetail[i]['status']='Starting To delivery';
+    }
   }
   goToHome(){
     this._dataservice.CartOpenOrNot.next(false);
     this.CartOpenOrNot=false;
     this._dataservice.OrderOpenOrNot.next(false);
     this.OrderOpenOrNot=false;
-   
     this.router.navigate(['']);
   }
   deleteItems(i:any){
+    // this.BuyingCartDetail.splice(i,1);
+    this.NewData=this.BuyingCartDetail[i]['name'];
+    for(let j=0;j<this.CartDetails.length;j++){
+        if(this.CartDetails[j]['name']==this.NewData){
+         this.CartDetails[j]['count']=0;
+      }
+    }
     this.BuyingCartDetail.splice(i,1);
+    this._dataservice.CartDetails.next(this.CartDetails);
     this._dataservice.BuyingCartDetail.next(this.BuyingCartDetail);
-    console.log("sdfs");
   }
   addToCustomerOrders(){
+    
     this.NewData=this.BuyingCartDetail;
     this.OrderDetails.push(this.NewData);
     this._dataservice.OrderDetails.next(this.OrderDetails);

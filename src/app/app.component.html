@@ -27,8 +27,8 @@
     </nav>
     <router-outlet></router-outlet>
     <section>
-        <div class="home" *ngIf="!adminloginOrNot && !CartOpenOrNot && !customerloginOrNot && !OrderOpenOrNot"></div>
-        <div class="dataShowing" *ngIf="(adminloginOrNot || customerloginOrNot) && !CartOpenOrNot && !OrderOpenOrNot">
+        <div class="home" *ngIf="(!adminloginOrNot && !CartOpenOrNot && !customerloginOrNot && !OrderOpenOrNot)"></div>
+        <div class="dataShowing" *ngIf="(customerloginOrNot) && !CartOpenOrNot && !OrderOpenOrNot">
             <div class="cardData">
                 <div class="card" *ngFor="let item of CartDetails;index as i">
                     <img src="{{item['images']}}" width="100%" height="45%" style="border-top-left-radius:5px;border-top-right-radius: 5px;background-size:cover;">
@@ -36,13 +36,12 @@
                         <div class="title">{{item['name']}}</div>
                         <div class="cardInfoInsideInfo" style="opacity: 0.8;">{{item['Pass']}}</div>
                     </div>
-
                     <div class="bottomInfo">
                         <div class="price"><strong>&#8377;{{item['price']}}</strong></div>
                         <button class="addToCart" (click)="AddToBuyingCart(item)" *ngIf="item['count']<=0 ">Add To Cart</button>
                         <div class="quantity" style="margin-right: 8%;" *ngIf="item['count']>0">
                             <button class="styleButton" (click)="decrease(item)">-</button>
-                            <input type="number" style="width: 50px;border:0.4 solid rgba(0,0,0,.5);padding:4px 10px;" disabled value="{{item['count']}}">
+                            <input type="text" style="width: 40px;text-align:center;border:0.4 solid rgba(0,0,0,.5);padding:4px 10px;" disabled value="{{item['count']}}">
                             <button class="styleButton2" (click)="increase(item)">+</button>
                         </div>
 
