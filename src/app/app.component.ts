@@ -107,7 +107,6 @@ export class AppComponent {
       this.BuyingCartDetail.push(this.NewData);
       this.BuyingCartDetail[this.BuyingCartDetail.length-1]['count']++;
       this._dataService.BuyingCartDetail.next(this.BuyingCartDetail);
-      console.log(this.CartDetails);
   }
   decrease(item:any){
     for(let i=0;i<this.BuyingCartDetail.length;i++){

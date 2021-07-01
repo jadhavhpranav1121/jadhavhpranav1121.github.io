@@ -16,7 +16,6 @@ export class AdminSideOrdersComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.customerdataToAdmin);
   }
   valueChange(value:any,third:any){
     third['status']=value;

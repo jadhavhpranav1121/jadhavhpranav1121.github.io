@@ -44,7 +44,7 @@ export class CartComponent implements OnInit {
       this.BuyOrNot=res;
       
     })
-    console.log(this._dataservice.customerdataToAdmin);
+
    }
 
   ngOnInit(): void {

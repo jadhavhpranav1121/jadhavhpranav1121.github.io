@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { NgForm } from '@angular/forms';
-import { DataServiceService } from '../dataService/data-service.service';
 @Component({
   selector: 'app-modal-signup',
   templateUrl: './modal-signup.component.html',

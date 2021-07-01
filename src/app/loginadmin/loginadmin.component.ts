@@ -28,7 +28,6 @@ export class LoginadminComponent implements OnInit {
   verify(event:NgForm){
     this.data=localStorage.getItem("adminData");
     this.data=JSON.parse(this.data);
-console.log(this.data);    
     if(this.data==null){
       alert("Username does not Exit");
     }
