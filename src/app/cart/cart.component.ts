@@ -51,6 +51,10 @@ export class CartComponent implements OnInit {
     for(let i=0;i<this.BuyingCartDetail.length;i++){
       this.BuyingCartDetail[i]['status']='Starting To delivery';
     }
+    this.BuyingCartDetail['total']=0;
+    for(let i=0;i<this.BuyingCartDetail.length;i++){
+      this.BuyingCartDetail['total']+=this.BuyingCartDetail[i]['count']*this.BuyingCartDetail[i]['price'];
+    }
   }
   goToHome(){
     this._dataservice.CartOpenOrNot.next(false);
@@ -149,8 +153,15 @@ export class CartComponent implements OnInit {
   decrease(item:any){
     for(let i=0;i<this.BuyingCartDetail.length;i++){
       if(this.BuyingCartDetail[i]['name']==item['name']){
+        if(this.BuyingCartDetail[i]['count']>1){
+        // this.BuyingCartDetail[i]['price']+=item['price']
         this.BuyingCartDetail[i]['count']--;
+        }
       }
+    }
+    this.BuyingCartDetail['total']=0;
+    for(let i=0;i<this.BuyingCartDetail.length;i++){
+      this.BuyingCartDetail['total']+=this.BuyingCartDetail[i]['count']*this.BuyingCartDetail[i]['price'];
     }
     this._dataservice.BuyingCartDetail.next(this.BuyingCartDetail);
   }
@@ -159,6 +170,10 @@ export class CartComponent implements OnInit {
       if(this.BuyingCartDetail[i]['name']==item['name']){
         this.BuyingCartDetail[i]['count']++;
       }
+    }
+    this.BuyingCartDetail['total']=0;
+    for(let i=0;i<this.BuyingCartDetail.length;i++){
+      this.BuyingCartDetail['total']+=this.BuyingCartDetail[i]['count']*this.BuyingCartDetail[i]['price'];
     }
     this._dataservice.BuyingCartDetail.next(this.BuyingCartDetail);
   }

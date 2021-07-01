@@ -20,4 +20,9 @@ export class AdminSideOrdersComponent implements OnInit {
   valueChange(value:any,third:any){
     third['status']=value;
   }
+  valueChange1(value:any,third:any,second:any){
+    third['status']=value;
+    second['total']-=(third['count'])*(third['price']);
+  }
+
 }
