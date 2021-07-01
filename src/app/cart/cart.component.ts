@@ -14,6 +14,9 @@ export class CartComponent implements OnInit {
   customerloginOrNot: any;
   OrderDetails: Object[][]=[[{}]];
   OrderOpenOrNot: boolean | undefined;
+  CartDetails: Object[]=[];
+  BuyOrNot: any;
+  NewData: any;
 
   constructor(private _dataservice:DataServiceService,private router:Router) {
     this._dataservice.CartOpenOrNot.subscribe((res)=>{
@@ -33,17 +36,26 @@ export class CartComponent implements OnInit {
     });
     this._dataservice.OrderOpenOrNot.subscribe((res)=>{
       this.OrderOpenOrNot=res;
+    });
+    this._dataservice.CartDetails.subscribe((res)=>{
+      this.CartDetails=res;
+    })
+    this._dataservice.BuyOrNot.subscribe((res)=>{
+      this.BuyOrNot=res;
+      
     })
     console.log(this._dataservice.customerdataToAdmin);
    }
 
   ngOnInit(): void {
+    console.log(this.BuyingCartDetail);
   }
   goToHome(){
     this._dataservice.CartOpenOrNot.next(false);
     this.CartOpenOrNot=false;
     this._dataservice.OrderOpenOrNot.next(false);
     this.OrderOpenOrNot=false;
+   
     this.router.navigate(['']);
   }
   deleteItems(i:any){
@@ -52,12 +64,95 @@ export class CartComponent implements OnInit {
     console.log("sdfs");
   }
   addToCustomerOrders(){
-    this.OrderDetails.push(this.BuyingCartDetail);
+    this.NewData=this.BuyingCartDetail;
+    this.OrderDetails.push(this.NewData);
     this._dataservice.OrderDetails.next(this.OrderDetails);
     this._dataservice.BuyingCartDetail.next([]);
-    this.BuyingCartDetail=[];
-    console.log(this.OrderDetails);
+    this.BuyingCartDetail=[]; 
+    this.CartDetails=[
+{
+          "name": "Margherita",
+          "images": "https://images.dominos.co.in/new_margherita_2502.jpg",
+          "Pass": "Classic delight with 100% real mozzarella cheese",
+          "count": 0,
+          "price": 140
+      },
+      {
+          "name": "Farmhouse",
+          "images": "https://images.dominos.co.in/farmhouse.png",
+          "Pass": "Delightful combination of onion, capsicum, tomato & grilled mushroom",
+          "count": 0,
+          "price": 212
+      },
+      {
+          "name": "Peppy Paneer",
+          "images": "https://images.dominos.co.in/new_peppy_paneer.jpg",
+          "Pass": "Flavorful trio of juicy paneer, crisp capsicum with spicy red paprika",
+          "count": 0,
+          "price": 234
+      },
+      {
+          "name": "Veg Extravaganza",
+          "images": "https://images.dominos.co.in/new_veg_extravaganza.jpg",
+          "Pass": "Black olives, capsicum, onion, grilled mushroom, corn, tomato, jalapeno & extra cheese",
+          "count": 0,
+          "price": 334
+      },
+      {
+          "name": "Veggie Paradise",
+          "images": "https://images.dominos.co.in/new_veggie_paradise.jpg",
+          "Pass": "The awesome foursome! Golden corn, black olives, capsicum, red paprika",
+          "count": 0,
+          "price": 432
+      },
+      {
+          "name": "Cheese n Corn",
+          "images": "https://images.dominos.co.in/new_cheese_n_corn.jpg",
+          "Pass": "A delectable combination of sweet & juicy golden corn",
+          "count": 0,
+          "price": 523
+      },
+      {
+          "name": "Pepper Barbecue Chicken",
+          "images": "https://images.dominos.co.in/new_pepper_barbeque_chicken.jpg",
+          "Pass": "Pepper barbecue chicken for that extra zing",
+          "count": 0,
+          "price": 363
+      },
+      {
+          "name": "Deluxe Veggie",
+          "images": "https://images.dominos.co.in/new_deluxe_veggie.jpg",
+          "Pass": "Veg delight - onion, capsicum, grilled mushroom, corn & paneer",
+          "count": 0,
+          "price": 532
+      },
+      {
+          "name": "Chicken Sausage",
+          "images": "https://images.dominos.co.in/new_chicken_sausage.jpg",
+          "Pass": "American classic! Spicy, herbed chicken sausage on pizza",
+          "count": 0,
+          "price": 343
+      }
+    ];
+    this._dataservice.CartDetails.next(this.CartDetails);
     this.router.navigate(['orders']);
   }
+  decrease(item:any){
+    for(let i=0;i<this.BuyingCartDetail.length;i++){
+      if(this.BuyingCartDetail[i]['name']==item['name']){
+        this.BuyingCartDetail[i]['count']--;
+      }
+    }
+    this._dataservice.BuyingCartDetail.next(this.BuyingCartDetail);
+  }
+  increase(item:any){
+    for(let i=0;i<this.BuyingCartDetail.length;i++){
+      if(this.BuyingCartDetail[i]['name']==item['name']){
+        this.BuyingCartDetail[i]['count']++;
+      }
+    }
+    this._dataservice.BuyingCartDetail.next(this.BuyingCartDetail);
+  }
   
+
 }

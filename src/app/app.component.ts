@@ -25,6 +25,10 @@ export class AppComponent {
   OrderOpenOrNot: boolean | undefined;
   OrderDetails: Object[][]=[];
   customerdataToAdmin: Object[]=[];
+  DuplicateOrdertails: boolean=false;
+  BuyOrNot: any;
+  NewData: any;
+  NewData1:any;
   
   constructor(private router:Router,private _dataService:DataServiceService){
     this._dataService.adminloginOrNot.subscribe((res)=>{
@@ -45,6 +49,9 @@ export class AppComponent {
     });
     this._dataService.OrderOpenOrNot.subscribe((res)=>{
       this.OrderOpenOrNot=res;
+    });
+    this._dataService.BuyOrNot.subscribe((res)=>{
+      this.BuyOrNot=res;
     })
     this._dataService.CartOpenOrNot.subscribe((res)=>{
       this.CartOpenOrNot=res;
@@ -57,16 +64,31 @@ export class AppComponent {
     });
     this._dataService.customerdataToAdmin.subscribe((res)=>{
       this.customerdataToAdmin=res;
-    })
+    });
+   
   } 
+  
+
   logout(){
+    for(let i=0;i<this.customerdataToAdmin.length;i++){
+      if(this.customerdataToAdmin[i]['Customer Name']==this.customerData['name']){
+        for(let j=0;j<this.OrderDetails.length;j++){
+        this.customerdataToAdmin[i]['Data'].push(this.OrderDetails[j]);
+        }
+        this.DuplicateOrdertails=true;
+      }
+    }
+    if(this.DuplicateOrdertails==false){
     this.customerdataToAdmin.push({"Customer Name":this.customerData["name"],"Data":this.OrderDetails});
+    }
+    this.DuplicateOrdertails=false;
     this._dataService.customerdataToAdmin.next(this.customerdataToAdmin);
     this._dataService.customerData.next({});
     this._dataService.customerloginOrNot.next(false);
     this._dataService.adminData.next({});
     this._dataService.adminloginOrNot.next(false);
     this.CartOpenOrNot=false;
+    this._dataService.OrderDetails.next([]);
     this._dataService.OrderOpenOrNot.next(false);
     this.OrderOpenOrNot=false;
     this._dataService.CartOpenOrNot.next(this.CartOpenOrNot);
@@ -81,20 +103,28 @@ export class AppComponent {
     this._dataService.OrderOpenOrNot.next(this.OrderOpenOrNot);
   }
   AddToBuyingCart(Data:any){
+      this.NewData=Data;
+      this.BuyingCartDetail.push(this.NewData);
+      this.BuyingCartDetail[this.BuyingCartDetail.length-1]['count']++;
+      this._dataService.BuyingCartDetail.next(this.BuyingCartDetail);
+      console.log(this.CartDetails);
+  }
+  decrease(item:any){
     for(let i=0;i<this.BuyingCartDetail.length;i++){
-      if(this.BuyingCartDetail[i]==Data){
-        this.DuplicateBuyingOrNot=true;
-        break;
+      if(this.BuyingCartDetail[i]['name']==item['name']){
+        this.BuyingCartDetail[i]['count']--;
       }
     }
-    if(this.DuplicateBuyingOrNot==false){
-      this.BuyingCartDetail.push(Data);
-    }
-    this.DuplicateBuyingOrNot=false;
     this._dataService.BuyingCartDetail.next(this.BuyingCartDetail);
-    console.log(this.BuyingCartDetail);
   }
-  
+  increase(item:any){
+    for(let i=0;i<this.BuyingCartDetail.length;i++){
+      if(this.BuyingCartDetail[i]['name']==item['name']){
+        this.BuyingCartDetail[i]['count']++;
+      }
+    }
+    this._dataService.BuyingCartDetail.next(this.BuyingCartDetail);
+  }
   
   
 }

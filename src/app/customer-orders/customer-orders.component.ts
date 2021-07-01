@@ -13,6 +13,8 @@ export class CustomerOrdersComponent implements OnInit {
   adminloginOrNot: boolean | undefined;
   customerloginOrNot: boolean | undefined;
   CartOpenOrNot: boolean | undefined;
+  customerdataToAdmin: Object[]=[];
+  customerData: any;
 
   constructor(private _dataservice:DataServiceService,private router:Router) {
     this._dataservice.OrderOpenOrNot.subscribe((res)=>{
@@ -29,11 +31,23 @@ export class CustomerOrdersComponent implements OnInit {
     })
     this._dataservice.CartOpenOrNot.subscribe((res)=>{
       this.CartOpenOrNot=res;
+    });
+    this._dataservice.customerdataToAdmin.subscribe((res)=>{
+      this.customerdataToAdmin=res;
+    });
+    this._dataservice.customerData.subscribe((res)=>{
+      this.customerData=res;
     })
+    for(let i=0;i<this.customerdataToAdmin.length;i++){
+      if(this.customerdataToAdmin[i]['Customer Name']==this.customerData['name']){
+        this.OrderDetails=this.customerdataToAdmin[i]['Data'];
+      }
+    }
     this._dataservice.OrderOpenOrNot.next(true);
    }
 
   ngOnInit(): void {
+
   }
 
   goToHome(){

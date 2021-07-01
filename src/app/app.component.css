@@ -122,6 +122,10 @@
             margin-left: 8%;
         }
         
+        .quantity {
+            display: flex;
+        }
+        
         section .dataShowing .cardData .card .bottomInfo .addToCart {
             width: 40%;
             height: 70%;
@@ -132,6 +136,22 @@
             border-radius: 4px;
             color: white;
             cursor: pointer;
+        }
+        
+        section .dataShowing .cardData .bottomInfo .quantity .styleButton {
+            padding: 4px 10px;
+            border: none;
+            border-top-left-radius: 5px;
+            border: 1px solid rgba(0, 0, 0, .5);
+            border-bottom-left-radius: 5px;
+        }
+        
+        section .dataShowing .cardData .bottomInfo .quantity .styleButton2 {
+            padding: 4px 10px;
+            border: none;
+            border-top-right-radius: 5px;
+            border: 1px solid rgba(0, 0, 0, .5);
+            border-bottom-right-radius: 5px;
         }
         
         @media screen and (max-width:1000px) {
