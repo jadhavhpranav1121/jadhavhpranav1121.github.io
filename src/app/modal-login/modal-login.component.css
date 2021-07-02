@@ -1,6 +1,6 @@
 .model {
-    width: 40rem;
-    height: 30rem;
+    width: 33rem;
+    height: 25rem;
     position: absolute;
     left: 50%;
     top: 55%;
@@ -18,7 +18,7 @@
 
 .model .close {
     position: absolute;
-    right: -4%;
+    right: -8%;
     border: none;
     background-color: transparent;
     /* font-size: 20px; */
@@ -205,6 +205,12 @@
     transform: scale(.75) translateY(-39px) translateX(-60px);
 }
 
+.StyleChanges {
+    margin-left: 15px;
+    margin-top: 15px;
+    font-size: 15px;
+}
+
 .model .login-right-div .form-wrapper-outer .field-wrapper button {
     width: 100%;
     border: none;
@@ -219,4 +225,13 @@
     cursor: not-allowed;
     color: rgba(0, 0, 0, 0.3)
     /* background-color: black; */
+}
+
+@media screen and (max-width:421px) {
+    .model {
+        width: calc(100% - 8rem);
+    }
+    .model .login-div {
+        display: none;
+    }
 }
