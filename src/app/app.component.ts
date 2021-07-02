@@ -112,6 +112,9 @@ export class AppComponent {
     for(let i=0;i<this.BuyingCartDetail.length;i++){
       if(this.BuyingCartDetail[i]['name']==item['name']){
         this.BuyingCartDetail[i]['count']--;
+        if(this.BuyingCartDetail[i]['count']<=0){
+          this.BuyingCartDetail.splice(i,1);
+        }
       }
     }
     this._dataService.BuyingCartDetail.next(this.BuyingCartDetail);
