@@ -4,7 +4,7 @@
             justify-content: space-between;
             height: 4em;
             background-color: white;
-            position: sticky;
+            background: linear-gradient(135deg, #fdfdfd, #4b0000);
             align-items: center;
         }
         
@@ -18,20 +18,23 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: white;
+            background-color: transparent;
+            /* background-color: white; */
         }
         
         .navigation .logo {
             margin-left: 3vw;
             display: flex;
+            background-color: transparent;
             align-items: center;
             cursor: pointer;
-            background: white;
+            /* background: white; */
         }
         
         .navigation .logo span,
         .navigation .logo img {
-            background: white;
+            /* background: white; */
+            background-color: transparent;
             margin-left: 0.4vw;
         }
         
@@ -124,6 +127,11 @@
         
         .quantity {
             display: flex;
+        }
+        
+        .sticky {
+            position: sticky;
+            top: 0px
         }
         
         section .dataShowing .cardData .card .bottomInfo .addToCart {
