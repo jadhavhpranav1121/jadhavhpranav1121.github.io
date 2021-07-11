@@ -42,6 +42,17 @@
     display: flex;
 }
 
+.totalPrice {
+    margin-right: 10px;
+    margin-top: 10px;
+    float: right;
+    font-weight: 1000;
+}
+
+.clear {
+    clear: both;
+}
+
 .container .cardData .card .CartData .CartItems .imageSide {
     width: 250px;
     height: 100%;
@@ -93,6 +104,7 @@ div {
 
 .priceAndQuantity {
     margin: 8%;
+    width: 400px;
 }
 
 @media screen and (max-width:680px) {

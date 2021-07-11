@@ -12,7 +12,8 @@ import { FormsModule } from '@angular/forms';
 import { CartComponent } from './cart/cart.component';
 import { CustomerOrdersComponent } from './customer-orders/customer-orders.component';
 import { AdminSideOrdersComponent } from './admin-side-orders/admin-side-orders.component';
-
+import { AdminhomepageComponent } from './adminhomepage/adminhomepage.component';
+import { CarouselModule } from 'ngx-owl-carousel-o';
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,12 +26,14 @@ import { AdminSideOrdersComponent } from './admin-side-orders/admin-side-orders.
     CartComponent,
     CustomerOrdersComponent,
     AdminSideOrdersComponent,
+    AdminhomepageComponent,
 
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    CarouselModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -37,7 +37,7 @@ export class LoginadminComponent implements OnInit {
         this._dataService.adminloginOrNot.next(true);
         this.loginOrNot=this._dataService.adminloginOrNot;
         this._dataService.adminData.next({"name":event.value.mail,"password":event.value.password});
-        this.router.navigate(['']);
+        this.router.navigate(['admin-home']);
       }
     }
     if(this.loginOrNot==false){

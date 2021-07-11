@@ -1,26 +1,28 @@
 <div class="cardData">
-    <h1 class="CartTitle">My Cart</h1>
+    <h1 class="CartTitle">Order List</h1>
     <div class="card">
         <div *ngFor="let first of customerdataToAdmin">
-            {{first['Customer Name']}}
-            <div class="card">
-                <div *ngFor="let second of first['Data']">
-                    {{second.length}}
-                    <div class="card">
-                        <div *ngFor="let third of second">
-                            {{third['name']}} and {{third['count']}}
-                            <div class="statusDiv">
-                                <button class="status" #status1 value="postponed" (click)="valueChange(status1.value,third)">postponed</button>
-                                <button class="status" #status2 value="Delivery Started" (click)="valueChange(status2.value,third)">Delivery Started</button>
-                                <button class="status" #status3 value="Near You Home" (click)="valueChange(status3.value,third)">Near You Home</button>
-                                <button class="status" #status4 value="Delivered" (click)="valueChange1(status4.value,third,second)">Delivered</button>
-                            </div>
+            <!-- <div *ngIf="{{first['Customer Name']}}"> -->
+            <div style="margin-left:15px;margin-top:15px;font-size: 15px;"><strong>Customer ID:- </strong> {{first['Customer Name']}}</div>
+            <div *ngFor="let second of first['Data']">
+                <div style="margin-left:25px;margin-top:15px;"><strong>{{second.length}} :- </strong></div>
+                <div *ngFor="let third of second">
+                    <div style="margin-left:35px;margin-top:15px;"><strong>Product Name:- </strong>{{third['name']}}<br><strong>Quantity:- </strong>{{third['count']}}</div>
+                    <div style="margin-left:45px;margin-top:15px;">
+                        <strong> Status:- </strong>{{third['status']}}
+                        <br>
+                        <strong> Status Change Option:- </strong>
+                        <br>
+                        <div class="statusDiv">
+                            <button class="status" #status1 value="postponed" (click)="valueChange(status1.value,third)">postponed</button>
+                            <button class="status" #status2 value="Delivery Started" (click)="valueChange(status2.value,third)">Delivery Started</button>
+                            <button class="status" #status3 value="Near You Home" (click)="valueChange(status3.value,third)">Near You Home</button>
+                            <button class="status" #status4 value="Delivered" (click)="valueChange1(status4.value,third,second)">Delivered</button>
                         </div>
                     </div>
-
                 </div>
             </div>
-
         </div>
     </div>
+    <!-- </div> -->
 </div>

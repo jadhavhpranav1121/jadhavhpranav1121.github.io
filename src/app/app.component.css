@@ -1,11 +1,17 @@
+        .container {
+            width: 100%;
+            height: 100%;
+        }
+        
         .navigation {
             width: 100vw;
             display: flex;
             justify-content: space-between;
             height: 4em;
             background-color: white;
-            background: linear-gradient(135deg, #fdfdfd, #4b0000);
+            /* background: linear-gradient(135deg, #fdfdfd, #4b0000); */
             align-items: center;
+            /* box-shadow: 0.3px solid rgba(0, 0, 0, 0.5); */
         }
         
         .navigation a {
@@ -18,14 +24,14 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: transparent;
+            /* background-color: transparent; */
             /* background-color: white; */
         }
         
         .navigation .logo {
             margin-left: 3vw;
             display: flex;
-            background-color: transparent;
+            /* background-color: transparent; */
             align-items: center;
             cursor: pointer;
             /* background: white; */
@@ -34,7 +40,7 @@
         .navigation .logo span,
         .navigation .logo img {
             /* background: white; */
-            background-color: transparent;
+            /* background-color: transparent; */
             margin-left: 0.4vw;
         }
         
@@ -43,7 +49,9 @@
         }
         
         .navigation .links a {
-            padding: 1rem;
+            padding: 0.84rem;
+            border-radius: 10px;
+            border: 0.1px solid rgba(0, 0, 0, 0.353);
             margin-right: 5px;
             text-decoration: none;
             cursor: pointer;
@@ -51,7 +59,7 @@
             border-radius: 5px;
             letter-spacing: 1px;
             background: white;
-            background-color: rgba(76, 241, 139, 0.527);
+            /* background-color: rgba(76, 241, 139, 0.527); */
             font-size: 1.3rem;
         }
         
@@ -59,6 +67,7 @@
             background-color: rgb(245, 78, 128);
             color: white;
             margin-right: 0px;
+            border: none;
         }
         
         @media screen and (max-width:716px) {
@@ -73,8 +82,7 @@
         
         section .home {
             width: 100vw;
-            height: calc(100vh - 4em);
-            background: url(https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=750&q=80);
+            /* background: url(https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=750&q=80); */
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
@@ -131,7 +139,8 @@
         
         .sticky {
             position: sticky;
-            top: 0px
+            top: 0px;
+            background-color: white;
         }
         
         section .dataShowing .cardData .card .bottomInfo .addToCart {

@@ -24,13 +24,15 @@
                                 <button class="styleButton2" (click)="increase(items)">+</button>
                             </div>
 
-                            <div style="width: 20px;"><strong>Price:- &#8377;</strong>{{items['count']*items['price']}}</div>
+                            <div style="width: 150px;margin-left:30px;margin-top:20px;"><strong style="font-size:15px;">Price:-</strong>{{items['count']}}*{{items['price']}}=<strong> &#8377;{{items['count']*items['price']}}</strong></div>
                         </div>
                     </div>
 
                     <div class="close"><i class="fas fa-times" (click)="deleteItems(i)"></i></div>
                 </div>
-                <button class="buy" (click)="addToCustomerOrders()">Buy Now</button> {{BuyingCartDetail['total']}}
+                <button class="buy" (click)="addToCustomerOrders()">Buy Now</button>
+                <div class="rightDiv">Total Price:- &#8377;{{BuyingCartDetail['total']}}</div>
+                <div class="clear"></div>
             </div>
         </div>
     </div>

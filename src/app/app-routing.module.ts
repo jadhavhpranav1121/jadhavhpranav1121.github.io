@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminSideOrdersComponent } from './admin-side-orders/admin-side-orders.component';
+import { AdminhomepageComponent } from './adminhomepage/adminhomepage.component';
 import { CartComponent } from './cart/cart.component';
 import { CustomerOrdersComponent } from './customer-orders/customer-orders.component';
 import { LoginadminComponent } from './loginadmin/loginadmin.component';
@@ -23,6 +24,7 @@ const routes: Routes = [
   {path:'carts',component:CartComponent},
   {path:'orders',component:CustomerOrdersComponent},
   {path:'Adminorders',component:AdminSideOrdersComponent},
+  {path:'admin-home',component:AdminhomepageComponent}
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

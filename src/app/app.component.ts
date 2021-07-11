@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Data, Router } from '@angular/router';
 import { DataServiceService } from './dataService/data-service.service';
+import { OwlOptions } from 'ngx-owl-carousel-o';
 
 @Component({
   selector: 'app-root',
@@ -8,7 +9,7 @@ import { DataServiceService } from './dataService/data-service.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'ShoppingPureCss';
+  title = 'Pranav Pizza Website';
   loginData: any={};
   // imagesPathArray=["pizza1.jpg","pizza2.jpg","pizza3.jpg","pizza4.jpg"];
   NameOfItems=["Margherita","Farmhouse","Peppy Paneer","Veg Extravaganza","Veggie Paradise","Cheese n Corn","Pepper Barbecue Chicken","Deluxe Veggie","Chicken Sausage"];
@@ -65,9 +66,33 @@ export class AppComponent {
     this._dataService.customerdataToAdmin.subscribe((res)=>{
       this.customerdataToAdmin=res;
     });
-   
+    
   } 
   
+  customOptions: OwlOptions = {
+    loop: true,
+    mouseDrag: true,
+    touchDrag: true,
+    pullDrag: false,
+    dots: false,
+    navSpeed: 700,
+    navText: ['<i class="fa-chevron-left"></i>', '<i class="fa-chevron-right></i>"' ],
+    responsive: {
+      0: {
+        items: 1
+      },
+      400: {
+        items: 2
+      },
+      740: {
+        items: 3
+      },
+      940: {
+        items: 4
+      }
+    },
+    nav: true
+  }
 
   logout(){
     for(let i=0;i<this.customerdataToAdmin.length;i++){
@@ -127,6 +152,7 @@ export class AppComponent {
     }
     this._dataService.BuyingCartDetail.next(this.BuyingCartDetail);
   }
+  
   
   
 }
