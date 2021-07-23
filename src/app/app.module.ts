@@ -15,6 +15,8 @@ import { AdminSideOrdersComponent } from './admin-side-orders/admin-side-orders.
 import { AdminhomepageComponent } from './adminhomepage/adminhomepage.component';
 import {NgbPaginationModule, NgbAlertModule, NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { HttpClientModule } from '@angular/common/http';
+import { Error404Component } from './error404/error404.component';
+import { BodyComponentComponent } from './body-component/body-component.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,7 +29,9 @@ import { HttpClientModule } from '@angular/common/http';
     CartComponent,
     CustomerOrdersComponent,
     AdminSideOrdersComponent,
-    AdminhomepageComponent
+    AdminhomepageComponent,
+    Error404Component,
+    BodyComponentComponent
   ],
   imports: [
     BrowserModule,

@@ -14,7 +14,6 @@ export class AdminhomepageComponent implements OnInit {
       this.adminloginOrNot=res;
     })
    }
-
   ngOnInit(): void {
   }
 

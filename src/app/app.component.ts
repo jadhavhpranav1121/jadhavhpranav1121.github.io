@@ -39,6 +39,7 @@ export class AppComponent {
     });
     this._dataService.customerloginOrNot.subscribe((res)=>{
       this.customerloginOrNot=res;
+      console.log(res);
     });
     this._dataService.customerData.subscribe((res)=>{
       this.customerData=res;
@@ -130,7 +131,6 @@ export class AppComponent {
     }
     this._dataService.BuyingCartDetail.next(this.BuyingCartDetail);
   }
-  
   images = [62, 83, 466, 965, 982, 1043, 738].map((n) => `https://picsum.photos/id/${n}/900/500`);
 
   paused = false;
@@ -160,6 +160,7 @@ export class AppComponent {
       this.togglePaused();
     }
   }
+  
 }
   
 
