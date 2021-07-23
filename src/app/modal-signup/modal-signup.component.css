@@ -15,6 +15,7 @@
     position: absolute;
     right: -4%;
     border: none;
+    cursor: pointer;
     background-color: transparent;
     /* font-size: 20px; */
 }

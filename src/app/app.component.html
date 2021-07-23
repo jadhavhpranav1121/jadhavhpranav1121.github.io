@@ -19,7 +19,8 @@
         <a *ngIf="customerloginOrNot" (click)="logout()">LogOut</a>
     </div>
     <div class="links" *ngIf="adminloginOrNot">
-        <strong *ngIf="adminloginOrNot">Hello,</strong>
+        <strong *ngIf="adminloginOrNot">Hello,
+            </strong>
         <p *ngIf="adminloginOrNot">{{adminData["name"]}}&nbsp;&nbsp;&nbsp;</p>
         <a *ngIf="adminloginOrNot" routerLink="Adminorders" class="Cart" (click)="ChangeCartOpeningStatus()">All Orders</a>
         <a *ngIf="adminloginOrNot" (click)="logout()">LogOut</a>
@@ -28,22 +29,21 @@
 <router-outlet></router-outlet>
 <section>
     <div class="home" *ngIf="(!adminloginOrNot && !CartOpenOrNot && !customerloginOrNot && !OrderOpenOrNot)">
-        <!-- <div>Some tags before</div> -->
-        <div class="carousel" style="width:100vw;height:calc(100vh - 4em);">
-            <owl-carousel-o [options]="customOptions">
-                <ng-template carouselSlide>
+        <ngb-carousel #carousel [interval]="2000" [pauseOnHover]="pauseOnHover" [pauseOnFocus]="pauseOnFocus" (slide)="onSlide($event)">
+            <ng-template ngbSlide *ngFor="let img of images; index as i">
+                <a target="_blank" rel="nofollow noopener noreferrer">
+                    <div class="picsum-img-wrapper">
+                        <img [src]="img" style="width:100vw;height:calc(100vh - 4em);" alt="My image {{i + 1}} description">
+                    </div>
+                </a>
+            </ng-template>
+        </ngb-carousel>
 
-                    <img src="https://images.dominos.co.in/new_margherita_2502.jpg">
-                </ng-template>
-                <ng-template carouselSlide><img src="../assets/images/pizzaSmallImage.png"></ng-template>
-                <ng-template carouselSlide><img src="../assets/images/pizzaSmallImage.png"></ng-template>
-            </owl-carousel-o>
-        </div>
-        <!-- <div>Some tags after</div>  -->
+
     </div>
     <div class="dataShowing" *ngIf="(customerloginOrNot) && !CartOpenOrNot && !OrderOpenOrNot">
         <div class="cardData">
-            <div class="card" *ngFor="let item of CartDetails;index as i">
+            <div class="card1" *ngFor="let item of CartDetails;index as i">
                 <img src="{{item['images']}}" width="100%" height="45%" style="border-top-left-radius:5px;border-top-right-radius: 5px;background-size:cover;">
                 <div class="cardInfo1">
                     <div class="title">{{item['name']}}</div>
@@ -63,4 +63,3 @@
         </div>
     </div>
 </section>
-<!-- </div> -->

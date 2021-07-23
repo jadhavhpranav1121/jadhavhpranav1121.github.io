@@ -1,5 +1,7 @@
+import { HttpClient,HttpClientModule} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { Student } from '../app-models/loginInterface.model';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +11,13 @@ export class DataServiceService {
   loginOrNot: any;
   OrdersOpenOrNot: any;
 
-  constructor() { }
+  url="http://localhost:8000/student";  
+  constructor(private http:HttpClient) { 
+  }
+  AddData(req:Student){
+    // res.set('Content-Type', 'text/html');
+    return this.http.post(this.url,req);
+  }
   signDataCustomer=new BehaviorSubject<Array<Object>>([]);
   signDataAdmin=new BehaviorSubject<Array<Object>>([]);
   customerdataToAdmin=new BehaviorSubject<Array<Object>>([]);

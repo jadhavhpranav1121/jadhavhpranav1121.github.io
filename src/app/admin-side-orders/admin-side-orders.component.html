@@ -2,7 +2,6 @@
     <h1 class="CartTitle">Order List</h1>
     <div class="card">
         <div *ngFor="let first of customerdataToAdmin">
-            <!-- <div *ngIf="{{first['Customer Name']}}"> -->
             <div style="margin-left:15px;margin-top:15px;font-size: 15px;"><strong>Customer ID:- </strong> {{first['Customer Name']}}</div>
             <div *ngFor="let second of first['Data']">
                 <div style="margin-left:25px;margin-top:15px;"><strong>{{second.length}} :- </strong></div>

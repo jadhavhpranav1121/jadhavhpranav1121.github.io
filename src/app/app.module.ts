@@ -13,7 +13,8 @@ import { CartComponent } from './cart/cart.component';
 import { CustomerOrdersComponent } from './customer-orders/customer-orders.component';
 import { AdminSideOrdersComponent } from './admin-side-orders/admin-side-orders.component';
 import { AdminhomepageComponent } from './adminhomepage/adminhomepage.component';
-import { CarouselModule } from 'ngx-owl-carousel-o';
+import {NgbPaginationModule, NgbAlertModule, NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { HttpClientModule } from '@angular/common/http';
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,16 +27,18 @@ import { CarouselModule } from 'ngx-owl-carousel-o';
     CartComponent,
     CustomerOrdersComponent,
     AdminSideOrdersComponent,
-    AdminhomepageComponent,
-
+    AdminhomepageComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    CarouselModule
+    NgbPaginationModule,
+     NgbAlertModule,
+     NgbModule,
+     HttpClientModule
   ],
-  providers: [],
+  providers: [HttpClientModule],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
