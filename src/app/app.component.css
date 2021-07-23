@@ -3,6 +3,13 @@
             height: 100%;
         }
         
+        .sticky {
+            position: sticky;
+            top: 0px;
+            background-color: white;
+        }
+        /* navigation Bar */
+        
         .navigation {
             width: 100vw;
             display: flex;
@@ -85,6 +92,7 @@
                 font-size: 1rem;
             }
         }
+        /* section  */
         
         section .home {
             width: 100vw;
@@ -144,17 +152,6 @@
             height: 100vh;
         }
         
-        .carousel-image {
-            width: 100vw;
-            height: calc(100vh - 4em);
-        }
-        
-        .sticky {
-            position: sticky;
-            top: 0px;
-            background-color: white;
-        }
-        
         section .dataShowing .cardData .card1 .bottomInfo .addToCart {
             width: 40%;
             height: 70%;
@@ -199,10 +196,11 @@
                 margin: 20px auto;
             }
         }
+        /* Carousel */
         
         .carousel-image {
             width: 100vw;
-            height: 100vh;
+            height: calc(100vh - 4em);
         }
         
         .carousel-control-prev-icon,

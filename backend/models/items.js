@@ -16,7 +16,7 @@ const itemsScheme = new mongoose.Schema({
         trim: true
     },
     count: {
-        type: String,
+        type: Number,
         required: true,
         trim: true,
         default: 0,

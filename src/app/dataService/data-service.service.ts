@@ -2,7 +2,7 @@ import { HttpClient,HttpClientModule} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { dataScheme } from '../app-models/dataScheme.model';
-
+import { itemScheme } from '../app-models/itemScheme.model';
 @Injectable({
   providedIn: 'root'
 })
@@ -11,8 +11,9 @@ export class DataServiceService {
   loginOrNot: any;
   OrdersOpenOrNot: any;
 
-  urlOfAdmin="http://localhost:8000/admin";  
-  urlOfCustomer="http://localhost:8000/customer";
+  urlOfAdmin="http://localhost:3000/admin";  
+  urlOfCustomer="http://localhost:3000/customer";
+  urlOfItems="http://localhost:3000/items";
   constructor(private http:HttpClient) { 
   }
   AddDataToAdmin(req:dataScheme){
@@ -21,12 +22,18 @@ export class DataServiceService {
   AddDataToCustomer(req:dataScheme){
     return this.http.post(this.urlOfCustomer,req);
   }
+  AddDataToItems(req:itemScheme){
+    return this.http.post(this.urlOfItems,req);
+  }
   getDataOfCustomer(){
       return this.http.get(this.urlOfCustomer);
   }
   getDataOfAdmin(){
     return this.http.get(this.urlOfAdmin);
   }
+  getDataOfItems(){
+    return this.http.get(this.urlOfItems);
+}
   signDataCustomer=new BehaviorSubject<Array<Object>>([]);
   signDataAdmin=new BehaviorSubject<Array<Object>>([]);
   customerdataToAdmin=new BehaviorSubject<Array<Object>>([]);

@@ -20,7 +20,7 @@ app.use(cors({ origin: 'http://localhost:4200' }))
 app.use(adminRouter);
 app.use(customerRouter);
 app.use(itemsRouter);
-const port = process.env.PORT || 8000;
+const port = process.env.PORT || 3000;
 app.listen(port, () => {
     console.log("success");
 })
