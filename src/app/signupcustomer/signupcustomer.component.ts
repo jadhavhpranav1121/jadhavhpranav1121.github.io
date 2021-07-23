@@ -28,14 +28,20 @@ export class SignupcustomerComponent implements OnInit {
     const new1=event.value;
     this.dataarray=this._dataServices.signDataCustomer.value;
     for(let i=0;i<this.dataarray.length;i++){
-      if(event.value.mail==this.dataarray[i]['mail'] && event.value.password==this.dataarray[i]['password']){
+      if(event.value.mail==this.dataarray[i]['mail'] || event.value.password==this.dataarray[i]['password']){
         alert("Please Don't enter existing data");
         this.duplicateOrNot=true;
       }
     }
     if(this.duplicateOrNot==false){
        this.dataarray.push(new1);
-        localStorage.setItem("customerData",JSON.stringify(this._dataServices.signDataCustomer.value));
+       this._dataServices.AddDataToCustomer({"first_name":event.value.first_name,"last_name":event.value.Last_name,"email":event.value.mail,"Pass":event.value.password,"phone_number":event.value.phonenumber,"address":event.value.address}).subscribe((res)=>{
+        this._dataServices.signDataCustomer.next(this.dataarray);
+      },
+      (err)=>{
+        console.log(err);
+      }
+      )
         alert("Account is Created!");
         this.router.navigate(['']);   
   }

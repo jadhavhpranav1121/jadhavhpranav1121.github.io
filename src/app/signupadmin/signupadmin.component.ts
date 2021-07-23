@@ -38,7 +38,8 @@ export class SignupadminComponent implements OnInit {
     if(this.duplicateOrNot==false){
        this.dataarray.push(new1);    
         // localStorage.setItem("adminData",JSON.stringify(this._dataServices.signDataAdmin.value));
-        this._dataServices.AddData({"email":event.value.mail,"Pass":event.value.password}).subscribe((res)=>{
+        console.log(new1);
+        this._dataServices.AddDataToAdmin({"first_name":event.value.first_name,"last_name":event.value.Last_name,"email":event.value.mail,"Pass":event.value.password,"phone_number":event.value.phonenumber,"address":event.value.address}).subscribe((res)=>{
           this._dataServices.signDataAdmin.next(this.dataarray);
         },
         (err)=>{

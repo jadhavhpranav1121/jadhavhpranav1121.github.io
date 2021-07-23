@@ -13,17 +13,23 @@ export class LogincustomerComponent implements OnInit {
   loginOrNot:any;
   loginData: Object={};
   customerData: any;
-  constructor(private router:Router,private _dataService:DataServiceService) { 
-    
-  }
-  ispopUpShow:any;
-  ngOnInit(): void {
+  // _dataServices: any;
+  constructor(private router:Router,private _dataService:DataServiceService) {
     this._dataService.customerloginOrNot.subscribe((res)=>{
       this.loginOrNot=res;
     })
-this._dataService.customerData.subscribe((res)=>{
-  this.customerData=res;
-})
+    this._dataService.customerData.subscribe((res)=>{
+        this.customerData=res;
+    })
+  }
+  getDataOfCustomerInLogin(){
+      this._dataService.getDataOfCustomer().subscribe((res)=>{
+          this.data=res;
+      });
+  }
+  ispopUpShow:any;
+  ngOnInit(): void {
+    this.getDataOfCustomerInLogin();
   }
   closetoggle(){
     this.router.navigate(['']);
@@ -32,13 +38,12 @@ this._dataService.customerData.subscribe((res)=>{
     this.ispopUpShow = false;
  }
  verify(event:NgForm){
-  this.data=localStorage.getItem("customerData");
-  this.data=JSON.parse(this.data);
+   console.log(this.data);
   if(this.data==null){
     alert("Username does not Exit");
   }
   for(let i=0;i<this.data.length;i++){
-    if(this.data[i].mail==event.value.mail && this.data[i].password==event.value.password){
+    if(this.data[i].email==event.value.mail && this.data[i].Pass==event.value.password){
       this._dataService.customerloginOrNot.next(true);
       this.loginOrNot=this._dataService.customerloginOrNot;
       this._dataService.customerData.next({"name":event.value.mail,"password":event.value.password});
@@ -49,5 +54,8 @@ this._dataService.customerData.subscribe((res)=>{
   alert("Please Enter Correct Email and Password");
   }
  }
+  dataarray(dataarray: any) {
+    throw new Error('Method not implemented.');
+  }
   
 }

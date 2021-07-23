@@ -29,7 +29,7 @@
 <router-outlet></router-outlet>
 <section>
     <div class="home" *ngIf="(!adminloginOrNot && !CartOpenOrNot && !customerloginOrNot && !OrderOpenOrNot)">
-        <ngb-carousel #carousel [interval]="2000" [pauseOnHover]="pauseOnHover" [pauseOnFocus]="pauseOnFocus" (slide)="onSlide($event)">
+        <ngb-carousel #carousel [interval]="10000" [pauseOnHover]="pauseOnHover" [pauseOnFocus]="pauseOnFocus" (slide)="onSlide($event)">
             <ng-template ngbSlide *ngFor="let img of images; index as i">
                 <a target="_blank" rel="nofollow noopener noreferrer">
                     <div class="picsum-img-wrapper">
@@ -38,8 +38,6 @@
                 </a>
             </ng-template>
         </ngb-carousel>
-
-
     </div>
     <div class="dataShowing" *ngIf="(customerloginOrNot) && !CartOpenOrNot && !OrderOpenOrNot">
         <div class="cardData">

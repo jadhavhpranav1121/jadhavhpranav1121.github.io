@@ -16,8 +16,14 @@ export class LoginadminComponent implements OnInit {
 
 
   constructor(private _dataService:DataServiceService,private router:Router) { }
-
+  getDataAdminInLogin(){
+    this._dataService.getDataOfAdmin().subscribe((res)=>{
+        this.data=res;
+        console.log(this.data);
+    });
+  }
   ngOnInit(): void {
+    this.getDataAdminInLogin();
     this._dataService.adminloginOrNot.subscribe((res)=>{
       this.loginOrNot=res;
     })
@@ -25,15 +31,14 @@ export class LoginadminComponent implements OnInit {
       this.adminData=res;
     })
   }
+  
   verify(event:NgForm){
-    this.data=localStorage.getItem("adminData");
-    this.data=JSON.parse(this.data);
     if(this.data==null){
       alert("Username does not Exit");
     }
     else{
     for(let i=0;i<this.data.length;i++){
-      if(this.data[i].mail==event.value.mail && this.data[i].password==event.value.password){
+      if(this.data[i].email==event.value.mail && this.data[i].Pass==event.value.password){
         this._dataService.adminloginOrNot.next(true);
         this.loginOrNot=this._dataService.adminloginOrNot;
         this._dataService.adminData.next({"name":event.value.mail,"password":event.value.password});

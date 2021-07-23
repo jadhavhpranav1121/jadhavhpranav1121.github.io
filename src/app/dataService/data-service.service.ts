@@ -1,7 +1,7 @@
 import { HttpClient,HttpClientModule} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { Student } from '../app-models/loginInterface.model';
+import { dataScheme } from '../app-models/dataScheme.model';
 
 @Injectable({
   providedIn: 'root'
@@ -11,12 +11,21 @@ export class DataServiceService {
   loginOrNot: any;
   OrdersOpenOrNot: any;
 
-  url="http://localhost:8000/student";  
+  urlOfAdmin="http://localhost:8000/admin";  
+  urlOfCustomer="http://localhost:8000/customer";
   constructor(private http:HttpClient) { 
   }
-  AddData(req:Student){
-    // res.set('Content-Type', 'text/html');
-    return this.http.post(this.url,req);
+  AddDataToAdmin(req:dataScheme){
+    return this.http.post(this.urlOfAdmin,req);
+  }
+  AddDataToCustomer(req:dataScheme){
+    return this.http.post(this.urlOfCustomer,req);
+  }
+  getDataOfCustomer(){
+      return this.http.get(this.urlOfCustomer);
+  }
+  getDataOfAdmin(){
+    return this.http.get(this.urlOfAdmin);
   }
   signDataCustomer=new BehaviorSubject<Array<Object>>([]);
   signDataAdmin=new BehaviorSubject<Array<Object>>([]);
