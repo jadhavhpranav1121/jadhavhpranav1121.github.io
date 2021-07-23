@@ -10,12 +10,12 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class AdminhomepageComponent implements OnInit {
   adminloginOrNot: boolean=false;
-  CartDetails: Object[] =[];
+  CartDetails:any;
   constructor(private _dataService:DataServiceService,private modalService: NgbModal) {
     this._dataService.adminloginOrNot.subscribe((res)=>{
       this.adminloginOrNot=res;
     })
-    this._dataService.CartDetails.subscribe((res)=>{
+    this._dataService.getDataOfItems().subscribe((res)=>{
       this.CartDetails=res;
     })
     
