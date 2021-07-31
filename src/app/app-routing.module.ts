@@ -18,10 +18,8 @@ import { SignupcustomerComponent } from './signupcustomer/signupcustomer.compone
 const routes: Routes = [
   {path:'',component:BodyComponentComponent,pathMatch:'full'},
   // pathMatch:'full',redirectTo:'/login/customer',
-  {path:'login',component:ModalLoginComponent, children: [
-    {path: 'customer', component: LogincustomerComponent}, 
-    {path: 'admin', component:LoginadminComponent }, 
-  ]},
+  {path: 'customer', component: LogincustomerComponent}, 
+  {path: 'admin', component:LoginadminComponent}, 
   {path:'signup',component:ModalSignupComponent, children: [
     {path: 'customer',component: SignupcustomerComponent}, 
     {path: 'admin', component:SignupadminComponent }, 

@@ -40,7 +40,7 @@ import { BodyComponentComponent } from './body-component/body-component.componen
     NgbPaginationModule,
      NgbAlertModule,
      NgbModule,
-     HttpClientModule
+     HttpClientModule,
   ],
   providers: [HttpClientModule],
   bootstrap: [AppComponent]

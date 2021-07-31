@@ -1,5 +1,6 @@
 <div>
     <h1 style="font-size: 30px;">Welcome Admin</h1>
+    <button class="btn btn-outline-primary mb-2 mr-2" (click)="openVerticallyCentered(content)">Add More Pizza</button>
 </div>
 <div class="dataShowing">
     <div class="cardData">
@@ -35,7 +36,7 @@
                         <div *ngIf="!(name.invalid && (name.dirty || name.touched))" style="margin-bottom: 0px;"></div>
                     </div>
                     <div class="field-wrapper">
-                        <input type="text" name="images" class="form-control" ngModel autocomplete="off" placeholder="&nbsp;" #images="ngModel" required>
+                        <input type="file" id="images" name="images" (change)="readUrl($event)" #images="ngModel" ngModel accept="image/*">
                         <div class="field-placeholder"><span>Enter images link</span></div>
                     </div>
                     <div class="error">
@@ -69,4 +70,3 @@
     </div>
 
 </ng-template>
-<button class="btn btn-outline-primary mb-2 mr-2" (click)="openVerticallyCentered(content)">Modal vertically centered</button>

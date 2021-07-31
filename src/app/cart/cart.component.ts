@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { customerScheme } from '../app-models/customerScheme.model';
+import { orderScheme } from '../app-models/orderDetails.model';
 import { DataServiceService } from '../dataService/data-service.service';
 
 @Component({
@@ -18,6 +20,8 @@ export class CartComponent implements OnInit {
   BuyOrNot: any;
   NewData: any;
   newItems: any;
+  customterData: any;
+  OrderDetailsFromDatabase: any;
 
   constructor(private _dataservice:DataServiceService,private router:Router) {
     this._dataservice.CartOpenOrNot.subscribe((res)=>{
@@ -38,9 +42,9 @@ export class CartComponent implements OnInit {
     this._dataservice.OrderOpenOrNot.subscribe((res)=>{
       this.OrderOpenOrNot=res;
     });
-    // this._dataservice.CartDetails.subscribe((res)=>{
-    //   this.CartDetails=res;
-    // })
+    this._dataservice.customerData.subscribe((res)=>{
+      this.customterData=res;
+    })
     this._dataservice.BuyOrNot.subscribe((res)=>{
       this.BuyOrNot=res;
       
@@ -52,8 +56,11 @@ export class CartComponent implements OnInit {
         this.newItems=res;
     });
 }
+
   ngOnInit(): void {
     this.getDataOfPizza();
+    this.getDataOfOrdersDetails();
+    console.log(this.BuyingCartDetail);
     for(let i=0;i<this.BuyingCartDetail.length;i++){
       this.BuyingCartDetail[i]['status']='Starting To delivery';
     }
@@ -62,7 +69,12 @@ export class CartComponent implements OnInit {
       this.BuyingCartDetail['total']+=this.BuyingCartDetail[i]['count']*this.BuyingCartDetail[i]['price'];
     }
   }
-  
+  getDataOfOrdersDetails(){
+    this._dataservice.getDataOfOrders().subscribe((res)=>{
+        this.OrderDetailsFromDatabase=res;
+        console.log(res);
+    });
+  }
   goToHome(){
     this._dataservice.CartOpenOrNot.next(false);
     this.CartOpenOrNot=false;
@@ -82,10 +94,21 @@ export class CartComponent implements OnInit {
     this._dataservice.CartDetails.next(this.CartDetails);
     this._dataservice.BuyingCartDetail.next(this.BuyingCartDetail);
   }
+ 
+tempDataForCart:orderScheme[]=[];
   addToCustomerOrders(){
     this.NewData=this.BuyingCartDetail;
-    this.OrderDetails.push(this.NewData);
-    this._dataservice.OrderDetails.next(this.OrderDetails);
+    console.log(this.OrderDetailsFromDatabase);
+    for(let i=0;i<this.OrderDetailsFromDatabase.length;i++){
+      if(this.OrderDetailsFromDatabase[i]['email']==this.customterData.name){
+        for(let i=0;i<this.BuyingCartDetail.length;i++){
+          this.tempDataForCart.push({"name":this.BuyingCartDetail[i].name,"count":this.BuyingCartDetail[i].count,"price":this.BuyingCartDetail[i].price,"Pass":this.BuyingCartDetail[i].Pass,"images":this.BuyingCartDetail[i].images,"status":this.BuyingCartDetail[i].status});
+        } 
+      }
+    }
+    this._dataservice.updateOrders(this.tempDataForCart,this.customterData.name).subscribe((res)=>{
+      console.log(res);
+    })
     this._dataservice.BuyingCartDetail.next([]);
     this.BuyingCartDetail=[]; 
     this.CartDetails=this.newItems;
@@ -96,7 +119,6 @@ export class CartComponent implements OnInit {
     for(let i=0;i<this.BuyingCartDetail.length;i++){
       if(this.BuyingCartDetail[i]['name']==item['name']){
         if(this.BuyingCartDetail[i]['count']>1){
-        // this.BuyingCartDetail[i]['price']+=item['price']
         this.BuyingCartDetail[i]['count']--;
         }
       }

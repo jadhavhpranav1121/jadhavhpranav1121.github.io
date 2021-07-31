@@ -13,7 +13,6 @@ export class LogincustomerComponent implements OnInit {
   loginOrNot:any;
   loginData: Object={};
   customerData: any;
-  // _dataServices: any;
   constructor(private router:Router,private _dataService:DataServiceService) {
     this._dataService.customerloginOrNot.subscribe((res)=>{
       this.loginOrNot=res;

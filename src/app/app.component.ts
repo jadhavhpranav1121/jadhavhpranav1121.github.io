@@ -1,8 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { Data, Router } from '@angular/router';
 import { DataServiceService } from './dataService/data-service.service';
-import { NgbCarousel, NgbSlideEvent, NgbSlideEventSource } from '@ng-bootstrap/ng-bootstrap';
-
+import { NgbCarousel, NgbModal, NgbSlideEvent, NgbSlideEventSource } from '@ng-bootstrap/ng-bootstrap';
+import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +12,7 @@ import { NgbCarousel, NgbSlideEvent, NgbSlideEventSource } from '@ng-bootstrap/n
 export class AppComponent {
   title = 'Pranav Pizza Website';
   loginData: any={};
- 
+  validatingForm!: FormGroup;
   // imagesPathArray=["pizza1.jpg","pizza2.jpg","pizza3.jpg","pizza4.jpg"];
   NameOfItems=["Margherita","Farmhouse","Peppy Paneer","Veg Extravaganza","Veggie Paradise","Cheese n Corn","Pepper Barbecue Chicken","Deluxe Veggie","Chicken Sausage"];
   CartImages=["https://images.dominos.co.in/new_margherita_2502.jpg","https://images.dominos.co.in/farmhouse.png","https://images.dominos.co.in/new_peppy_paneer.jpg","https://images.dominos.co.in/new_veg_extravaganza.jpg","https://images.dominos.co.in/new_veggie_paradise.jpg","https://images.dominos.co.in/new_cheese_n_corn.jpg","https://images.dominos.co.in/new_pepper_barbeque_chicken.jpg","https://images.dominos.co.in/new_deluxe_veggie.jpg","https://images.dominos.co.in/new_chicken_sausage.jpg"];
@@ -33,13 +33,14 @@ export class AppComponent {
   NewData: any;
   NewData1:any;
   newItems: any;
-  ErrorPage: any;
-  // paused: any;
-  // carousel: any;
-  // unpauseOnArrow: any;
-  // pauseOnIndicator: any;
-  
-  constructor(private router:Router,private _dataService:DataServiceService){
+  ErrorPage: any;  
+  url: any;
+  DataUnknown:any;
+  loginOrNot: any;
+  // loginOrNot:any;
+  // loginData: Object={};
+  // customerData: any;
+  constructor(private router:Router,private _dataService:DataServiceService,private modalService: NgbModal){
     this._dataService.adminloginOrNot.subscribe((res)=>{
       this.adminloginOrNot=res;
     });
@@ -80,10 +81,22 @@ export class AppComponent {
   });
   this._dataService.ErrorPage.subscribe((res:any)=>{
     this.ErrorPage=res;
+  });
+  this._dataService.customerloginOrNot.subscribe((res)=>{
+    this.loginOrNot=res;
+  })
+  this._dataService.customerData.subscribe((res)=>{
+      this.customerData=res;
   })
   } 
+  getDataOfCustomerInLogin(){
+    this._dataService.getDataOfCustomer().subscribe((res)=>{
+        this.DataUnknown=res;
+    });
+}
+ispopUpShow:any;
   ngOnInit(): void {
-  
+    this.getDataOfCustomerInLogin();
   }
 
   logout(){
@@ -173,6 +186,55 @@ export class AppComponent {
       this.togglePaused();
     }
   }
-  
+  openVerticallyCentered(content: any) {
+    this.modalService.open(content, { centered: true });
+  }
+    
+  data(event:NgForm){
+    
+    this._dataService.AddDataToItems({"name":event.value.name,"images":this.url,"Pass":event.value.Pass,"count":event.value.count,"price":event.value.price}).subscribe((res:any)=>{
+          this.CartDetails.push(res);
+          this._dataService.CartDetails.next(this.CartDetails);
+        });
+  }
+  readUrl(event:any) {
+    if (event.target.files && event.target.files[0]) {
+      var reader = new FileReader();
+      reader.onload = (event:any) => {
+        this.url = event.target.result;
+      }
+      reader.readAsDataURL(event.target.files[0]);
+    }
 }
+closetoggle(){
+  this.router.navigate(['']);
+}
+closePop() {
+  this.ispopUpShow = false;
+}
+verify(event:NgForm){
+ console.log(this.DataUnknown);
+ console.log(event);
+  if(this.DataUnknown==null){
+    alert("Username does not Exit");
+  }
+  for(let i=0;i<this.DataUnknown.length;i++){
+    console.log(this.loginOrNot);
+    if(this.DataUnknown[i].email==event.value.mail && this.DataUnknown[i].Pass==event.value.password){
+    this._dataService.customerloginOrNot.next(true);
+    this.loginOrNot=this._dataService.customerloginOrNot;
+    
+    this._dataService.customerData.next({"name":event.value.mail,"password":event.value.password});
+    this.router.navigate(['']);
+  }
+}
+if(this.loginOrNot==false){
+alert("Please Enter Correct Email and Password");
+}
+}
+dataarray(dataarray: any) {
+  throw new Error('Method not implemented.');
+}
+
+ }
   

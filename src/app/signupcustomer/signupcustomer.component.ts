@@ -40,8 +40,10 @@ export class SignupcustomerComponent implements OnInit {
       },
       (err)=>{
         console.log(err);
-      }
-      )
+      })
+      this._dataServices.AddDataToOrder({"email":event.value.mail,"orders":[]}).subscribe((res)=>{
+        console.log(res);
+      });
         alert("Account is Created!");
         this.router.navigate(['']);   
   }

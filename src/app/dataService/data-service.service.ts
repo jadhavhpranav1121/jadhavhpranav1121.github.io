@@ -1,8 +1,10 @@
 import { HttpClient,HttpClientModule} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { customerScheme } from '../app-models/customerScheme.model';
 import { dataScheme } from '../app-models/dataScheme.model';
 import { itemScheme } from '../app-models/itemScheme.model';
+import { orderScheme } from '../app-models/orderDetails.model';
 @Injectable({
   providedIn: 'root'
 })
@@ -14,6 +16,7 @@ export class DataServiceService {
   urlOfAdmin="http://localhost:3000/admin";  
   urlOfCustomer="http://localhost:3000/customer";
   urlOfItems="http://localhost:3000/items";
+  urlOfOrders="http://localhost:3000/orders";
   constructor(private http:HttpClient) { 
   }
   AddDataToAdmin(req:dataScheme){
@@ -25,6 +28,12 @@ export class DataServiceService {
   AddDataToItems(req:itemScheme){
     return this.http.post(this.urlOfItems,req);
   }
+  AddDataToOrder(req:customerScheme){
+    return this.http.post(this.urlOfOrders,req);
+  }
+  updateOrders(req:orderScheme[],name:any){
+    return this.http.patch(this.urlOfOrders+"/"+name,req);
+  }
   getDataOfCustomer(){
       return this.http.get(this.urlOfCustomer);
   }
@@ -33,7 +42,10 @@ export class DataServiceService {
   }
   getDataOfItems(){
     return this.http.get(this.urlOfItems);
-}
+  }
+  getDataOfOrders(){
+    return this.http.get(this.urlOfOrders);
+  }
   signDataCustomer=new BehaviorSubject<Array<Object>>([]);
   signDataAdmin=new BehaviorSubject<Array<Object>>([]);
   customerdataToAdmin=new BehaviorSubject<Array<Object>>([]);

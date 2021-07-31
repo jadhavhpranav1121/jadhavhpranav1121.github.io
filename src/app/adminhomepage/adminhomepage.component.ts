@@ -11,6 +11,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 export class AdminhomepageComponent implements OnInit {
   adminloginOrNot: boolean=false;
   CartDetails:any;
+  url:any;
   constructor(private _dataService:DataServiceService,private modalService: NgbModal) {
     this._dataService.adminloginOrNot.subscribe((res)=>{
       this.adminloginOrNot=res;
@@ -31,12 +32,20 @@ export class AdminhomepageComponent implements OnInit {
     
   data(event:NgForm){
     
-    this._dataService.AddDataToItems({"name":event.value.name,"images":event.value.images,"Pass":event.value.Pass,"count":event.value.count,"price":event.value.price}).subscribe((res:any)=>{
+    this._dataService.AddDataToItems({"name":event.value.name,"images":this.url,"Pass":event.value.Pass,"count":event.value.count,"price":event.value.price}).subscribe((res:any)=>{
           this.CartDetails.push(res);
           this._dataService.CartDetails.next(this.CartDetails);
         });
   }
 
-
+  readUrl(event:any) {
+    if (event.target.files && event.target.files[0]) {
+      var reader = new FileReader();
+      reader.onload = (event:any) => {
+        this.url = event.target.result;
+      }
+      reader.readAsDataURL(event.target.files[0]);
+    }
+}
 }
 
