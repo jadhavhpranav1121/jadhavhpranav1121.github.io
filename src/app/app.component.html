@@ -5,7 +5,7 @@
         <span>Pizza Hunter</span>
     </div>
     <div class="links" *ngIf="!adminloginOrNot || !customerloginOrNot">
-        <a *ngIf="!customerloginOrNot && !adminloginOrNot" routerLink="login/customer" class="login">Login</a>
+        <a *ngIf="!customerloginOrNot && !adminloginOrNot" class="login" (click)="openVerticallyCentered(content)">Login</a>
         <a *ngIf="!customerloginOrNot && !adminloginOrNot" routerLink="signup/customer" class="signup">Sign up</a>
     </div>
     <div class="links" *ngIf="customerloginOrNot">
@@ -23,12 +23,122 @@
         <a *ngIf="adminloginOrNot" (click)="logout()">LogOut</a>
     </div>
 </nav>
+<!-- MEAN STACK Implement version 0.004 -->
+
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">Add Items</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <!-- <form #f="ngForm" (ngSubmit)="data(f)" ngNativeValidate> -->
+
+        <div class="login-right-div">
+            <!-- <div class="tabLayout"> -->
+            <!-- <a class="tab" routerLink="customer" routerLinkActive="active">Customer</a> -->
+            <!-- <a class="tab" routerLink="admin" routerLinkActive="active">Admin</a> -->
+            <!-- </div> -->
+            <u style="color:red"><p class="StyleChanges">Login</p></u>
+            <div class="form-wrapper-outer">
+                <form #f="ngForm" (ngSubmit)="verify(f)" style="width: 80%;height: 80%;">
+                    <div class="field-wrapper "> console.log("Customer Orders"+this.customerOrders);
+                        <input type="email " name="email " ngModel placeholder="&nbsp;" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" name="mail" #mail="ngModel" required>
+                        <div class="field-placeholder "><span>Enter your email</span></div>
+                    </div>
+                    <div class="error">
+                        <div *ngIf="mail.invalid && (mail.dirty || mail.touched) || mail.errors?.pattern">Please Enter Mail</div>
+                    </div>
+                    <div class="field-wrapper">
+                        <input type="password" autocomplete="off" ngModel placeholder="&nbsp;" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$" #password="ngModel" name="password" required>
+                        <div class="field-placeholder"><span>Enter your password</span></div>
+                    </div>
+                    <div class="error">
+                        <div *ngIf="password.invalid && (password.dirty || password.touched) || password.errors?.pattern" style="font-size: 10px;text-align: center;">Please Enter Password in minimum 8 letters,at least one uppercase,one lowercase,one special character</div>
+                    </div>
+
+                    <div class="field-wrapper">
+                        <button type="submit" style="color:white;" [disabled]="f.invalid">Log in</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary" (click)="modal.close('Close click')">Save</button>
+        <!-- </form> -->
+    </div>
+    <div class="modal-footer">
+
+        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+    </div>
+
+</ng-template>
 
 
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <div class="form-add">
+                <div class="form-wrapper-outer">
+                    <div class="field-wrapper">
+                            <input type="text" name="name" class="form-control" ngModel autocomplete="off" placeholder="&nbsp;" #name="ngModel" required>
+                        <div class="field-placeholder"><span>Enter Pizza Name</span></div>
+                    </div>
+                    <div class="error">
+                        <div *ngIf="name.invalid && (name.dirty || name.touched)">Please Enter Pizza Name</div>
+                        <div *ngIf="!(name.invalid && (name.dirty || name.touched))" style="margin-bottom: 0px;"></div>
+                    </div>
+                    <div class="field-wrapper">
+                        <input type="file" id="images" name="images" (change)="readUrl($event)" #images="ngModel" ngModel accept="image/*">
+                        <div class="field-placeholder"><span>Enter images link</span></div>
+                    </div>
+                    <div class="error">
+                        <div *ngIf="images.invalid && (images.dirty || images.touched)">Please Enter Image Link</div>
+                        <div *ngIf="!(images.invalid && (images.dirty || images.touched))" style="margin-bottom: 0px;"></div>
+                    </div>
+                    <div class="field-wrapper">
+                        <input type="text" name="Pass" class="form-control" ngModel autocomplete="off" placeholder="&nbsp;" #Pass="ngModel" required>
+                        <div class="field-placeholder"><span>Enter Details Name</span></div>
+                    </div>
+                    <div class="error">
+                        <div *ngIf="Pass.invalid && (Pass.dirty || Pass.touched)">Please Enter Details</div>
+                        <div *ngIf="!(Pass.invalid && (Pass.dirty || Pass.touched))" style="margin-bottom: 0px;"></div>
+                    </div>
+                    <div class="field-wrapper">
+                        <input type="number" name="price" class="form-control" ngModel autocomplete="off" placeholder="&nbsp;" #price="ngModel" required>
+                        <div class="field-placeholder"><span>Enter price Name</span></div>
+                    </div>
+                    <div class="error">
+                        <div *ngIf="price.invalid && (price.dirty || price.touched)">Please Enter prize</div>
+                        <div *ngIf="!(price.invalid && (price.dirty || price.touched))" style="margin-bottom: 0px;"></div>
+                    </div>
+                </div>
+            </div> -->
 
 <router-outlet></router-outlet>
 
@@ -42,10 +152,8 @@
 
 
 
-
-
 <section>
-    <div class="home" *ngIf="(!adminloginOrNot && !CartOpenOrNot && !customerloginOrNot && !OrderOpenOrNot && !ErrorPage)">
+    <!-- <div class="home" *ngIf="(!adminloginOrNot && !CartOpenOrNot && !customerloginOrNot && !OrderOpenOrNot && !ErrorPage)">
         <ngb-carousel #carousel [interval]="10000" [pauseOnHover]="pauseOnHover" [pauseOnFocus]="pauseOnFocus" (slide)="onSlide($event)">
             <ng-template ngbSlide *ngFor="let img of images; index as i">
                 <a target="_blank" rel="nofollow noopener noreferrer">
@@ -55,7 +163,7 @@
                 </a>
             </ng-template>
         </ngb-carousel>
-    </div>
+    </div> -->
     <div class="dataShowing" *ngIf="(customerloginOrNot) && !CartOpenOrNot && !OrderOpenOrNot">
         <div class="cardData">
             <div class="card1" *ngFor="let item of CartDetails;index as i">
