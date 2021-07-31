@@ -42,16 +42,18 @@ export class CustomerOrdersComponent implements OnInit {
     this._dataservice.getDataOfOrders().subscribe((res)=>{
       this.customerOrders=res;
       console.log(this.customerOrders);
+      for(let i=0;i<this.customerOrders.length;i++){
+        if(this.customerOrders[i].email==this.customerData.name){
+          this.OrderDetails=this.customerOrders[i].orders;
+        }
+      }
     })
     console.log("Customer Orders"+this.customerOrders);
     this._dataservice.OrderOpenOrNot.next(true);
    }
   ngOnInit(): void {
-    for(let i=0;i<this.customerOrders.length;i++){
-      if(this.customerOrders[i].email==this.customerData.name){
-        this.OrderDetails=this.customerOrders[i].orders;
-      }
-    }
+    console.log(this.customerOrders);
+  
   }
 
   goToHome(){

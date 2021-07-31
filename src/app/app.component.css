@@ -215,3 +215,110 @@
         .carousel-control-next-icon {
             right: 10px;
         }
+        
+        .form-wrapper-outer {
+            width: 100%;
+            height: 85%;
+            display: grid;
+            place-items: center;
+        }
+        
+        .form-button {
+            text-align: right;
+        }
+        
+        .field-wrapper {
+            position: relative;
+            /* margin-bottom: 25px; */
+        }
+        
+        .field-wrapper input {
+            border: 1px solid rgba(0, 0, 0, 0.34);
+            padding: 15px;
+            border-radius: 4px;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .error {
+            color: #FF3636;
+            height: 30px;
+        }
+        
+        .field-wrapper .field-placeholder {
+            font-size: 16px;
+            position: absolute;
+            pointer-events: none;
+            bottom: 17px;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            color: #008cff;
+            background-color: transparent;
+            left: 8px;
+            padding: 0 8px;
+            -webkit-transform: scale(.75) translateY(-39px) translateX(-60px);
+            transform: scale(.75) translateY(-39px) translateX(-60px);
+            z-index: 1;
+            text-align: left;
+            width: 100%;
+        }
+        
+        button[disabled]:hover {
+            background-color: black;
+            cursor: not-allowed;
+        }
+        
+        .field-wrapper .field-placeholder span {
+            width: 100%;
+            height: 100%;
+            padding: 0px 8px;
+        }
+        
+        .field-wrapper input:not([disabled]):focus {
+            border: 1px solid rgba(0, 0, 0, 0.34);
+            outline: none;
+        }
+        
+        .field-wrapper input:not([disabled]):focus~.field-placeholder {
+            color: #1A73E8;
+        }
+        
+        .field-wrapper input:not([disabled]):focus~.field-placeholder,
+        .field-wrapper.hasValue input:not([disabled])~.field-placeholder {
+            -webkit-transform: scale(.75) translateY(-39px) translateX(-60px);
+            transform: scale(.75) translateY(-39px) translateX(-60px);
+        }
+        
+        .form-wrapper-outer .field-wrapper button {
+            width: 100%;
+            border: none;
+            outline: none;
+            color: white;
+            cursor: pointer;
+            height: 35px;
+            background-color: orangered;
+        }
+        
+        .linkOfActive {
+            display: flex;
+        }
+        
+        .active {
+            background: black;
+            color: rgb(255, 255, 255);
+        }
+        
+        .linkOfActive button {
+            margin-right: 15px;
+            height: 30px;
+        }
+        
+        .form-wrapper-outer .field-wrapper button[disabled] {
+            cursor: not-allowed;
+            color: rgba(0, 0, 0, 0.3)
+            /* background-color: black; */
+        }
+        
+        .modal-body {
+            height: 300px;
+        }
