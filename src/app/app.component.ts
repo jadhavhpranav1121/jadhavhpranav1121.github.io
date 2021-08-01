@@ -53,6 +53,7 @@ export class AppComponent {
 
 @ViewChild('carousel', { static: true })
 carousel!: NgbCarousel;
+  SpinnerService: any;
   constructor(private router:Router,private _dataService:DataServiceService,private modalService: NgbModal){
     this._dataService.adminloginOrNot.subscribe((res)=>{
       this.adminloginOrNot=res;
@@ -93,13 +94,16 @@ carousel!: NgbCarousel;
   })
   } 
   getDataOfCustomerInLogin(){
+   
     this._dataService.getDataOfCustomer().subscribe((res)=>{
         this.customerDatabaseData=res;
     });
+    
    this._dataService.getDataOfAdmin().subscribe((res)=>{
     this.data=res;
     console.log(this.data);
 });
+// this.SpinnerService.hide(); 
 }
 
   ngOnInit(): void {
@@ -108,11 +112,24 @@ carousel!: NgbCarousel;
   }
 
   logout(){
+    this._dataService.customerdataToAdmin.next([]);
+    this._dataService.BuyOrNot.next(false);
+    this._dataService.BuyingCartDetail.next([]);
+  // this._dataService.CartDetails.next([]);
+    this._dataService.customerData.next({});
+    this._dataService.OrderDetails.next([]);
+    this._dataService.adminData.next({});
     this._dataService.customerloginOrNot.next(false);
     this._dataService.adminloginOrNot.next(false);
     this.CartOpenOrNot=false;
     this._dataService.OrderOpenOrNot.next(false);
+    this._dataService.adminData.next({});
+    this._dataService.customerData.next({});
     this.OrderOpenOrNot=false;
+    this.isAdmin=false;
+    this.isCustomer=true;
+    this.isAdminSigup=false;
+    this.isCustomerSigup=true;
     this._dataService.CartOpenOrNot.next(false);
     this.router.navigate(['']);
   }
