@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataServiceService } from '../dataService/data-service.service';
-
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-customer-orders',
   templateUrl: './customer-orders.component.html',
@@ -16,8 +16,9 @@ export class CustomerOrdersComponent implements OnInit {
   customerdataToAdmin: Object[] = [];
   customerData: any;
   customerOrders: any;
+  // SpinnerService: any;
 
-  constructor(private _dataservice: DataServiceService, private router: Router) {
+  constructor(private _dataservice: DataServiceService, private router: Router,private SpinnerService:NgxSpinnerService) {
     this._dataservice.OrderOpenOrNot.subscribe((res) => {
       this.OrderOpenOrNot = res;
     });
@@ -39,23 +40,29 @@ export class CustomerOrdersComponent implements OnInit {
     this._dataservice.customerData.subscribe((res) => {
       this.customerData = res;
     });
-    this._dataservice.getDataOfOrders().subscribe((res) => {
-      this.customerOrders = res;
-      console.log(this.customerOrders);
-      for (let i = 0; i < this.customerOrders.length; i++) {
-        if (this.customerOrders[i].email == this.customerData.name) {
-          this.OrderDetails = this.customerOrders[i].orders;
-        }
-      }
-    });
-    console.log("Customer Orders" + this.customerOrders);
+     
     this._dataservice.OrderOpenOrNot.next(true);
   }
-  ngOnInit(): void {
-    console.log(this.customerOrders);
-
+  getDataOfOrderFromDatabase(){
+    this._dataservice.getDataOfOrders().subscribe((res) => {
+     this.customerOrders = res;
+     
+     console.log(this.customerOrders);
+     for (let i = 0; i < this.customerOrders.length; i++) {
+       if (this.customerOrders[i].email == this.customerData.name) {
+         this.OrderDetails = this.customerOrders[i].orders;
+       }
+     }
+     
+   });
   }
-
+  ngOnInit(): void {
+    this.SpinnerService.show(); 
+    console.log("sdf");
+    this.getDataOfOrderFromDatabase();
+    this.SpinnerService.hide(); 
+  }
+  
   goToHome() {
     this._dataservice.OrderOpenOrNot.next(false);
     this.OrderOpenOrNot = false;

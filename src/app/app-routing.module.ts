@@ -11,10 +11,10 @@ import { LoginGuardGuard } from './guardRouter/login-guard.guard';
 
 const routes: Routes = [
   {path:'',component:BodyComponentComponent,pathMatch:'full'},
-  {path:'carts',component:CartComponent,pathMatch:'full',canActivate:[LoginGuardGuard]},
-  {path:'orders',component:CustomerOrdersComponent,pathMatch:'full',canActivate:[LoginGuardGuard]},
-  {path:'Adminorders',component:AdminSideOrdersComponent,pathMatch:'full',canActivate:[AdminGuardGuard]},
-  {path:'admin-home',component:AdminhomepageComponent,pathMatch:'full',canActivate:[AdminGuardGuard]},
+  {path:'carts',component:CartComponent,pathMatch:'full'},
+  {path:'orders',component:CustomerOrdersComponent,pathMatch:'full'},
+  {path:'Adminorders',component:AdminSideOrdersComponent,pathMatch:'full'},
+  {path:'admin-home',component:AdminhomepageComponent,pathMatch:'full'},
   {path:'**',component:Error404Component}
 ];
 @NgModule({

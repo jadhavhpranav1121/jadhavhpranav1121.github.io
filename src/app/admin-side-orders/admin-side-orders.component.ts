@@ -24,10 +24,10 @@ export class AdminSideOrdersComponent implements OnInit {
     })
   }
   valueChange(value:any,third:any){
-    console.log(third['_id']);
-    this._dataService.updateStatus(value,third['_id']).subscribe((res)=>{
-      console.log(res);
-    })
+    // console.log(third['_id']);
+    // this._dataService.updateStatus(value,"second._id/orders/third._id").subscribe((res)=>{
+    //   console.log(res);
+    // })
   }
   valueChange1(value:any,third:any,second:any){
     alert("Status Updated");

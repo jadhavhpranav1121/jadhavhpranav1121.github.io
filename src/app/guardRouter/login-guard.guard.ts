@@ -16,6 +16,7 @@ export class LoginGuardGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    // this._dataService.customerloginOrNot.next(this.customerloginOrNot==false?false:true)
     return (this.customerloginOrNot==false?false:true);
   }
 }
