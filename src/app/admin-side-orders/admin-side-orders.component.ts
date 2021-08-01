@@ -8,22 +8,26 @@ import { DataServiceService } from '../dataService/data-service.service';
   styleUrls: ['./admin-side-orders.component.css']
 })
 export class AdminSideOrdersComponent implements OnInit {
-  customerdataToAdmin: Object[]=[];
+  // customerdataToAdmin: Object[]=[];
   CartOpenOrNot: boolean | undefined;
   OrderOpenOrNot: boolean | undefined;
+  allDetailsOfOrders: any;
+  customerdataToAdmin: any;
 
-  constructor(private _dataService:DataServiceService,private router:Router) { 
-      this._dataService.customerdataToAdmin.subscribe((res)=>{
-        this.customerdataToAdmin=res;
-      })
-      // console.log(this.customerdataToAdmin);
-  }
+  constructor(private _dataService:DataServiceService,private router:Router) { }
 
   ngOnInit(): void {
+    this._dataService.getDataOfOrders().subscribe((res)=>{
+      this.customerdataToAdmin=res;
+      console.log(res);
+      console.log(this.customerdataToAdmin.length);   
+    })
   }
   valueChange(value:any,third:any){
-    third['status']=value;
-    alert("Status Updated");
+    console.log(third['_id']);
+    this._dataService.updateStatus(value,third['_id']).subscribe((res)=>{
+      console.log(res);
+    })
   }
   valueChange1(value:any,third:any,second:any){
     alert("Status Updated");

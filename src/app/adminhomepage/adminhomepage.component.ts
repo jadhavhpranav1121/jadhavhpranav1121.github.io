@@ -16,20 +16,39 @@ export class AdminhomepageComponent implements OnInit {
     this._dataService.adminloginOrNot.subscribe((res)=>{
       this.adminloginOrNot=res;
     })
+   
+   }
+   ngOnChange(){
+    this._dataService.getDataOfItems().subscribe((res)=>{
+      this.CartDetails=res;
+    })
+   }
+  ngOnInit(): void {
     this._dataService.getDataOfItems().subscribe((res)=>{
       this.CartDetails=res;
     })
     
-   }
-  ngOnInit(): void {
   }
   // add(event:NgForm){
   //   
   // }
+  valueOfName="";
+  valueOfPass="";
+  valueOfPrice="";
   openVerticallyCentered(content: any) {
     this.modalService.open(content, { centered: true });
   }
-    
+  openVerticallyCenteredUpdate(content:any,items:any){
+    this.modalService.open(content, { centered: true });
+  }
+  
+  deleteItems(item:any) {
+    if(confirm("Are you sure to delete" +item['_id'])) {
+      this._dataService.deleteItemsInDataBase(item['_id']).subscribe((res)=>{
+        console.log(res);
+      });
+    }
+  }
   data(event:NgForm){
     
     this._dataService.AddDataToItems({"name":event.value.name,"images":this.url,"Pass":event.value.Pass,"count":event.value.count,"price":event.value.price}).subscribe((res:any)=>{

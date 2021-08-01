@@ -4,8 +4,8 @@
     <div class="card">
         <div *ngIf="customerdataToAdmin.length==0">Order List is Empty</div>
         <div *ngFor="let first of customerdataToAdmin">
-            <div style="margin-left:15px;margin-top:15px;font-size: 15px;"><strong>Customer ID:- </strong> {{first['Customer Name']}}</div>
-            <div *ngFor="let second of first['Data']">
+            <div style="margin-left:15px;margin-top:15px;font-size: 15px;"><strong>Customer ID:- </strong> {{first['email']}}</div>
+            <div *ngFor="let second of first['orders']">
                 <div style="margin-left:25px;margin-top:15px;"><strong>{{second.length}} :- </strong></div>
                 <div *ngFor="let third of second">
                     <div style="margin-left:35px;margin-top:15px;"><strong>Product Name:- </strong>{{third['name']}}<br><strong>Quantity:- </strong>{{third['count']}}</div>

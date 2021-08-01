@@ -30,12 +30,12 @@ export class BodyComponentComponent implements OnInit {
       this.customerloginOrNot=res;
       // console.log(res);
     });
-    this._dataService.customerData.subscribe((res)=>{
-      this.customerData=res;
-    });
-    this._dataService.adminData.subscribe((res)=>{
-      this.adminData=res;
-    });
+    // this._dataService.customerData.subscribe((res)=>{
+    //   this.customerData=res;
+    // // });
+    // this._dataService.adminData.subscribe((res)=>{
+    //   this.adminData=res;
+    // });
    
     this._dataService.CartDetails.subscribe((res)=>{
       this.CartDetails=res;
@@ -52,9 +52,9 @@ export class BodyComponentComponent implements OnInit {
     this._dataService.BuyingCartDetail.subscribe((res)=>{
       this.BuyingCartDetail=res;
     });
-    this._dataService.OrderDetails.subscribe((res)=>{
-      this.OrderDetails=res;
-    });
+    // this._dataService.OrderDetails.subscribe((res)=>{
+    //   this.OrderDetails=res;
+    // });
     this._dataService.customerdataToAdmin.subscribe((res)=>{
       this.customerdataToAdmin=res;
     });

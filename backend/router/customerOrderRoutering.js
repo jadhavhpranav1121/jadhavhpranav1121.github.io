@@ -21,12 +21,16 @@ router.post("/orders", async(req, res) => {
 })
 router.get("/orders", async(req, res) => {
     const newdata = await admin.find();
-    // console.log(newdata);
     res.send(newdata);
 })
 router.patch("/orders/:name", async(req, res) => {
     const email = req.params.name;
     const newdata = await admin.updateOne({ email }, { $push: { "orders": req.body } });
+    res.send(newdata);
+})
+router.put("/orders/:id", async(req, res) => {
+    const id = req.params.id;
+    const newdata = await admin.updateOne({ "orders.0.id": id }, { $set: { 'status': req.body } });
     res.send(newdata);
 })
 router.delete("/orders/:id", async(req, res) => {

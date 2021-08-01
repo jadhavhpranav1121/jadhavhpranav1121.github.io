@@ -1,6 +1,6 @@
 <div>
     <h1 style="font-size: 30px;">Welcome Admin</h1>
-    <button class="btn btn-outline-primary mb-2 mr-2" (click)="openVerticallyCentered(content)">Add More Pizza</button>
+    <button class="btn btn-outline-primary mb-2 mr-2" (click)="openVerticallyCentered(addMoreItems)">Add More Pizza</button>
 </div>
 <div class="dataShowing">
     <div class="cardData">
@@ -12,11 +12,13 @@
             </div>
             <div class="bottomInfo">
                 <div class="price"><strong>&#8377;{{item['price']}}</strong></div>
+                <button class="btn btn-outline-primary mb-2 mr-2" (click)="openVerticallyCenteredUpdate(updateItems,item)">Update Items</button>
+                <button class="btn btn-outline-primary" (click)="deleteItems(item)">Delete Items</button>
             </div>
         </div>
     </div>
 </div>
-<ng-template #content let-modal>
+<ng-template #addMoreItems let-modal>
     <div class="modal-header">
         <h4 class="modal-title">Add Items</h4>
         <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
@@ -61,12 +63,62 @@
                     </div>
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary" (click)="modal.close('Close click')">Save</button>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" (click)="f.valid==true?modal.close('Close click'):null">Save</button>
+                <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+            </div>
         </form>
     </div>
-    <div class="modal-footer">
-
-        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+</ng-template>
+<ng-template #updateItems let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">Update Items</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
     </div>
-
+    <div class="modal-body">
+        <form #f="ngForm" (ngSubmit)="data(f)" ngNativeValidate>
+            <div class="form-add">
+                <div class="form-wrapper-outer">
+                    <div class="field-wrapper">
+                        <input type="text" name="name" class="form-control" ngModel autocomplete="off" placeholder="&nbsp;" value="{{valueOfName}}" #name="ngModel" required>
+                        <div class="field-placeholder"><span>Enter Pizza Name</span></div>
+                    </div>
+                    <div class="error">
+                        <div *ngIf="name.invalid && (name.dirty || name.touched)">Please Enter Pizza Name</div>
+                        <div *ngIf="!(name.invalid && (name.dirty || name.touched))" style="margin-bottom: 0px;"></div>
+                    </div>
+                    <div class="field-wrapper">
+                        <input type="file" id="images" name="images" (change)="readUrl($event)" #images="ngModel" ngModel accept="image/*">
+                        <div class="field-placeholder"><span>Enter images link</span></div>
+                    </div>
+                    <div class="error">
+                        <div *ngIf="images.invalid && (images.dirty || images.touched)">Please Enter Image Link</div>
+                        <div *ngIf="!(images.invalid && (images.dirty || images.touched))" style="margin-bottom: 0px;"></div>
+                    </div>
+                    <div class="field-wrapper">
+                        <input type="text" name="Pass" class="form-control" ngModel autocomplete="off" placeholder="&nbsp;" #Pass="ngModel" required>
+                        <div class="field-placeholder"><span>Enter Details Name</span></div>
+                    </div>
+                    <div class="error">
+                        <div *ngIf="Pass.invalid && (Pass.dirty || Pass.touched)">Please Enter Details</div>
+                        <div *ngIf="!(Pass.invalid && (Pass.dirty || Pass.touched))" style="margin-bottom: 0px;"></div>
+                    </div>
+                    <div class="field-wrapper">
+                        <input type="number" name="price" class="form-control" ngModel autocomplete="off" placeholder="&nbsp;" value="{{valueOfPrice}}" #price="ngModel" required>
+                        <div class="field-placeholder"><span>Enter price Name</span></div>
+                    </div>
+                    <div class="error">
+                        <div *ngIf="price.invalid && (price.dirty || price.touched)">Please Enter prize</div>
+                        <div *ngIf="!(price.invalid && (price.dirty || price.touched))" style="margin-bottom: 0px;"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" (click)="f.valid==true?modal.close('Close click'):null">Update</button>
+                <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+            </div>
+        </form>
+    </div>
 </ng-template>

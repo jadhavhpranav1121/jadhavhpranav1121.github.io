@@ -3,7 +3,6 @@ import { Data, Router } from '@angular/router';
 import { DataServiceService } from './dataService/data-service.service';
 import { NgbCarousel, NgbModal, NgbSlideEvent, NgbSlideEventSource } from '@ng-bootstrap/ng-bootstrap';
 import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
-import { model } from 'mongoose';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +13,6 @@ export class AppComponent {
   title = 'Pranav Pizza Website';
   loginData: any={};
   validatingForm!: FormGroup;
-  // imagesPathArray=["pizza1.jpg","pizza2.jpg","pizza3.jpg","pizza4.jpg"];
   NameOfItems=["Margherita","Farmhouse","Peppy Paneer","Veg Extravaganza","Veggie Paradise","Cheese n Corn","Pepper Barbecue Chicken","Deluxe Veggie","Chicken Sausage"];
   CartImages=["https://images.dominos.co.in/new_margherita_2502.jpg","https://images.dominos.co.in/farmhouse.png","https://images.dominos.co.in/new_peppy_paneer.jpg","https://images.dominos.co.in/new_veg_extravaganza.jpg","https://images.dominos.co.in/new_veggie_paradise.jpg","https://images.dominos.co.in/new_cheese_n_corn.jpg","https://images.dominos.co.in/new_pepper_barbeque_chicken.jpg","https://images.dominos.co.in/new_deluxe_veggie.jpg","https://images.dominos.co.in/new_chicken_sausage.jpg"];
   DetailsOfP=["Classic delight with 100% real mozzarella cheese","Delightful combination of onion, capsicum, tomato & grilled mushroom","Flavorful trio of juicy paneer, crisp capsicum with spicy red paprika","Black olives, capsicum, onion, grilled mushroom, corn, tomato, jalapeno & extra cheese","The awesome foursome! Golden corn, black olives, capsicum, red paprika","A delectable combination of sweet & juicy golden corn","Pepper barbecue chicken for that extra zing","Veg delight - onion, capsicum, grilled mushroom, corn & paneer","American classic! Spicy, herbed chicken sausage on pizza"];
@@ -41,6 +39,20 @@ export class AppComponent {
   customerduplicateOrNot: any=false;
   adminduplicateOrNot:any=false;
   data: any;
+  isCustomer=true;
+  isAdmin=false;
+  isCustomerSigup=true;
+  isAdminSigup=false;
+  ispopUpShow:any;
+  images = [62, 83, 466, 965, 982, 1043, 738].map((n) => `https://picsum.photos/id/${n}/900/500`);
+  paused = false;
+  unpauseOnArrow = false;
+  pauseOnIndicator = false;
+  pauseOnHover = true;
+  pauseOnFocus = true;
+
+@ViewChild('carousel', { static: true })
+carousel!: NgbCarousel;
   constructor(private router:Router,private _dataService:DataServiceService,private modalService: NgbModal){
     this._dataService.adminloginOrNot.subscribe((res)=>{
       this.adminloginOrNot=res;
@@ -49,19 +61,9 @@ export class AppComponent {
       this.customerloginOrNot=res;
       console.log(res);
     });
-    this._dataService.customerData.subscribe((res)=>{
-      this.customerData=res;
-    });
     this._dataService.customerloginOrNot.subscribe((res)=>{
       this.customerloginOrNot=res;
-    })
-    this._dataService.customerData.subscribe((res)=>{
-        this.customerData=res;
-    });
-    this._dataService.adminData.subscribe((res)=>{
-      this.adminData=res;
-    });
-   
+    })   
     this._dataService.CartDetails.subscribe((res)=>{
       this.CartDetails=res;
     });
@@ -77,9 +79,6 @@ export class AppComponent {
     this._dataService.BuyingCartDetail.subscribe((res)=>{
       this.BuyingCartDetail=res;
     });
-    this._dataService.OrderDetails.subscribe((res)=>{
-      this.OrderDetails=res;
-    });
     this._dataService.customerdataToAdmin.subscribe((res)=>{
       this.customerdataToAdmin=res;
     });
@@ -92,51 +91,29 @@ export class AppComponent {
   this._dataService.customerloginOrNot.subscribe((res)=>{
     this.customerloginOrNot=res;
   })
-  this._dataService.customerData.subscribe((res)=>{
-      this.customerData=res;
-  })
   } 
   getDataOfCustomerInLogin(){
     this._dataService.getDataOfCustomer().subscribe((res)=>{
         this.customerDatabaseData=res;
     });
-    this._dataService.signDataCustomer.subscribe((res:any)=>{
-      this.dataarray=res;
-   });
    this._dataService.getDataOfAdmin().subscribe((res)=>{
     this.data=res;
     console.log(this.data);
 });
 }
-ispopUpShow:any;
+
   ngOnInit(): void {
     this.getDataOfCustomerInLogin();
     
   }
 
   logout(){
-    for(let i=0;i<this.customerdataToAdmin.length;i++){
-      if(this.customerdataToAdmin[i]['Customer Name']==this.customerData['name']){
-        for(let j=0;j<this.OrderDetails.length;j++){
-        this.customerdataToAdmin[i]['Data'].push(this.OrderDetails[j]);
-        }
-        this.DuplicateOrdertails=true;
-      }
-    }
-    if(this.DuplicateOrdertails==false){
-    this.customerdataToAdmin.push({"Customer Name":this.customerData["name"],"Data":this.OrderDetails});
-    }
-    this.DuplicateOrdertails=false;
-    this._dataService.customerdataToAdmin.next(this.customerdataToAdmin);
-    this._dataService.customerData.next({});
     this._dataService.customerloginOrNot.next(false);
-    this._dataService.adminData.next({});
     this._dataService.adminloginOrNot.next(false);
     this.CartOpenOrNot=false;
-    this._dataService.OrderDetails.next([]);
     this._dataService.OrderOpenOrNot.next(false);
     this.OrderOpenOrNot=false;
-    this._dataService.CartOpenOrNot.next(this.CartOpenOrNot);
+    this._dataService.CartOpenOrNot.next(false);
     this.router.navigate(['']);
   }
   ChangeCartOpeningStatus(){
@@ -172,16 +149,8 @@ ispopUpShow:any;
     }
     this._dataService.BuyingCartDetail.next(this.BuyingCartDetail);
   }
-  images = [62, 83, 466, 965, 982, 1043, 738].map((n) => `https://picsum.photos/id/${n}/900/500`);
 
-  paused = false;
-  unpauseOnArrow = false;
-  pauseOnIndicator = false;
-  pauseOnHover = true;
-  pauseOnFocus = true;
 
-  @ViewChild('carousel', { static: true })
-  carousel!: NgbCarousel;
 
   togglePaused() {
     if (this.paused) {
@@ -205,11 +174,6 @@ ispopUpShow:any;
     this.modalService.open(content, { centered: true,scrollable: true});
   }
     
-isCustomer=true;
-isAdmin=false;
-isCustomerSigup=true;
-isAdminSigup=false;
-
 
 changeStateAdmin(){
   this.isAdmin=true;
@@ -242,9 +206,15 @@ verifyCustomer(event:NgForm){
     console.log("asd"+this.customerDatabaseData);
     if(this.customerDatabaseData[i].email==event.value.mail && this.customerDatabaseData[i].Pass==event.value.password){
     this._dataService.customerloginOrNot.next(true);
+    this._dataService.customerData.next({
+      "name":event.value.mail,
+      "password":event.value.password
+    });
+    this.customerData={
+      "name":event.value.mail,
+      "password":event.value.password
+    }
     this.customerloginOrNot=true;
-    this._dataService.customerData.next({"name":event.value.mail,"password":event.value.password});
-    console.log("customerloginOrNot"+this.customerloginOrNot);
     if(this.customerloginOrNot==true){
       this.modalService.dismissAll();
     }
@@ -262,9 +232,13 @@ verifyAdmin(event:NgForm){
   for(let i=0;i<this.data.length;i++){
     if(this.data[i].email==event.value.mail && this.data[i].Pass==event.value.password){
       this._dataService.adminloginOrNot.next(true);
-      this.adminloginOrNot=this._dataService.adminloginOrNot;
-      this._dataService.adminData.next({"name":event.value.mail,"password":event.value.password});
-      this.router.navigate(['']);
+      this.adminData={"name":event.value.mail,"password":event.value.password};
+      this._dataService.adminData.next(this.adminData);
+      this.adminloginOrNot=true;
+      if(this.adminloginOrNot==true){
+        this.modalService.dismissAll();
+      }
+      this.router.navigate(['admin-home']);
     }
   }
   if(this.adminloginOrNot==false){

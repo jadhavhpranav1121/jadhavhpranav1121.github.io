@@ -34,6 +34,9 @@ export class DataServiceService {
   updateOrders(req:orderScheme[],name:any){
     return this.http.patch(this.urlOfOrders+"/"+name,req);
   }
+  updateStatus(req:any,id:any){
+    return this.http.put(this.urlOfOrders+'/'+id,req);
+  }
   getDataOfCustomer(){
       return this.http.get(this.urlOfCustomer);
   }
@@ -46,21 +49,21 @@ export class DataServiceService {
   getDataOfOrders(){
     return this.http.get(this.urlOfOrders);
   }
-  signDataCustomer=new BehaviorSubject<Array<Object>>([]);
-  signDataAdmin=new BehaviorSubject<Array<Object>>([]);
+  deleteItemsInDataBase(name:any){
+    return this.http.delete(this.urlOfItems+"/"+name);
+  }
   customerdataToAdmin=new BehaviorSubject<Array<Object>>([]);
-  customerData=new BehaviorSubject<any>({});
-  adminData=new BehaviorSubject<any>({});
   customerloginOrNot=new BehaviorSubject<boolean>(false);
   BuyOrNot=new BehaviorSubject<boolean>(false);
   adminloginOrNot=new BehaviorSubject<boolean>(false);
   CartOpenOrNot=new BehaviorSubject<any>(false);
   BuyingCartDetail=new BehaviorSubject<Array<Object>>([]);
-  OrderDetails=new BehaviorSubject<Array<Array<Object>>>([]);
   OrderOpenOrNot=new BehaviorSubject<boolean>(false);
   CartDetails=new BehaviorSubject<Array<Object>>([]);
+  customerData=new BehaviorSubject<Object>({});
+  OrderDetails=new BehaviorSubject<Array<Array<Object>>>([]);
+  adminData=new BehaviorSubject<Object>({});
   ErrorPage=new BehaviorSubject<Boolean>(false);
-  
 }
 
 

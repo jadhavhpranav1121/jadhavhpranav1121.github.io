@@ -8,22 +8,9 @@ import { CustomerOrdersComponent } from './customer-orders/customer-orders.compo
 import { Error404Component } from './error404/error404.component';
 import { AdminGuardGuard } from './guardRouter/admin-guard.guard';
 import { LoginGuardGuard } from './guardRouter/login-guard.guard';
-import { LoginadminComponent } from './loginadmin/loginadmin.component';
-import { LogincustomerComponent } from './logincustomer/logincustomer.component';
-import { ModalLoginComponent } from './modal-login/modal-login.component';
-import { ModalSignupComponent } from './modal-signup/modal-signup.component';
-import { SignupadminComponent } from './signupadmin/signupadmin.component';
-import { SignupcustomerComponent } from './signupcustomer/signupcustomer.component';
 
 const routes: Routes = [
   {path:'',component:BodyComponentComponent,pathMatch:'full'},
-  // pathMatch:'full',redirectTo:'/login/customer',
-  {path: 'customer', component: LogincustomerComponent}, 
-  {path: 'admin', component:LoginadminComponent}, 
-  {path:'signup',component:ModalSignupComponent, children: [
-    {path: 'customer',component: SignupcustomerComponent}, 
-    {path: 'admin', component:SignupadminComponent }, 
-  ]},
   {path:'carts',component:CartComponent,pathMatch:'full',canActivate:[LoginGuardGuard]},
   {path:'orders',component:CustomerOrdersComponent,pathMatch:'full',canActivate:[LoginGuardGuard]},
   {path:'Adminorders',component:AdminSideOrdersComponent,pathMatch:'full',canActivate:[AdminGuardGuard]},
