@@ -28,7 +28,7 @@
                         </div>
                     </div>
 
-                    <div class="close"><i class="fas fa-times" (click)="deleteItems(i)"></i></div>
+                    <div class="close" (click)="deleteCartItems(i)"><i class="fas fa-times"></i></div>
                 </div>
                 <button class="buy" (click)="addToCustomerOrders()">Buy Now</button>
                 <div class="rightDiv">Total Price:- &#8377;{{BuyingCartDetail['total']}}</div>
@@ -37,3 +37,6 @@
         </div>
     </div>
 </div>
+<ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">
+    <p style="color: white">Please Wait. </p>
+</ngx-spinner>

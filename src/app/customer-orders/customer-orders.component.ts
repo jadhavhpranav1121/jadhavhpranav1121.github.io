@@ -72,8 +72,9 @@ export class CustomerOrdersComponent implements OnInit {
   }
   calcTotalPrice(item: any) {
     let totalprice = 0;
+    // console.log(item);
     for (let i = 0; i < item.length; i++) {
-      totalprice=item[i]['count']*item[i]['price'];
+      totalprice+=item[i]['count']*item[i]['price'];
     }
     return totalprice;
   }

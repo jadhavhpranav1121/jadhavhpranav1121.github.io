@@ -26,7 +26,7 @@
 <ng-template #login let-modal>
     <div class="modal-header">
         <h4 class="modal-title">Login</h4>
-        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <button type="button" class="close" aria-label="Close" (click)="closeModal()">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
@@ -55,7 +55,7 @@
 
                     <div class="field-wrapper">
                         <!-- customerloginOrNot==true?:loginAlert() -->
-                        <button type="submit" style="color:white;" (click)="customerloginOrNot==true?modal.close('Close click'):loginAlert()" [disabled]="f.invalid">Log in</button>
+                        <button type="submit" style="color:white;" (click)="customerloginOrNot==true?closeModal():loginAlert()" [disabled]="f.invalid">Log in</button>
                     </div>
                 </form>
                 <form #f="ngForm" (ngSubmit)="verifyAdmin(f)" style="width: 80%;height: 80%;" *ngIf="isAdmin">
@@ -75,7 +75,7 @@
                     </div>
 
                     <div class="field-wrapper">
-                        <button type="submit" style="color:white;" (click)="adminloginOrNot==true?modal.close('Close click'):loginAlert()" [disabled]="f.invalid">Log in</button>
+                        <button type="submit" style="color:white;" (click)="adminloginOrNot==true?closeModal():loginAlert()" [disabled]="f.invalid">Log in</button>
                     </div>
                 </form>
             </div>
@@ -89,7 +89,7 @@
 
     <div class="modal-header">
         <h4 class="modal-title">Sign Up</h4>
-        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <button type="button" class="close" aria-label="Close" (click)="closeModal()">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
@@ -154,7 +154,8 @@
                     <button type="submit" [disabled]="f.invalid" style="width: 90%;height:40px;border: none;background-color: #9d0000a0;border-radius: 10px;color:white;">Sign Up</button>
                 </div>
             </form>
-            <form #f="ngForm" (ngSubmit)="dataAdmin(f)" *ngIf="isAdminSigup" ngNativeValidate>
+            <h4 *ngIf="isAdminSigup && lengthVariable>=1">Already Admin are Signup</h4>
+            <form #f="ngForm" (ngSubmit)="dataAdmin(f)" *ngIf="isAdminSigup && lengthVariable==0" ngNativeValidate>
                 <div class="field-wrapper">
                     <input type="text" name="first_name" class="form-control" ngModel autocomplete="off" placeholder="&nbsp;" #firstname="ngModel" required>
                     <div class="field-placeholder"><span>Enter your First Name</span></div>
@@ -188,6 +189,7 @@
                     <div *ngIf="Last_name.invalid && (Last_name.dirty || Last_name.touched)">Please Enter Last name</div>
                     <div *ngIf="!(Last_name.invalid && (Last_name.dirty || Last_name.touched))" style="margin-bottom: 0px;"></div>
                 </div>
+                <!-- closeModal() -->
                 <div class="field-wrapper">
                     <input type="password" autocomplete="off" ngModel placeholder="&nbsp;" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$" #password="ngModel" name="password" required>
                     <div class="field-placeholder"><span>Enter your password</span></div>

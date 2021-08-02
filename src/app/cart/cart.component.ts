@@ -22,7 +22,7 @@ export class CartComponent implements OnInit {
   newItems: any;
   customterData: any;
   OrderDetailsFromDatabase: any;
-
+  tempDataForCart:orderScheme[]=[];
   constructor(private _dataservice:DataServiceService,private router:Router) {
     this._dataservice.CartOpenOrNot.subscribe((res)=>{
       this.CartOpenOrNot=res;
@@ -49,7 +49,9 @@ export class CartComponent implements OnInit {
       this.BuyOrNot=res;
       
     })
-
+    this._dataservice.CartDetails.subscribe((res)=>{
+      this.CartDetails=res;
+    })
    }
    getDataOfPizza(){
     this._dataservice.getDataOfItems().subscribe((res)=>{
@@ -82,8 +84,9 @@ export class CartComponent implements OnInit {
     this.OrderOpenOrNot=false;
     this.router.navigate(['']);
   }
-  deleteItems(i:any){
+  deleteCartItems(i:any){
     // this.BuyingCartDetail.splice(i,1);
+    // console.log("sdf");
     this.NewData=this.BuyingCartDetail[i]['name'];
     for(let j=0;j<this.CartDetails.length;j++){
         if(this.CartDetails[j]['name']==this.NewData){
@@ -93,9 +96,13 @@ export class CartComponent implements OnInit {
     this.BuyingCartDetail.splice(i,1);
     this._dataservice.CartDetails.next(this.CartDetails);
     this._dataservice.BuyingCartDetail.next(this.BuyingCartDetail);
+    //   this.router.navigate(['carts'])
+    // .then(() => {
+    //   window.location.reload();
+    // });
   }
  
-tempDataForCart:orderScheme[]=[];
+
   addToCustomerOrders(){
     this.NewData=this.BuyingCartDetail;
     console.log(this.OrderDetailsFromDatabase);

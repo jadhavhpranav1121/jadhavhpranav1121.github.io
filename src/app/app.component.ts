@@ -1,8 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
 import { Data, Router } from '@angular/router';
 import { DataServiceService } from './dataService/data-service.service';
-import { NgbCarousel, NgbModal, NgbSlideEvent, NgbSlideEventSource } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbCarousel, NgbModal, NgbSlideEvent, NgbSlideEventSource } from '@ng-bootstrap/ng-bootstrap';
 import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-root',
@@ -50,11 +51,13 @@ export class AppComponent {
   pauseOnIndicator = false;
   pauseOnHover = true;
   pauseOnFocus = true;
-
+  isModelUse=false;
+  lengthVariable=-1;
 @ViewChild('carousel', { static: true })
 carousel!: NgbCarousel;
-  SpinnerService: any;
-  constructor(private router:Router,private _dataService:DataServiceService,private modalService: NgbModal){
+  contentIsOpenOrNot: boolean=false;
+  DataOfAdmin: any;
+  constructor(private router:Router,private _dataService:DataServiceService,private modalService: NgbModal,private SpinnerService:NgxSpinnerService){
     this._dataService.adminloginOrNot.subscribe((res)=>{
       this.adminloginOrNot=res;
     });
@@ -83,9 +86,7 @@ carousel!: NgbCarousel;
     this._dataService.customerdataToAdmin.subscribe((res)=>{
       this.customerdataToAdmin=res;
     });
-    this._dataService.getDataOfItems().subscribe((res)=>{
-      this.CartDetails=res;
-  });
+    
   this._dataService.ErrorPage.subscribe((res:any)=>{
     this.ErrorPage=res;
   });
@@ -93,8 +94,12 @@ carousel!: NgbCarousel;
     this.customerloginOrNot=res;
   })
   } 
+  getDataOfItemsFromDatabase(){
+    this._dataService.getDataOfItems().subscribe((res)=>{
+      this.CartDetails=res;
+  });
+  }
   getDataOfCustomerInLogin(){
-   
     this._dataService.getDataOfCustomer().subscribe((res)=>{
         this.customerDatabaseData=res;
     });
@@ -105,17 +110,31 @@ carousel!: NgbCarousel;
 });
 // this.SpinnerService.hide(); 
 }
+getDataOfAdminFromDatabase(){
+  this._dataService.getDataOfAdmin().subscribe((res)=>{
+    this.DataOfAdmin=res;
+    this.lengthVariable=this.DataOfAdmin.length;
+    // console.log("Data Of Admin"+this.DataOfAdmin);
+});
+}
 
   ngOnInit(): void {
     this.getDataOfCustomerInLogin();
-    
+    // this.SpinnerService.show();
+    console.log("ngOnit implemented");
+    this.getDataOfItemsFromDatabase();
+    this.getDataOfAdminFromDatabase();
+    // this.SpinnerService.hide();
   }
 
   logout(){
     this._dataService.customerdataToAdmin.next([]);
     this._dataService.BuyOrNot.next(false);
     this._dataService.BuyingCartDetail.next([]);
-  // this._dataService.CartDetails.next([]);
+    for(let i=0;i<this.CartDetails.length;i++){
+       this.CartDetails[i]['count']=0;
+    }
+    this._dataService.CartDetails.next(this.CartDetails);
     this._dataService.customerData.next({});
     this._dataService.OrderDetails.next([]);
     this._dataService.adminData.next({});
@@ -126,6 +145,7 @@ carousel!: NgbCarousel;
     this._dataService.adminData.next({});
     this._dataService.customerData.next({});
     this.OrderOpenOrNot=false;
+    this.isModelUse=false;
     this.isAdmin=false;
     this.isCustomer=true;
     this.isAdminSigup=false;
@@ -166,9 +186,6 @@ carousel!: NgbCarousel;
     }
     this._dataService.BuyingCartDetail.next(this.BuyingCartDetail);
   }
-
-
-
   togglePaused() {
     if (this.paused) {
       this.carousel.cycle();
@@ -178,7 +195,7 @@ carousel!: NgbCarousel;
     this.paused = !this.paused;
   }
 
-  onSlide(slideEvent: NgbSlideEvent) {
+onSlide(slideEvent: NgbSlideEvent) {
     if (this.unpauseOnArrow && slideEvent.paused &&
       (slideEvent.source === NgbSlideEventSource.ARROW_LEFT || slideEvent.source === NgbSlideEventSource.ARROW_RIGHT)) {
       this.togglePaused();
@@ -187,11 +204,18 @@ carousel!: NgbCarousel;
       this.togglePaused();
     }
   }
-  openVerticallyCentered(content: any) {
-    this.modalService.open(content, { centered: true,scrollable: true});
+openVerticallyCentered(content: any) {
+    if(this.isModelUse==false){
+      this.modalService.open(content, { centered: true,scrollable: true,backdrop:'static',keyboard:false});
+      this.isModelUse=true;
+    }
   }
-    
 
+
+closeModal(){
+  this.isModelUse=false;
+  this.modalService.dismissAll();
+}
 changeStateAdmin(){
   this.isAdmin=true;
   this.isCustomer=false;
@@ -310,8 +334,6 @@ dataAdmin(event:NgForm){
 this.adminduplicateOrNot=false;
 
 }
-
-loginAlert(){
-}
+loginAlert(){}
  }
   
