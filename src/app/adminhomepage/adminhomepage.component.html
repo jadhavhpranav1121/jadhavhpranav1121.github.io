@@ -12,7 +12,7 @@
             </div>
             <div class="bottomInfo">
                 <div class="price"><strong>&#8377;{{item['price']}}</strong></div>
-                <button class="btn btn-outline-primary mb-2 mr-2" (click)="openVerticallyCenteredUpdate(updateItems,item)">Update Items</button>
+                <button class="btn btn-outline-primary mb-2 mr-2" (click)="openVerticallyCenteredUpdate(updateItems,i)">Update Items</button>
                 <button class="btn btn-outline-primary" (click)="deleteItems(item)">Delete Items</button>
             </div>
         </div>
@@ -78,11 +78,11 @@
       </button>
     </div>
     <div class="modal-body">
-        <form #f="ngForm" (ngSubmit)="data(f)" ngNativeValidate>
+        <form #f="ngForm" (ngSubmit)="updateItem(f)" ngNativeValidate>
             <div class="form-add">
                 <div class="form-wrapper-outer">
                     <div class="field-wrapper">
-                        <input type="text" name="name" class="form-control" ngModel autocomplete="off" placeholder="&nbsp;" value="{{valueOfName}}" #name="ngModel" required>
+                        <input type="text" name="name" class="form-control" ngModel autocomplete="off" placeholder="&nbsp;" #name="ngModel" required>
                         <div class="field-placeholder"><span>Enter Pizza Name</span></div>
                     </div>
                     <div class="error">

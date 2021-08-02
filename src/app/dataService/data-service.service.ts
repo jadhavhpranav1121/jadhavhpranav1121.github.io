@@ -1,5 +1,6 @@
 import { HttpClient,HttpClientModule} from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { customerScheme } from '../app-models/customerScheme.model';
 import { dataScheme } from '../app-models/dataScheme.model';
@@ -51,6 +52,12 @@ export class DataServiceService {
   }
   deleteItemsInDataBase(name:any){
     return this.http.delete(this.urlOfItems+"/"+name);
+  }
+  findItemInDataBase(id:any){
+    return this.http.get(this.urlOfItems,id);
+  }
+  updateItemInDataBase(req:any,id:any){
+    return this.http.patch(this.urlOfItems+"/"+id,req);
   }
   customerdataToAdmin=new BehaviorSubject<Array<Object>>([]);
   customerloginOrNot=new BehaviorSubject<boolean>(false);

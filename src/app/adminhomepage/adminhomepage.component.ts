@@ -12,6 +12,9 @@ export class AdminhomepageComponent implements OnInit {
   adminloginOrNot: boolean=false;
   CartDetails:any;
   url:any;
+  findThisItem: any;
+  updateData: any;
+  updateItems:Object={};
   constructor(private _dataService:DataServiceService,private modalService: NgbModal) {
     this._dataService.adminloginOrNot.subscribe((res)=>{
       this.adminloginOrNot=res;
@@ -38,8 +41,13 @@ export class AdminhomepageComponent implements OnInit {
   openVerticallyCentered(content: any) {
     this.modalService.open(content, { centered: true });
   }
-  openVerticallyCenteredUpdate(content:any,items:any){
+  openVerticallyCenteredUpdate(content:any,i:any){
     this.modalService.open(content, { centered: true });
+    this.findThisItem=this.CartDetails[i]["_id"];
+    console.log(this.findThisItem);
+    this._dataService.findItemInDataBase(this.findThisItem).subscribe((res:any)=>{
+      this.updateData=res;
+    })
   }
   
   deleteItems(item:any) {
@@ -66,5 +74,16 @@ export class AdminhomepageComponent implements OnInit {
       reader.readAsDataURL(event.target.files[0]);
     }
 }
+  updateItem(f:NgForm){
+    this.updateItems["name"]=f.value.name;
+    this.updateItems["images"]=this.url;
+    this.updateItems["Pass"]=f.value.Pass;
+    this.updateItems["count"]=0;
+    this.updateItems["price"]=f.value.price;
+    console.log(this.updateItems);
+      this._dataService.updateItemInDataBase(this.updateItems,this.findThisItem).subscribe((res:any)=>{
+        console.log(res);
+      })
+  }
 }
 

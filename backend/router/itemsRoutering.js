@@ -24,9 +24,16 @@ router.get("/items", async(req, res) => {
     // console.log(newdata);
     res.send(newdata);
 })
-router.patch("/items/:email", async(req, res) => {
-    const email = req.params.email;
-    const newdata = await items.updateOne({ email }, req.body);
+router.get("/items/:id", async(req, res) => {
+    const id = req.params.id;
+    console.log(id);
+    const newdata = await items.findById({ "_id": id });
+    console.log(newdata);
+    res.send(newdata);
+})
+router.patch("/items/:id", async(req, res) => {
+    const id = req.params.id;
+    const newdata = await items.updateOne({ "_id": id }, { $set: { "name": req.body.name, "images": req.body.images, "Pass": req.body.Pass, "price": req.body.price, "count": req.body.count } });
     res.send(newdata);
 })
 router.delete("/items/:id", async(req, res) => {
