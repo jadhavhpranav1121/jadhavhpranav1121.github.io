@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataServiceService } from '../dataService/data-service.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { isConstructorDeclaration } from 'typescript';
 @Component({
   selector: 'app-customer-orders',
   templateUrl: './customer-orders.component.html',
@@ -45,24 +46,30 @@ export class CustomerOrdersComponent implements OnInit {
   }
   getDataOfOrderFromDatabase(){
     this._dataservice.getDataOfOrders().subscribe((res) => {
-     this.customerOrders = res;
-     
+     this.customerOrders = res;  
      console.log(this.customerOrders);
      for (let i = 0; i < this.customerOrders.length; i++) {
        if (this.customerOrders[i].email == this.customerData.name) {
          this.OrderDetails = this.customerOrders[i].orders;
+         this.customerData['_id']=this.customerOrders[i]['_id'];  
        }
      }
-     
    });
   }
+  
   ngOnInit(): void {
     this.SpinnerService.show(); 
     console.log("sdf");
     this.getDataOfOrderFromDatabase();
     this.SpinnerService.hide(); 
   }
-  
+  cancelOrder(j:any){
+    let value=JSON.stringify(this.OrderDetails[j]);
+    console.log("customer email"+this.customerData['name']);
+    this._dataservice.DeleteOrders(value,this.customerData['name']).subscribe((res:any)=>{
+      console.log(res);
+    });
+  }
   goToHome() {
     this._dataservice.OrderOpenOrNot.next(false);
     this.OrderOpenOrNot = false;

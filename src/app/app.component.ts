@@ -63,7 +63,7 @@ carousel!: NgbCarousel;
     });
     this._dataService.customerloginOrNot.subscribe((res)=>{
       this.customerloginOrNot=res;
-      console.log(res);
+      // console.log(res);
     });
     this._dataService.customerloginOrNot.subscribe((res)=>{
       this.customerloginOrNot=res;
@@ -106,7 +106,7 @@ carousel!: NgbCarousel;
     
    this._dataService.getDataOfAdmin().subscribe((res)=>{
     this.data=res;
-    console.log(this.data);
+    // console.log(this.data);
 });
 // this.SpinnerService.hide(); 
 }
@@ -121,10 +121,10 @@ getDataOfAdminFromDatabase(){
   ngOnInit(): void {
     this.getDataOfCustomerInLogin();
     // this.SpinnerService.show();
-    console.log("ngOnit implemented");
+    // console.log("ngOnit implemented");
     this.getDataOfItemsFromDatabase();
     this.getDataOfAdminFromDatabase();
-    // this.SpinnerService.hide();
+    
   }
 
   logout(){
@@ -240,18 +240,22 @@ closePop() {
   this.ispopUpShow = false;
 }
 verifyCustomer(event:NgForm){
+  // console.log("id:"+this.customerDatabaseData[0]['_id']);
   if(this.customerDatabaseData==null){
     alert("Username does not Exist");
   }
   for(let i=0;i<this.customerDatabaseData.length;i++){
-    console.log("asd"+this.customerDatabaseData);
+    // console.log("asd"+this.customerDatabaseData);
     if(this.customerDatabaseData[i].email==event.value.mail && this.customerDatabaseData[i].Pass==event.value.password){
     this._dataService.customerloginOrNot.next(true);
+    console.log(this.customerDatabaseData[i]['_id']);
     this._dataService.customerData.next({
+      "id":this.customerDatabaseData[i]['_id'],
       "name":event.value.mail,
       "password":event.value.password
     });
     this.customerData={
+      "id":this.customerDatabaseData[i]['_id'],
       "name":event.value.mail,
       "password":event.value.password
     }
@@ -305,7 +309,7 @@ dataCustomer(event:NgForm){
       console.log(err);
     })
     this._dataService.AddDataToOrder({"email":event.value.mail,"orders":[]}).subscribe((res)=>{
-      console.log(res);
+      // console.log(res);
     });
     this.modalService.dismissAll();
       alert("Account is Created!");

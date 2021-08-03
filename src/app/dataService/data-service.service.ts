@@ -35,6 +35,9 @@ export class DataServiceService {
   updateOrders(req:orderScheme[],name:any){
     return this.http.patch(this.urlOfOrders+"/"+name,req);
   }
+  DeleteOrders(req:any,email:any){
+    return this.http.patch(this.urlOfOrders+"/"+email+"/orders",req);
+  }
   updateStatus(req:any,id:any){
     return this.http.put(this.urlOfOrders+'/'+id,req);
   }

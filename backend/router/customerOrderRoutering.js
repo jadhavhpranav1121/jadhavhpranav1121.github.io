@@ -28,6 +28,13 @@ router.patch("/orders/:name", async(req, res) => {
     const newdata = await admin.updateOne({ email }, { $push: { "orders": req.body } });
     res.send(newdata);
 })
+router.patch("/orders/:email/orders", async(req, res) => {
+    const email = req.params.email;
+    // const order_number = req.params.order_number;
+    console.log(req.body);
+    const newdata = await admin.updateOne({ "email": email }, { $pull: { "orders": req.body } });
+    res.send(newdata);
+})
 router.put("/orders/:customer_id/orders/:product_id", async(req, res) => {
     const customer_id = req.params.customer_id;
     const product_id = req.params.product_id;
