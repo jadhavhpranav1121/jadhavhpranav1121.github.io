@@ -263,6 +263,7 @@ verifyCustomer(event:NgForm){
     if(this.customerloginOrNot==true){
       this.modalService.dismissAll();
     }
+    this.getDataOfItemsFromDatabase();
     this.router.navigate(['']);
   }
 }

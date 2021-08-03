@@ -16,6 +16,9 @@
                 <button class="btn btn-outline-primary" (click)="deleteItems(item)">Delete Items</button>
             </div>
         </div>
+        <ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">
+            <p style="color: white">Please Wait. </p>
+        </ngx-spinner>
     </div>
 </div>
 <ng-template #addMoreItems let-modal>
@@ -106,7 +109,7 @@
                         <div *ngIf="!(Pass.invalid && (Pass.dirty || Pass.touched))" style="margin-bottom: 0px;"></div>
                     </div>
                     <div class="field-wrapper">
-                        <input type="number" name="price" class="form-control" ngModel autocomplete="off" placeholder="&nbsp;" value="{{valueOfPrice}}" #price="ngModel" required>
+                        <input type="number" name="price" class="form-control" ngModel autocomplete="off" placeholder="&nbsp;" #price="ngModel" required>
                         <div class="field-placeholder"><span>Enter price Name</span></div>
                     </div>
                     <div class="error">

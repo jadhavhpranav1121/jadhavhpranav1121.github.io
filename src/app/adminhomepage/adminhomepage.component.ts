@@ -2,6 +2,7 @@ import { Component, OnInit,ViewEncapsulation } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { DataServiceService } from '../dataService/data-service.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-adminhomepage',
   templateUrl: './adminhomepage.component.html',
@@ -15,29 +16,25 @@ export class AdminhomepageComponent implements OnInit {
   findThisItem: any;
   updateData: any;
   updateItems:Object={};
-  constructor(private _dataService:DataServiceService,private modalService: NgbModal) {
+  constructor(private _dataService:DataServiceService,private modalService: NgbModal,private SpinnerService:NgxSpinnerService) {
     this._dataService.adminloginOrNot.subscribe((res)=>{
       this.adminloginOrNot=res;
     })
    
    }
-   ngOnChange(){
+   getItemsFromDatabase(){
     this._dataService.getDataOfItems().subscribe((res)=>{
       this.CartDetails=res;
     })
    }
   ngOnInit(): void {
-    this._dataService.getDataOfItems().subscribe((res)=>{
-      this.CartDetails=res;
-    })
-    
+    this.SpinnerService.show();
+    this.getItemsFromDatabase();
+    this.SpinnerService.hide();
   }
   // add(event:NgForm){
   //   
   // }
-  valueOfName="";
-  valueOfPass="";
-  valueOfPrice="";
   openVerticallyCentered(content: any) {
     this.modalService.open(content, { centered: true });
   }
@@ -53,7 +50,7 @@ export class AdminhomepageComponent implements OnInit {
   deleteItems(item:any) {
     if(confirm("Are you sure to delete" +item['_id'])) {
       this._dataService.deleteItemsInDataBase(item['_id']).subscribe((res)=>{
-        console.log(res);
+        this.getItemsFromDatabase();
       });
     }
   }
@@ -82,8 +79,9 @@ export class AdminhomepageComponent implements OnInit {
     this.updateItems["price"]=f.value.price;
     console.log(this.updateItems);
       this._dataService.updateItemInDataBase(this.updateItems,this.findThisItem).subscribe((res:any)=>{
-        console.log(res);
-      })
+        this.getItemsFromDatabase();
+      });
+      
   }
 }
 
