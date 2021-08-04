@@ -6,8 +6,6 @@ import { BodyComponentComponent } from './body-component/body-component.componen
 import { CartComponent } from './cart/cart.component';
 import { CustomerOrdersComponent } from './customer-orders/customer-orders.component';
 import { Error404Component } from './error404/error404.component';
-import { AdminGuardGuard } from './guardRouter/admin-guard.guard';
-import { LoginGuardGuard } from './guardRouter/login-guard.guard';
 
 const routes: Routes = [
   {path:'',component:BodyComponentComponent,pathMatch:'full'},

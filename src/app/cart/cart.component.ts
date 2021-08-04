@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { customerScheme } from '../app-models/customerScheme.model';
 import { orderScheme } from '../app-models/orderDetails.model';
 import { DataServiceService } from '../dataService/data-service.service';
-
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
@@ -23,7 +23,7 @@ export class CartComponent implements OnInit {
   customterData: any;
   OrderDetailsFromDatabase: any;
   tempDataForCart:orderScheme[]=[];
-  constructor(private _dataservice:DataServiceService,private router:Router) {
+  constructor(private _dataservice:DataServiceService,private router:Router,private SpinnerService:NgxSpinnerService) {
     this._dataservice.CartOpenOrNot.subscribe((res)=>{
       this.CartOpenOrNot=res;
     });
@@ -82,24 +82,30 @@ export class CartComponent implements OnInit {
     this.CartOpenOrNot=false;
     this._dataservice.OrderOpenOrNot.next(false);
     this.OrderOpenOrNot=false;
+    this._dataservice.CartDetails.subscribe((res:any)=>{
+      this.CartDetails=res;
+    })
     this.router.navigate(['']);
   }
   deleteCartItems(i:any){
-    // this.BuyingCartDetail.splice(i,1);
-    // console.log("sdf");
     this.NewData=this.BuyingCartDetail[i]['name'];
     for(let j=0;j<this.CartDetails.length;j++){
         if(this.CartDetails[j]['name']==this.NewData){
+          this.BuyingCartDetail[i]['total']-=this.CartDetails[j]['count']*this.CartDetails[j]['price'];
          this.CartDetails[j]['count']=0;
       }
     }
     this.BuyingCartDetail.splice(i,1);
     this._dataservice.CartDetails.next(this.CartDetails);
     this._dataservice.BuyingCartDetail.next(this.BuyingCartDetail);
-    //   this.router.navigate(['carts'])
-    // .then(() => {
-    //   window.location.reload();
-    // });
+    this.SpinnerService.show();
+    this._dataservice.CartDetails.subscribe((res:any)=>{
+      this.CartDetails=res;
+    });
+    this.SpinnerService.hide();
+    this._dataservice.BuyingCartDetail.subscribe((res:any)=>{
+      this.BuyingCartDetail=res;
+    })
   }
  
 

@@ -93,7 +93,7 @@ carousel!: NgbCarousel;
   this._dataService.customerloginOrNot.subscribe((res)=>{
     this.customerloginOrNot=res;
   })
-  } 
+} 
   getDataOfItemsFromDatabase(){
     this._dataService.getDataOfItems().subscribe((res)=>{
       this.CartDetails=res;
@@ -109,22 +109,22 @@ carousel!: NgbCarousel;
     // console.log(this.data);
 });
 // this.SpinnerService.hide(); 
-}
-getDataOfAdminFromDatabase(){
+  }
+  getDataOfAdminFromDatabase(){
   this._dataService.getDataOfAdmin().subscribe((res)=>{
     this.DataOfAdmin=res;
     this.lengthVariable=this.DataOfAdmin.length;
     // console.log("Data Of Admin"+this.DataOfAdmin);
 });
-}
+  }
 
   ngOnInit(): void {
     this.getDataOfCustomerInLogin();
-    // this.SpinnerService.show();
-    // console.log("ngOnit implemented");
     this.getDataOfItemsFromDatabase();
     this.getDataOfAdminFromDatabase();
-    
+    this._dataService.CartDetails.subscribe((res:any)=>{
+      this.CartDetails=res;
+    })
   }
 
   logout(){
@@ -195,7 +195,7 @@ getDataOfAdminFromDatabase(){
     this.paused = !this.paused;
   }
 
-onSlide(slideEvent: NgbSlideEvent) {
+  onSlide(slideEvent: NgbSlideEvent) {
     if (this.unpauseOnArrow && slideEvent.paused &&
       (slideEvent.source === NgbSlideEventSource.ARROW_LEFT || slideEvent.source === NgbSlideEventSource.ARROW_RIGHT)) {
       this.togglePaused();
@@ -204,42 +204,40 @@ onSlide(slideEvent: NgbSlideEvent) {
       this.togglePaused();
     }
   }
-openVerticallyCentered(content: any) {
+  openVerticallyCentered(content: any) {
     if(this.isModelUse==false){
       this.modalService.open(content, { centered: true,scrollable: true,backdrop:'static',keyboard:false});
       this.isModelUse=true;
     }
   }
-
-
-closeModal(){
+  closeModal(){
   this.isModelUse=false;
   this.modalService.dismissAll();
-}
-changeStateAdmin(){
+  }
+  changeStateAdmin(){
   this.isAdmin=true;
   this.isCustomer=false;
-}
-changeStateCustomer(){
+  }
+  changeStateCustomer(){
   this.isAdmin=false;
   this.isCustomer=true;
-}
-changeStateCustomerSigup(){
+  }
+  changeStateCustomerSigup(){
   this.isAdminSigup=false;
   this.isCustomerSigup=true;
-}
-changeStateAdminSigup(){
+  }
+  changeStateAdminSigup(){
   
   this.isCustomerSigup=false;
   this.isAdminSigup=true;
-}
-closetoggle(){
+  }
+  closetoggle(){
   this.router.navigate(['']);
-}
-closePop() {
+  }
+  closePop() {
   this.ispopUpShow = false;
-}
-verifyCustomer(event:NgForm){
+  }
+  verifyCustomer(event:NgForm){
   // console.log("id:"+this.customerDatabaseData[0]['_id']);
   if(this.customerDatabaseData==null){
     alert("Username does not Exist");
@@ -270,8 +268,8 @@ verifyCustomer(event:NgForm){
 if(this.customerloginOrNot==false){
   alert("Please Enter Correct Email and Password");
   }
-}
-verifyAdmin(event:NgForm){
+  }
+  verifyAdmin(event:NgForm){
   if(this.data==null){
     alert("Username does not Exit");
   }
@@ -290,8 +288,8 @@ verifyAdmin(event:NgForm){
   if(this.adminloginOrNot==false){
   alert("Please Enter Correct Email and Password");
   }
-}
-dataCustomer(event:NgForm){
+  }
+  dataCustomer(event:NgForm){
   const new1=event.value;
   // this.dataarray=this._dataService.signDataCustomer.value;
   for(let i=0;i<this.customerDatabaseData.length;i++){
@@ -317,8 +315,8 @@ dataCustomer(event:NgForm){
       this.router.navigate(['']);   
 }
 this.customerduplicateOrNot=false;
-}
-dataAdmin(event:NgForm){
+  }
+  dataAdmin(event:NgForm){
   for(let i=0;i<this.data.length;i++){
     if(event.value.mail==this.data[i]['email'] && event.value.password==this.data[i]['Pass']){
       alert("Please Don't enter existing data");
@@ -338,7 +336,7 @@ dataAdmin(event:NgForm){
 }
 this.adminduplicateOrNot=false;
 
+  } 
+  loginAlert(){}
 }
-loginAlert(){}
- }
   
