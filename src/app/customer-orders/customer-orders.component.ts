@@ -17,8 +17,6 @@ export class CustomerOrdersComponent implements OnInit {
   customerdataToAdmin: Object[] = [];
   customerData: any;
   customerOrders: any;
-  // SpinnerService: any;
-
   constructor(private _dataservice: DataServiceService, private router: Router,private SpinnerService:NgxSpinnerService) {
     this._dataservice.OrderOpenOrNot.subscribe((res) => {
       this.OrderOpenOrNot = res;
@@ -64,7 +62,7 @@ export class CustomerOrdersComponent implements OnInit {
     this.SpinnerService.hide(); 
   }
   cancelOrder(j:any){
-    if(confirm("Are you sure to delete - Order No."+j+1)){
+    if(confirm("Are you sure to delete - Order No."+(j+1))){
       const data=this.OrderDetails[j];
       this._dataservice.DeleteOrders(this.OrderDetails[j],this.customerData['name']).subscribe((res:any)=>{
         console.log("Orders Deleted");

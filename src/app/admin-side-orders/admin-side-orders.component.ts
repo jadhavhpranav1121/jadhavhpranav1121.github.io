@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { isConstructorDeclaration } from 'typescript';
 import { DataServiceService } from '../dataService/data-service.service';
 
 @Component({
@@ -23,16 +24,13 @@ export class AdminSideOrdersComponent implements OnInit {
       console.log(this.customerdataToAdmin.length);   
     })
   }
-  valueChange(value:any,third:any){
-    // console.log(third['_id']);
-    // this._dataService.updateStatus(value,"second._id/orders/third._id").subscribe((res)=>{
-    //   console.log(res);
-    // })
-  }
-  valueChange1(value:any,third:any,second:any){
+  
+  valueChange1(value:any,third:any,second:any,first:any){
     alert("Status Updated");
     third['status']=value;
-    second['total']-=(third['count'])*(third['price']);
+    // console.log(first['orders']);
+    this._dataService.updateOrdersStatus(first['orders'],first['_id']).subscribe((res:any)=>{});
+    // second['total']-=(third['count'])*(third['price']);
   }
   goToHome(){
     this._dataService.CartOpenOrNot.next(false);

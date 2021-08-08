@@ -65,7 +65,10 @@ export class DataServiceService {
   deleteCustomerInDataBase(id:any){
     return this.http.delete(this.urlOfCustomer+"/"+id);
   }
-  
+  updateOrdersStatus(req:any,id:any){
+    console.log("ues");
+    return this.http.patch(this.urlOfOrders+"/changingStatus/"+id,req);
+  }
   findItemInDataBase(id:any){
     return this.http.get(this.urlOfItems,id);
   }

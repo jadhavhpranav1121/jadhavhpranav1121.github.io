@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { customerScheme } from '../app-models/customerScheme.model';
 import { orderScheme } from '../app-models/orderDetails.model';
 import { DataServiceService } from '../dataService/data-service.service';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -19,11 +18,13 @@ export class CartComponent implements OnInit {
   CartDetails: any;
   BuyOrNot: any;
   NewData: any;
+  totalVariable:number;
   newItems: any;
   customterData: any;
   OrderDetailsFromDatabase: any;
   tempDataForCart:orderScheme[]=[];
   constructor(private _dataservice:DataServiceService,private router:Router,private SpinnerService:NgxSpinnerService) {
+    
     this._dataservice.CartOpenOrNot.subscribe((res)=>{
       this.CartOpenOrNot=res;
     });
@@ -53,12 +54,18 @@ export class CartComponent implements OnInit {
       this.CartDetails=res;
       console.log(this.CartDetails); 
     })
-   }
-   getDataOfPizza(){
+    this.totalVariable=0;
+    // console.log(this.totalVariable);
+    console.log(JSON.stringify(this.BuyingCartDetail));
+    for(let i=0;i<this.BuyingCartDetail.length;i++){
+      this.totalVariable+=(this.BuyingCartDetail[i]['count']*(this.BuyingCartDetail[i]['price']));
+    }
+  }
+  getDataOfPizza(){
     this._dataservice.getDataOfItems().subscribe((res)=>{
         this.newItems=res;
     });
-}
+  }
 
   ngOnInit(): void {
     this.getDataOfPizza();
@@ -67,7 +74,6 @@ export class CartComponent implements OnInit {
     for(let i=0;i<this.BuyingCartDetail.length;i++){
       this.BuyingCartDetail[i]['status']='Starting To delivery';
     }
-    // this.BuyingCartDetail['total']=0;
     for(let i=0;i<this.BuyingCartDetail.length;i++){
       this.BuyingCartDetail[i]['total']+=this.BuyingCartDetail[i]['count']*this.BuyingCartDetail[i]['price'];
     }
@@ -83,21 +89,17 @@ export class CartComponent implements OnInit {
     this.CartOpenOrNot=false;
     this._dataservice.OrderOpenOrNot.next(false);
     this.OrderOpenOrNot=false;
-    // console.log("before"+JSON.stringify(this.CartDetails));
-    // this._dataservice.CartDetails.next(this.CartDetails);
-    // this._dataservice.CartDetails.subscribe((res:any)=>{
-    //   this.CartDetails=res;
-    // })
     console.log(this._dataservice.CartDetails);
-    // console.log("after"+JSON.stringify(this.CartDetails));
     this.router.navigate(['menu']);
   }
   deleteCartItems(i:any){
     this.NewData=this.BuyingCartDetail[i]['name'];
     for(let j=0;j<this.CartDetails.length;j++){
         if(this.CartDetails[j]['name']==this.NewData){
-          this.BuyingCartDetail[i]['total']-=this.CartDetails[j]['count']*this.CartDetails[j]['price'];
+          this.totalVariable-=this.BuyingCartDetail[i]['count']*this.BuyingCartDetail[i]['price'];
+         console.log(this.totalVariable);
          this.CartDetails[j]['count']=0;
+        //  console.log(this.BuyingCartDetail[i]['count']+",,,"+this.BuyingCartDetail[i]['price']);
       }
     }
     this.BuyingCartDetail.splice(i,1);
@@ -112,17 +114,12 @@ export class CartComponent implements OnInit {
       this.BuyingCartDetail=res;
     })
   }
- 
-
   addToCustomerOrders(){
     this.NewData=this.BuyingCartDetail;
     console.log(this.OrderDetailsFromDatabase);
     for(let i=0;i<this.OrderDetailsFromDatabase.length;i++){
       if(this.OrderDetailsFromDatabase[i]['email']==this.customterData.name){
-        // this.tempDataForCart['total']=0;
         for(let i=0;i<this.BuyingCartDetail.length;i++){
-          this.BuyingCartDetail[i]['total']=0;
-          console.log(this.BuyingCartDetail[i]['total']+"sdfa");
           this.tempDataForCart.push({"name":this.BuyingCartDetail[i].name,"count":this.BuyingCartDetail[i].count,"price":this.BuyingCartDetail[i].price,"Pass":this.BuyingCartDetail[i].Pass,"images":this.BuyingCartDetail[i].images,"status":this.BuyingCartDetail[i].status});
         } 
 
@@ -142,12 +139,9 @@ export class CartComponent implements OnInit {
       if(this.BuyingCartDetail[i]['name']==item['name']){
         if(this.BuyingCartDetail[i]['count']>1){
         this.BuyingCartDetail[i]['count']--;
+        this.totalVariable-=this.BuyingCartDetail[i]['price'];
         }
       }
-    }
-    this.BuyingCartDetail['total']=0;
-    for(let i=0;i<this.BuyingCartDetail.length;i++){
-      this.BuyingCartDetail['total']+=this.BuyingCartDetail[i]['count']*this.BuyingCartDetail[i]['price'];
     }
     this._dataservice.BuyingCartDetail.next(this.BuyingCartDetail);
   }
@@ -155,14 +149,9 @@ export class CartComponent implements OnInit {
     for(let i=0;i<this.BuyingCartDetail.length;i++){
       if(this.BuyingCartDetail[i]['name']==item['name']){
         this.BuyingCartDetail[i]['count']++;
+        this.totalVariable+=this.BuyingCartDetail[i]['price'];
       }
-    }
-    this.BuyingCartDetail['total']=0;
-    for(let i=0;i<this.BuyingCartDetail.length;i++){
-      this.BuyingCartDetail['total']+=this.BuyingCartDetail[i]['count']*this.BuyingCartDetail[i]['price'];
     }
     this._dataservice.BuyingCartDetail.next(this.BuyingCartDetail);
   }
-  
-
 }
