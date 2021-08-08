@@ -13,7 +13,8 @@ import { Error404Component } from './error404/error404.component';
 import { BodyComponentComponent } from './body-component/body-component.component';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { SettingcomponentComponent } from './settingcomponent/settingcomponent.component';
-import { MenuComponent } from './menu/menu.component';  
+import { MenuComponent } from './menu/menu.component';
+import { SettingAdminComponent } from './setting-admin/setting-admin.component';  
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,7 +25,8 @@ import { MenuComponent } from './menu/menu.component';
     Error404Component,
     BodyComponentComponent,
     SettingcomponentComponent,
-    MenuComponent
+    MenuComponent,
+    SettingAdminComponent
   ],
   imports: [
     BrowserModule,

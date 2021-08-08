@@ -3,30 +3,21 @@ import { Router } from '@angular/router';
 import { DataServiceService } from '../dataService/data-service.service';
 
 @Component({
-  selector: 'app-settingcomponent',
-  templateUrl: './settingcomponent.component.html',
-  styleUrls: ['./settingcomponent.component.css']
+  selector: 'app-setting-admin',
+  templateUrl: './setting-admin.component.html',
+  styleUrls: ['./setting-admin.component.css']
 })
-export class SettingcomponentComponent implements OnInit {
-  customerData: any;
+export class SettingAdminComponent implements OnInit {
   CartDetails: any;
-  OrderDetails: any;
-  OrderDetailsFromDatabase: any;
+  adminData: any;
 
   constructor(private _dataservice:DataServiceService,private router:Router) { 
-    this._dataservice.customerData.subscribe((res:any)=>{
-      this.customerData=res;
-    })
     this._dataservice.CartDetails.subscribe((res:any)=>{
       this.CartDetails=res;
     })
-    this._dataservice.OrderDetails.subscribe((res:any)=>{
-      this.OrderDetails=res;
+    this._dataservice.adminData.subscribe((res:any)=>{
+      this.adminData=res;
     })
-    this._dataservice.getDataOfOrders().subscribe((res)=>{
-      this.OrderDetailsFromDatabase=res;
-      console.log("database"+res);
-  });
   }
 
   ngOnInit(): void {
@@ -57,19 +48,12 @@ export class SettingcomponentComponent implements OnInit {
     // this._dataservice.CartOpenOrNot.next(false);
     this.router.navigate(['']);
   }
-  deleteAccount(){
-   if(confirm("Delete Your Account")){
-    for(let i=0;i<this.OrderDetailsFromDatabase.length;i++){
-        if(this.OrderDetailsFromDatabase[i]['email']==this.customerData['name']){
-          this._dataservice.DeleteOrdersAccount(this.customerData['name']).subscribe((res:any)=>{
-            
-          })
-        }
-    }
-    this._dataservice.deleteCustomerInDataBase(this.customerData['id']).subscribe((res:any)=>{
-      this.logout();
-      this.router.navigate(['']);
+  deleteAccountFromAdmin(){
+    this._dataservice.deleteAdmin(this.adminData['id']).subscribe((res:any)=>{
+      if(confirm("Delete Account")){
+        this.logout();
+       this.router.navigate(['']);
+      }
     })
-  }
   }
 }

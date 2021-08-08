@@ -41,6 +41,9 @@ export class DataServiceService {
   DeleteOrdersAccount(email:any){
     return this.http.delete(this.urlOfOrders+"/"+email);
   }
+  deleteAdmin(id:any){
+    return this.http.delete(this.urlOfAdmin+"/"+id);
+  }
   updateStatus(req:any,id:any){
     return this.http.put(this.urlOfOrders+'/'+id,req);
   }

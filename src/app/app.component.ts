@@ -57,6 +57,7 @@ export class AppComponent {
   carousel!: NgbCarousel;
   contentIsOpenOrNot: boolean=false;
   DataOfAdmin: any;
+  adminDataFromDatabase: any;
 
 
   constructor(private router:Router,private _dataService:DataServiceService,private modalService: NgbModal,private SpinnerService:NgxSpinnerService){
@@ -88,7 +89,6 @@ export class AppComponent {
     this._dataService.customerdataToAdmin.subscribe((res)=>{
       this.customerdataToAdmin=res;
     });
-    
   this._dataService.ErrorPage.subscribe((res:any)=>{
     this.ErrorPage=res;
   });
@@ -251,8 +251,7 @@ ngOnInit(): void {
   for(let i=0;i<this.customerDatabaseData.length;i++){
     // console.log("asd"+this.customerDatabaseData);
     if(this.customerDatabaseData[i].email==event.value.mail && this.customerDatabaseData[i].Pass==event.value.password){
-    this._dataService.customerloginOrNot.next(true);
-    
+    this._dataService.customerloginOrNot.next(true);  
     this._dataService.customerData.next({
       "id":this.customerDatabaseData[i]['_id'],
       "name":event.value.mail,
@@ -263,20 +262,20 @@ ngOnInit(): void {
       "name":event.value.mail,
       "password":event.value.password
     }
-    this.customerloginOrNot=true;
-    if(this.customerloginOrNot==true){
-      this.closeModal();
-      this.modalService.dismissAll();
+     this.customerloginOrNot=true;
+      if(this.customerloginOrNot==true){
+        this.closeModal();
+        this.modalService.dismissAll();
+      }
+      this.getDataOfItemsFromDatabase();
+      this.router.navigate(['menu']);
     }
-    this.getDataOfItemsFromDatabase();
-    this.router.navigate(['menu']);
   }
-}
-if(this.customerloginOrNot==false){
+  if(this.customerloginOrNot==false){
   alert("Please Enter Correct Email and Password");
   }
   }
-  verifyAdmin(event:NgForm){
+verifyAdmin(event:NgForm){
   this.getDataOfAdminFromDatabase();
   if(this.data==null){
     alert("Username does not Exit");
@@ -284,8 +283,8 @@ if(this.customerloginOrNot==false){
   for(let i=0;i<this.data.length;i++){
     if(this.data[i].email==event.value.mail && this.data[i].Pass==event.value.password){
       this._dataService.adminloginOrNot.next(true);
-      this.adminData={"name":event.value.mail,"password":event.value.password};
-      this._dataService.adminData.next(this.adminData);
+      this.adminData={"id":this.data[i]['_id'],"name":event.value.mail,"password":event.value.password};
+      this._dataService.adminData.next(this.adminData); 
       this.adminloginOrNot=true;
       if(this.adminloginOrNot==true){
         this.closeModal();
@@ -298,7 +297,7 @@ if(this.customerloginOrNot==false){
   alert("Please Enter Correct Email and Password");
   }
   }
-  dataCustomer(event:NgForm){
+dataCustomer(event:NgForm){
   const new1=event.value;
   // this.dataarray=this._dataService.signDataCustomer.value;
   for(let i=0;i<this.customerDatabaseData.length;i++){
@@ -325,7 +324,7 @@ if(this.customerloginOrNot==false){
 }
 this.customerduplicateOrNot=false;
   }
-  dataAdmin(event:NgForm){
+dataAdmin(event:NgForm){
   for(let i=0;i<this.data.length;i++){
     if(event.value.mail==this.data[i]['email'] && event.value.password==this.data[i]['Pass']){
       alert("Please Don't enter existing data");
@@ -351,5 +350,16 @@ this.adminduplicateOrNot=false;
 
   } 
   loginAlert(){}
+  GoTobodyComponent(){
+    if(this.customerloginOrNot==true){
+      this.router.navigate(['menu']);
+    }
+    else if(this.adminloginOrNot==true){
+      this.router.navigate(['admin-home'])
+    }
+    else{
+      this.router.navigate(['']);
+    }
+}
 }
   

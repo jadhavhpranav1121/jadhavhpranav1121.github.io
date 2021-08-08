@@ -1,6 +1,6 @@
 <!-- navigation Part -->
 <nav class="navigation sticky">
-    <div class="logo">
+    <div class="logo" (click)="GoTobodyComponent()">
         <img src="../assets/images/pizza.png" width="30em" height="30em">
         <span>Pizza Hunter</span>
     </div>
@@ -65,6 +65,7 @@
             </strong>
         <p *ngIf="adminloginOrNot">{{adminData["name"]}}&nbsp;&nbsp;&nbsp;</p>
         <a *ngIf="adminloginOrNot" routerLink="Adminorders" class="Cart" (click)="ChangeCartOpeningStatus()">All Orders</a>
+        <a *ngIf="adminloginOrNot" routerLink="setting-admin" class="Cart">Settings</a>
         <a *ngIf="adminloginOrNot" (click)="logout()">LogOut</a>
     </div>
 </nav>

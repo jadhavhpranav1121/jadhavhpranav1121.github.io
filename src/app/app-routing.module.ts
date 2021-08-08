@@ -7,6 +7,7 @@ import { CartComponent } from './cart/cart.component';
 import { CustomerOrdersComponent } from './customer-orders/customer-orders.component';
 import { Error404Component } from './error404/error404.component';
 import { MenuComponent } from './menu/menu.component';
+import { SettingAdminComponent } from './setting-admin/setting-admin.component';
 import { SettingcomponentComponent } from './settingcomponent/settingcomponent.component';
 
 const routes: Routes = [
@@ -17,6 +18,7 @@ const routes: Routes = [
   {path:'admin-home',component:AdminhomepageComponent,pathMatch:'full'},
   {path:'settings',component:SettingcomponentComponent,pathMatch:'full'},
   {path:'menu',component:MenuComponent,pathMatch:'full'},
+  {path:'setting-admin',component:SettingAdminComponent,pathMatch:'full'},
   {path:'**',component:Error404Component}
 ];
 @NgModule({
