@@ -11,12 +11,9 @@ import { NgxSpinnerService } from 'ngx-spinner';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'Pranav Pizza Website';
+  title = 'PIZZA HUNTER';
   loginData: any={};
   validatingForm!: FormGroup;
-  NameOfItems=["Margherita","Farmhouse","Peppy Paneer","Veg Extravaganza","Veggie Paradise","Cheese n Corn","Pepper Barbecue Chicken","Deluxe Veggie","Chicken Sausage"];
-  CartImages=["https://images.dominos.co.in/new_margherita_2502.jpg","https://images.dominos.co.in/farmhouse.png","https://images.dominos.co.in/new_peppy_paneer.jpg","https://images.dominos.co.in/new_veg_extravaganza.jpg","https://images.dominos.co.in/new_veggie_paradise.jpg","https://images.dominos.co.in/new_cheese_n_corn.jpg","https://images.dominos.co.in/new_pepper_barbeque_chicken.jpg","https://images.dominos.co.in/new_deluxe_veggie.jpg","https://images.dominos.co.in/new_chicken_sausage.jpg"];
-  DetailsOfP=["Classic delight with 100% real mozzarella cheese","Delightful combination of onion, capsicum, tomato & grilled mushroom","Flavorful trio of juicy paneer, crisp capsicum with spicy red paprika","Black olives, capsicum, onion, grilled mushroom, corn, tomato, jalapeno & extra cheese","The awesome foursome! Golden corn, black olives, capsicum, red paprika","A delectable combination of sweet & juicy golden corn","Pepper barbecue chicken for that extra zing","Veg delight - onion, capsicum, grilled mushroom, corn & paneer","American classic! Spicy, herbed chicken sausage on pizza"];
   CartDetails: any;
   CartOpenOrNot: any;
   BuyingCartDetail: any;
@@ -45,7 +42,7 @@ export class AppComponent {
   isCustomerSigup=true;
   isAdminSigup=false;
   ispopUpShow:any;
-  images = [62, 83, 466, 965, 982, 1043, 738].map((n) => `https://picsum.photos/id/${n}/900/500`);
+  images = [1026, 1027, 1028, 1029, 103, 1031, 1032].map((n) => `https://picsum.photos/id/${n}/900/500`);
   paused = false;
   unpauseOnArrow = false;
   pauseOnIndicator = false;
@@ -53,10 +50,15 @@ export class AppComponent {
   pauseOnFocus = true;
   isModelUse=false;
   lengthVariable=-1;
-@ViewChild('carousel', { static: true })
-carousel!: NgbCarousel;
+
+
+  // carousel------------------------------------------------------------------------
+  @ViewChild('carousel', { static: true })
+  carousel!: NgbCarousel;
   contentIsOpenOrNot: boolean=false;
   DataOfAdmin: any;
+
+
   constructor(private router:Router,private _dataService:DataServiceService,private modalService: NgbModal,private SpinnerService:NgxSpinnerService){
     this._dataService.adminloginOrNot.subscribe((res)=>{
       this.adminloginOrNot=res;
@@ -94,9 +96,22 @@ carousel!: NgbCarousel;
     this.customerloginOrNot=res;
   })
 } 
+ngOnInit(): void {
+  this.getDataOfCustomerInLogin();
+  this.getDataOfItemsFromDatabase();
+  this.getDataOfAdminFromDatabase();
+  this._dataService.CartDetails.subscribe((res:any)=>{
+    this.CartDetails=res;
+  })
+}
+
+
+
+    // User Defined Function-------------------------------------------------------
   getDataOfItemsFromDatabase(){
     this._dataService.getDataOfItems().subscribe((res)=>{
       this.CartDetails=res;
+      this._dataService.CartDetails.next(this.CartDetails);
   });
   }
   getDataOfCustomerInLogin(){
@@ -116,15 +131,6 @@ carousel!: NgbCarousel;
     this.lengthVariable=this.DataOfAdmin.length;
     // console.log("Data Of Admin"+this.DataOfAdmin);
 });
-  }
-
-  ngOnInit(): void {
-    this.getDataOfCustomerInLogin();
-    this.getDataOfItemsFromDatabase();
-    this.getDataOfAdminFromDatabase();
-    this._dataService.CartDetails.subscribe((res:any)=>{
-      this.CartDetails=res;
-    })
   }
 
   logout(){
@@ -211,12 +217,12 @@ carousel!: NgbCarousel;
     }
   }
   closeModal(){
-  this.isModelUse=false;
-  this.modalService.dismissAll();
+    this.isModelUse=false;
+    this.modalService.dismissAll();
   }
   changeStateAdmin(){
-  this.isAdmin=true;
-  this.isCustomer=false;
+    this.isAdmin=true;
+    this.isCustomer=false;
   }
   changeStateCustomer(){
   this.isAdmin=false;
@@ -238,7 +244,7 @@ carousel!: NgbCarousel;
   this.ispopUpShow = false;
   }
   verifyCustomer(event:NgForm){
-  // console.log("id:"+this.customerDatabaseData[0]['_id']);
+  this.getDataOfCustomerInLogin();
   if(this.customerDatabaseData==null){
     alert("Username does not Exist");
   }
@@ -246,7 +252,7 @@ carousel!: NgbCarousel;
     // console.log("asd"+this.customerDatabaseData);
     if(this.customerDatabaseData[i].email==event.value.mail && this.customerDatabaseData[i].Pass==event.value.password){
     this._dataService.customerloginOrNot.next(true);
-    console.log(this.customerDatabaseData[i]['_id']);
+    
     this._dataService.customerData.next({
       "id":this.customerDatabaseData[i]['_id'],
       "name":event.value.mail,
@@ -259,10 +265,11 @@ carousel!: NgbCarousel;
     }
     this.customerloginOrNot=true;
     if(this.customerloginOrNot==true){
+      this.closeModal();
       this.modalService.dismissAll();
     }
     this.getDataOfItemsFromDatabase();
-    this.router.navigate(['']);
+    this.router.navigate(['menu']);
   }
 }
 if(this.customerloginOrNot==false){
@@ -270,6 +277,7 @@ if(this.customerloginOrNot==false){
   }
   }
   verifyAdmin(event:NgForm){
+  this.getDataOfAdminFromDatabase();
   if(this.data==null){
     alert("Username does not Exit");
   }
@@ -280,6 +288,7 @@ if(this.customerloginOrNot==false){
       this._dataService.adminData.next(this.adminData);
       this.adminloginOrNot=true;
       if(this.adminloginOrNot==true){
+        this.closeModal();
         this.modalService.dismissAll();
       }
       this.router.navigate(['admin-home']);
@@ -301,8 +310,7 @@ if(this.customerloginOrNot==false){
   if(this.customerduplicateOrNot==false){
     //  this.dataarray.push(new1);
      this._dataService.AddDataToCustomer({"first_name":event.value.first_name,"last_name":event.value.Last_name,"email":event.value.mail,"Pass":event.value.password,"phone_number":event.value.phonenumber,"address":event.value.address}).subscribe((res)=>{
-      // this._dataService.signDataCustomer.next(this.dataarray);
-      
+      this.getDataOfCustomerInLogin();
     },
     (err)=>{
       console.log(err);
@@ -311,6 +319,7 @@ if(this.customerloginOrNot==false){
       // console.log(res);
     });
     this.modalService.dismissAll();
+    this.closeModal();
       alert("Account is Created!");
       this.router.navigate(['']);   
 }
@@ -324,7 +333,9 @@ this.customerduplicateOrNot=false;
     }
   }
   if(this.adminduplicateOrNot==false){
-      this._dataService.AddDataToAdmin({"first_name":event.value.first_name,"last_name":event.value.Last_name,"email":event.value.mail,"Pass":event.value.password,"phone_number":event.value.phonenumber,"address":event.value.address}).subscribe((res)=>{}
+      this._dataService.AddDataToAdmin({"first_name":event.value.first_name,"last_name":event.value.Last_name,"email":event.value.mail,"Pass":event.value.password,"phone_number":event.value.phonenumber,"address":event.value.address}).subscribe((res)=>{
+        this.getDataOfAdminFromDatabase();
+      }
       ,
       (err)=>{
         console.log(err);
@@ -332,6 +343,8 @@ this.customerduplicateOrNot=false;
       )
       this.modalService.dismissAll();
       alert("Account is Created!");
+      
+      this.closeModal();
       this.router.navigate(['']);   
 }
 this.adminduplicateOrNot=false;

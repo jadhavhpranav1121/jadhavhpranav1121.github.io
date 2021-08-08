@@ -38,6 +38,9 @@ export class DataServiceService {
   DeleteOrders(req:any,email:any){
     return this.http.patch(this.urlOfOrders+"/"+email+"/orders",req);
   }
+  DeleteOrdersAccount(email:any){
+    return this.http.delete(this.urlOfOrders+"/"+email);
+  }
   updateStatus(req:any,id:any){
     return this.http.put(this.urlOfOrders+'/'+id,req);
   }
@@ -56,6 +59,10 @@ export class DataServiceService {
   deleteItemsInDataBase(name:any){
     return this.http.delete(this.urlOfItems+"/"+name);
   }
+  deleteCustomerInDataBase(id:any){
+    return this.http.delete(this.urlOfCustomer+"/"+id);
+  }
+  
   findItemInDataBase(id:any){
     return this.http.get(this.urlOfItems,id);
   }

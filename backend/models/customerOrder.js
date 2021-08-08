@@ -30,6 +30,11 @@ const orderDetailScheme = new mongoose.Schema({
         type: String,
         required: true,
         trim: true
+    },
+    total: {
+        type: Number,
+        required: true,
+        trim: true
     }
 })
 const ordersSchema = new mongoose.Schema({

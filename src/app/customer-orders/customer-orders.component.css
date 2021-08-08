@@ -107,6 +107,16 @@ div {
     width: 400px;
 }
 
+.cancelButton {
+    padding: 8px 20px;
+    color: white;
+    background-color: red;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
 @media screen and (max-width:680px) {
     .container .cardData .card .CartData .CartItems {
         flex-direction: column;

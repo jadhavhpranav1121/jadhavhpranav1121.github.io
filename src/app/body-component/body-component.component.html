@@ -4,7 +4,7 @@
             <ng-template ngbSlide *ngFor="let img of images; index as i">
                 <a target="_blank" rel="nofollow noopener noreferrer">
                     <div class="picsum-img-wrapper">
-                        <img [src]="img" style="width:100vw;height:calc(100vh - 4em);" alt="My image {{i + 1}} description">
+                        <img [src]="img" style="width:100vw;max-height:calc(100vh - 4em);" alt="My image {{i + 1}} description">
                     </div>
                 </a>
             </ng-template>

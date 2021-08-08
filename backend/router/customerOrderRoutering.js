@@ -42,9 +42,9 @@ router.put("/orders/:customer_id/orders/:product_id", async(req, res) => {
     // const newdata = await admin.updateOne({ _id: customer_id }, {{ $set: { "orders.$[i].0.1.status": req.body.status } },{arrayFilters: [{ "i._id": product_id }]});
 
 })
-router.delete("/orders/:id", async(req, res) => {
-    const id = req.params.id;
-    const name = await admin.findByIdAndDelete(id);
+router.delete("/orders/:email", async(req, res) => {
+    const email = req.params.email;
+    const name = await admin.deleteOne({ "email": email });
     res.send(name);
 })
 app.use(router);

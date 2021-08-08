@@ -51,6 +51,7 @@ export class CartComponent implements OnInit {
     })
     this._dataservice.CartDetails.subscribe((res)=>{
       this.CartDetails=res;
+      console.log(this.CartDetails); 
     })
    }
    getDataOfPizza(){
@@ -66,9 +67,9 @@ export class CartComponent implements OnInit {
     for(let i=0;i<this.BuyingCartDetail.length;i++){
       this.BuyingCartDetail[i]['status']='Starting To delivery';
     }
-    this.BuyingCartDetail['total']=0;
+    // this.BuyingCartDetail['total']=0;
     for(let i=0;i<this.BuyingCartDetail.length;i++){
-      this.BuyingCartDetail['total']+=this.BuyingCartDetail[i]['count']*this.BuyingCartDetail[i]['price'];
+      this.BuyingCartDetail[i]['total']+=this.BuyingCartDetail[i]['count']*this.BuyingCartDetail[i]['price'];
     }
   }
   getDataOfOrdersDetails(){
@@ -82,10 +83,14 @@ export class CartComponent implements OnInit {
     this.CartOpenOrNot=false;
     this._dataservice.OrderOpenOrNot.next(false);
     this.OrderOpenOrNot=false;
-    this._dataservice.CartDetails.subscribe((res:any)=>{
-      this.CartDetails=res;
-    })
-    this.router.navigate(['']);
+    // console.log("before"+JSON.stringify(this.CartDetails));
+    // this._dataservice.CartDetails.next(this.CartDetails);
+    // this._dataservice.CartDetails.subscribe((res:any)=>{
+    //   this.CartDetails=res;
+    // })
+    console.log(this._dataservice.CartDetails);
+    // console.log("after"+JSON.stringify(this.CartDetails));
+    this.router.navigate(['menu']);
   }
   deleteCartItems(i:any){
     this.NewData=this.BuyingCartDetail[i]['name'];
@@ -114,9 +119,13 @@ export class CartComponent implements OnInit {
     console.log(this.OrderDetailsFromDatabase);
     for(let i=0;i<this.OrderDetailsFromDatabase.length;i++){
       if(this.OrderDetailsFromDatabase[i]['email']==this.customterData.name){
+        // this.tempDataForCart['total']=0;
         for(let i=0;i<this.BuyingCartDetail.length;i++){
+          this.BuyingCartDetail[i]['total']=0;
+          console.log(this.BuyingCartDetail[i]['total']+"sdfa");
           this.tempDataForCart.push({"name":this.BuyingCartDetail[i].name,"count":this.BuyingCartDetail[i].count,"price":this.BuyingCartDetail[i].price,"Pass":this.BuyingCartDetail[i].Pass,"images":this.BuyingCartDetail[i].images,"status":this.BuyingCartDetail[i].status});
         } 
+
       }
     }
     this._dataservice.updateOrders(this.tempDataForCart,this.customterData.name).subscribe((res)=>{

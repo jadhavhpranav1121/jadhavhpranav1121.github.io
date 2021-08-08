@@ -301,6 +301,13 @@
             background-color: orangered;
         }
         
+        .ItemsNumber {
+            position: absolute;
+            top: -1px;
+            left: 1.3em;
+            z-index: 2;
+        }
+        
         .linkOfActive {
             display: flex;
         }
@@ -313,6 +320,18 @@
         .linkOfActive button {
             /* margin-right: 15px; */
             height: 30px;
+        }
+        /* .active>svg * {
+            fill: white;
+        }
+        
+        .cartCss:hover>svg * {
+            fill: white;
+        }
+        */
+        
+        .cartCss {
+            position: relative;
         }
         
         .form-wrapper-outer .field-wrapper button[disabled] {

@@ -6,6 +6,8 @@ import { BodyComponentComponent } from './body-component/body-component.componen
 import { CartComponent } from './cart/cart.component';
 import { CustomerOrdersComponent } from './customer-orders/customer-orders.component';
 import { Error404Component } from './error404/error404.component';
+import { MenuComponent } from './menu/menu.component';
+import { SettingcomponentComponent } from './settingcomponent/settingcomponent.component';
 
 const routes: Routes = [
   {path:'',component:BodyComponentComponent,pathMatch:'full'},
@@ -13,6 +15,8 @@ const routes: Routes = [
   {path:'orders',component:CustomerOrdersComponent,pathMatch:'full'},
   {path:'Adminorders',component:AdminSideOrdersComponent,pathMatch:'full'},
   {path:'admin-home',component:AdminhomepageComponent,pathMatch:'full'},
+  {path:'settings',component:SettingcomponentComponent,pathMatch:'full'},
+  {path:'menu',component:MenuComponent,pathMatch:'full'},
   {path:'**',component:Error404Component}
 ];
 @NgModule({

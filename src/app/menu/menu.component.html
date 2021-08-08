@@ -1,0 +1,23 @@
+<section>
+
+    <div class="dataShowing">
+        <div class="cardData">
+            <div class="card1" *ngFor="let item of CartDetails;index as i">
+                <img src="{{item['images']}}" width="100%" height="45%" style="border-top-left-radius:5px;border-top-right-radius: 5px;background-size:cover;">
+                <div class="cardInfo1">
+                    <div class="title">{{item['name']}}</div>
+                    <div class="cardInfoInsideInfo" style="font-weight: 100;color:rgb(105, 105, 105)">{{item['Pass']}}</div>
+                </div>
+                <div class="bottomInfo">
+                    <div class="price"><strong>&#8377;{{item['price']}}</strong></div>
+                    <button class="addToCart" (click)="AddToBuyingCart(item)" *ngIf="item['count']<=0 ">Add To Cart</button>
+                    <div class="quantity" style="margin-right: 8%;" *ngIf="item['count']>0">
+                        <button class="styleButton" (click)="decrease(item)">-</button>
+                        <input type="text" style="width: 40px;text-align:center;border:0.4 solid rgba(0,0,0,.5);padding:4px 10px;" disabled value="{{item['count']}}">
+                        <button class="styleButton2" (click)="increase(item)">+</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

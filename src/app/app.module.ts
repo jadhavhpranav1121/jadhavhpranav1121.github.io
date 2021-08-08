@@ -11,7 +11,9 @@ import {NgbPaginationModule, NgbAlertModule, NgbModule} from '@ng-bootstrap/ng-b
 import { HttpClientModule } from '@angular/common/http';
 import { Error404Component } from './error404/error404.component';
 import { BodyComponentComponent } from './body-component/body-component.component';
-import { NgxSpinnerModule } from "ngx-spinner";  
+import { NgxSpinnerModule } from "ngx-spinner";
+import { SettingcomponentComponent } from './settingcomponent/settingcomponent.component';
+import { MenuComponent } from './menu/menu.component';  
 @NgModule({
   declarations: [
     AppComponent,
@@ -20,7 +22,9 @@ import { NgxSpinnerModule } from "ngx-spinner";
     AdminSideOrdersComponent,
     AdminhomepageComponent,
     Error404Component,
-    BodyComponentComponent
+    BodyComponentComponent,
+    SettingcomponentComponent,
+    MenuComponent
   ],
   imports: [
     BrowserModule,

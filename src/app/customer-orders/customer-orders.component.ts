@@ -64,26 +64,25 @@ export class CustomerOrdersComponent implements OnInit {
     this.SpinnerService.hide(); 
   }
   cancelOrder(j:any){
-    // console.log()
-    console.log(this.OrderDetails[j]);
-    // let value=JSON.stringify(this.OrderDetails[j]);
-    const data=this.OrderDetails[j];
-    console.log("customer email"+this.customerData['name']);
-    this._dataservice.DeleteOrders(this.OrderDetails[j],this.customerData['name']).subscribe((res:any)=>{
-      console.log("n"+JSON. stringify(res));
-    });
-    this.getDataOfOrderFromDatabase();
+    if(confirm("Are you sure to delete - Order No."+j+1)){
+      const data=this.OrderDetails[j];
+      this._dataservice.DeleteOrders(this.OrderDetails[j],this.customerData['name']).subscribe((res:any)=>{
+        console.log("Orders Deleted");
+        this.getDataOfOrderFromDatabase();
+      });
+      
+    }
+   
   }
   goToHome() {
     this._dataservice.OrderOpenOrNot.next(false);
     this.OrderOpenOrNot = false;
     this._dataservice.CartOpenOrNot.next(false);
     this.CartOpenOrNot = false;
-    this.router.navigate(['']);
+    this.router.navigate(['menu']);
   }
   calcTotalPrice(item: any) {
     let totalprice = 0;
-    // console.log(item);
     for (let i = 0; i < item.length; i++) {
       totalprice+=item[i]['count']*item[i]['price'];
     }
