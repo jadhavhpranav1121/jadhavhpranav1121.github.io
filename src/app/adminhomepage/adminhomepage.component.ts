@@ -41,7 +41,7 @@ export class AdminhomepageComponent implements OnInit {
   openVerticallyCenteredUpdate(content:any,i:any){
     this.modalService.open(content, { centered: true });
     this.findThisItem=this.CartDetails[i]["_id"];
-    console.log(this.findThisItem);
+    // console.log(this.findThisItem);
     this._dataService.findItemInDataBase(this.findThisItem).subscribe((res:any)=>{
       this.updateData=res;
     })
@@ -77,7 +77,7 @@ export class AdminhomepageComponent implements OnInit {
     this.updateItems["Pass"]=f.value.Pass;
     this.updateItems["count"]=0;
     this.updateItems["price"]=f.value.price;
-    console.log(this.updateItems);
+    // console.log(this.updateItems);
       this._dataService.updateItemInDataBase(this.updateItems,this.findThisItem).subscribe((res:any)=>{
         this.getItemsFromDatabase();
       });

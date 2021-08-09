@@ -171,3 +171,63 @@ div {
 .clear {
     clear: both;
 }
+
+.parent_of_loader {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.parent_of_loader .loader {
+    display: inline-block;
+    width: 120px;
+    height: 120px;
+    /* background: url(""); */
+    background-position: center;
+    background-size: 90%;
+}
+
+.parent_of_loader .loader:after {
+    content: " ";
+    display: block;
+    width: 104px;
+    height: 104px;
+    /* color */
+    margin: 8px;
+    border-radius: 50%;
+    border: 6px solid rgb(255, 0, 0);
+    border-color: rgb(255, 0, 0) transparent rgb(255, 0, 0) transparent;
+    animation: lds-dual-ring 1.2s linear infinite;
+}
+
+@keyframes lds-dual-ring {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+
+/* Safari */
+
+@-webkit-keyframes spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}

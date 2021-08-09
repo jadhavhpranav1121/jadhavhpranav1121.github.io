@@ -12,6 +12,7 @@ export class SettingcomponentComponent implements OnInit {
   CartDetails: any;
   OrderDetails: any;
   OrderDetailsFromDatabase: any;
+  customerDatabaseData: any;
 
   constructor(private _dataservice:DataServiceService,private router:Router) { 
     this._dataservice.customerData.subscribe((res:any)=>{
@@ -25,10 +26,16 @@ export class SettingcomponentComponent implements OnInit {
     })
     this._dataservice.getDataOfOrders().subscribe((res)=>{
       this.OrderDetailsFromDatabase=res;
-      console.log("database"+res);
+      // console.log("database"+res);
+  });
+  this.getCustomerData();
+  }
+  getCustomerData(){
+    this._dataservice.getDataOfCustomer().subscribe((res)=>{
+      // console.log(res);
+      this.customerDatabaseData=res;
   });
   }
-
   ngOnInit(): void {
   }
   logout(){
@@ -44,17 +51,13 @@ export class SettingcomponentComponent implements OnInit {
     this._dataservice.adminData.next({});
     this._dataservice.customerloginOrNot.next(false);
     this._dataservice.adminloginOrNot.next(false);
-    // this.CartOpenOrNot=false;
+    this.getCustomerData();
+    // console.log("sdfafasfwerw"+JSON.stringify(this.customerDatabaseData));
     this._dataservice.OrderOpenOrNot.next(false);
     this._dataservice.adminData.next({});
     this._dataservice.customerData.next({});
     // this.OrderOpenOrNot=false;
-    // this.isModelUse=false;
-    // this.isAdmin=false;
-    // this.isCustomer=true;
-    // this.isAdminSigup=false;
-    // this.isCustomerSigup=true;
-    // this._dataservice.CartOpenOrNot.next(false);
+    
     this.router.navigate(['']);
   }
   deleteAccount(){
@@ -62,14 +65,18 @@ export class SettingcomponentComponent implements OnInit {
     for(let i=0;i<this.OrderDetailsFromDatabase.length;i++){
         if(this.OrderDetailsFromDatabase[i]['email']==this.customerData['name']){
           this._dataservice.DeleteOrdersAccount(this.customerData['name']).subscribe((res:any)=>{
-            
+            this.getCustomerData();
           })
         }
     }
     this._dataservice.deleteCustomerInDataBase(this.customerData['id']).subscribe((res:any)=>{
-      this.logout();
-      this.router.navigate(['']);
+      
     })
+    this.getCustomerData();
+    this._dataservice.customerData.next({});
+    this.logout();  
   }
+  // console.log("function is called");
+  this.getCustomerData();
   }
 }

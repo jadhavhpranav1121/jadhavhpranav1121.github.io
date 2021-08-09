@@ -20,8 +20,8 @@ export class AdminSideOrdersComponent implements OnInit {
   ngOnInit(): void {
     this._dataService.getDataOfOrders().subscribe((res)=>{
       this.customerdataToAdmin=res;
-      console.log(res);
-      console.log(this.customerdataToAdmin.length);   
+      // console.log(res);
+      // console.log(this.customerdataToAdmin.length);   
     })
   }
   

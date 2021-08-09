@@ -52,11 +52,11 @@ export class CartComponent implements OnInit {
     })
     this._dataservice.CartDetails.subscribe((res)=>{
       this.CartDetails=res;
-      console.log(this.CartDetails); 
+      // console.log(this.CartDetails); 
     })
     this.totalVariable=0;
     // console.log(this.totalVariable);
-    console.log(JSON.stringify(this.BuyingCartDetail));
+    // console.log(JSON.stringify(this.BuyingCartDetail));
     for(let i=0;i<this.BuyingCartDetail.length;i++){
       this.totalVariable+=(this.BuyingCartDetail[i]['count']*(this.BuyingCartDetail[i]['price']));
     }
@@ -70,7 +70,7 @@ export class CartComponent implements OnInit {
   ngOnInit(): void {
     this.getDataOfPizza();
     this.getDataOfOrdersDetails();
-    console.log(this.BuyingCartDetail);
+    // console.log(this.BuyingCartDetail);
     for(let i=0;i<this.BuyingCartDetail.length;i++){
       this.BuyingCartDetail[i]['status']='Starting To delivery';
     }
@@ -81,7 +81,7 @@ export class CartComponent implements OnInit {
   getDataOfOrdersDetails(){
     this._dataservice.getDataOfOrders().subscribe((res)=>{
         this.OrderDetailsFromDatabase=res;
-        console.log(res);
+        // console.log(res);
     });
   }
   goToHome(){
@@ -89,50 +89,58 @@ export class CartComponent implements OnInit {
     this.CartOpenOrNot=false;
     this._dataservice.OrderOpenOrNot.next(false);
     this.OrderOpenOrNot=false;
-    console.log(this._dataservice.CartDetails);
+    // console.log(this._dataservice.CartDetails);
     this.router.navigate(['menu']);
   }
   deleteCartItems(i:any){
-    this.NewData=this.BuyingCartDetail[i]['name'];
+    this.SpinnerService.show();
+     setTimeout(()=>{
+      this.NewData=this.BuyingCartDetail[i]['name'];
     for(let j=0;j<this.CartDetails.length;j++){
         if(this.CartDetails[j]['name']==this.NewData){
           this.totalVariable-=this.BuyingCartDetail[i]['count']*this.BuyingCartDetail[i]['price'];
-         console.log(this.totalVariable);
+        //  console.log(this.totalVariable);
          this.CartDetails[j]['count']=0;
-        //  console.log(this.BuyingCartDetail[i]['count']+",,,"+this.BuyingCartDetail[i]['price']);
       }
     }
     this.BuyingCartDetail.splice(i,1);
     this._dataservice.CartDetails.next(this.CartDetails);
     this._dataservice.BuyingCartDetail.next(this.BuyingCartDetail);
-    this.SpinnerService.show();
+    // this.SpinnerService.show();
     this._dataservice.CartDetails.subscribe((res:any)=>{
       this.CartDetails=res;
     });
-    this.SpinnerService.hide();
+    
     this._dataservice.BuyingCartDetail.subscribe((res:any)=>{
       this.BuyingCartDetail=res;
     })
+      this.SpinnerService.hide();
+    },200);
   }
   addToCustomerOrders(){
-    this.NewData=this.BuyingCartDetail;
-    console.log(this.OrderDetailsFromDatabase);
-    for(let i=0;i<this.OrderDetailsFromDatabase.length;i++){
-      if(this.OrderDetailsFromDatabase[i]['email']==this.customterData.name){
-        for(let i=0;i<this.BuyingCartDetail.length;i++){
-          this.tempDataForCart.push({"name":this.BuyingCartDetail[i].name,"count":this.BuyingCartDetail[i].count,"price":this.BuyingCartDetail[i].price,"Pass":this.BuyingCartDetail[i].Pass,"images":this.BuyingCartDetail[i].images,"status":this.BuyingCartDetail[i].status});
-        } 
-
+    this.SpinnerService.show();
+    setTimeout(()=>{
+      this.NewData=this.BuyingCartDetail;
+      // console.log(this.OrderDetailsFromDatabase);
+      for(let i=0;i<this.OrderDetailsFromDatabase.length;i++){
+        if(this.OrderDetailsFromDatabase[i]['email']==this.customterData.name){
+          for(let i=0;i<this.BuyingCartDetail.length;i++){
+            this.tempDataForCart.push({"name":this.BuyingCartDetail[i].name,"count":this.BuyingCartDetail[i].count,"price":this.BuyingCartDetail[i].price,"Pass":this.BuyingCartDetail[i].Pass,"images":this.BuyingCartDetail[i].images,"status":this.BuyingCartDetail[i].status});
+          } 
+  
+        }
       }
-    }
-    this._dataservice.updateOrders(this.tempDataForCart,this.customterData.name).subscribe((res)=>{
-      console.log(res);
-    })
-    this._dataservice.BuyingCartDetail.next([]);
-    this.BuyingCartDetail=[]; 
-    this.CartDetails=this.newItems;
-    this._dataservice.CartDetails.next(this.CartDetails);
-    this.router.navigate(['orders']);
+      this._dataservice.updateOrders(this.tempDataForCart,this.customterData.name).subscribe((res)=>{
+        // console.log(res);
+      })
+      this._dataservice.BuyingCartDetail.next([]);
+      this.BuyingCartDetail=[]; 
+      this.CartDetails=this.newItems;
+      this._dataservice.CartDetails.next(this.CartDetails);
+      this.router.navigate(['orders']);
+    },200);
+    
+    
   }
   decrease(item:any){
     for(let i=0;i<this.BuyingCartDetail.length;i++){

@@ -4,6 +4,8 @@ import { DataServiceService } from './dataService/data-service.service';
 import { NgbActiveModal, NgbCarousel, NgbModal, NgbSlideEvent, NgbSlideEventSource } from '@ng-bootstrap/ng-bootstrap';
 import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { async } from '@angular/core/testing';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -42,7 +44,6 @@ export class AppComponent {
   isCustomerSigup=true;
   isAdminSigup=false;
   ispopUpShow:any;
-  images = [1026, 1027, 1028, 1029, 103, 1031, 1032].map((n) => `https://picsum.photos/id/${n}/900/500`);
   paused = false;
   unpauseOnArrow = false;
   pauseOnIndicator = false;
@@ -60,13 +61,13 @@ export class AppComponent {
   adminDataFromDatabase: any;
 
 
-  constructor(private router:Router,private _dataService:DataServiceService,private modalService: NgbModal,private SpinnerService:NgxSpinnerService){
+  constructor(private router:Router,private _dataService:DataServiceService,private modalService: NgbModal,private SpinnerService:NgxSpinnerService,private route:ActivatedRoute){
+    // console.log(co`)
     this._dataService.adminloginOrNot.subscribe((res)=>{
       this.adminloginOrNot=res;
     });
     this._dataService.customerloginOrNot.subscribe((res)=>{
       this.customerloginOrNot=res;
-      // console.log(res);
     });
     this._dataService.customerloginOrNot.subscribe((res)=>{
       this.customerloginOrNot=res;
@@ -96,9 +97,19 @@ export class AppComponent {
     this.customerloginOrNot=res;
   })
 } 
+getDataOfCustomerInLogin(){
+  this._dataService.getDataOfCustomer().subscribe((res)=>{
+      this.customerDatabaseData=res;
+
+  });
+  
+ this._dataService.getDataOfAdmin().subscribe((res)=>{
+  this.data=res;
+});
+}
 ngOnInit(): void {
   this.getDataOfCustomerInLogin();
-  this.getDataOfItemsFromDatabase();
+   this.getDataOfItemsFromDatabase();  
   this.getDataOfAdminFromDatabase();
   this._dataService.CartDetails.subscribe((res:any)=>{
     this.CartDetails=res;
@@ -114,22 +125,11 @@ ngOnInit(): void {
       this._dataService.CartDetails.next(this.CartDetails);
   });
   }
-  getDataOfCustomerInLogin(){
-    this._dataService.getDataOfCustomer().subscribe((res)=>{
-        this.customerDatabaseData=res;
-    });
-    
-   this._dataService.getDataOfAdmin().subscribe((res)=>{
-    this.data=res;
-    // console.log(this.data);
-});
-// this.SpinnerService.hide(); 
-  }
+  
   getDataOfAdminFromDatabase(){
   this._dataService.getDataOfAdmin().subscribe((res)=>{
     this.DataOfAdmin=res;
     this.lengthVariable=this.DataOfAdmin.length;
-    // console.log("Data Of Admin"+this.DataOfAdmin);
 });
   }
 
@@ -211,6 +211,7 @@ ngOnInit(): void {
     }
   }
   openVerticallyCentered(content: any) {
+    this.getDataOfCustomerInLogin();
     if(this.isModelUse==false){
       this.modalService.open(content, { centered: true,scrollable: true,backdrop:'static',keyboard:false});
       this.isModelUse=true;
@@ -244,12 +245,10 @@ ngOnInit(): void {
   this.ispopUpShow = false;
   }
   verifyCustomer(event:NgForm){
-  this.getDataOfCustomerInLogin();
   if(this.customerDatabaseData==null){
     alert("Username does not Exist");
   }
   for(let i=0;i<this.customerDatabaseData.length;i++){
-    // console.log("asd"+this.customerDatabaseData);
     if(this.customerDatabaseData[i].email==event.value.mail && this.customerDatabaseData[i].Pass==event.value.password){
     this._dataService.customerloginOrNot.next(true);  
     this._dataService.customerData.next({
@@ -315,7 +314,6 @@ dataCustomer(event:NgForm){
       console.log(err);
     })
     this._dataService.AddDataToOrder({"email":event.value.mail,"orders":[]}).subscribe((res)=>{
-      // console.log(res);
     });
     this.modalService.dismissAll();
     this.closeModal();

@@ -58,6 +58,7 @@ router.put("/orders/:customer_id/orders/:product_id", async(req, res) => {
 router.delete("/orders/:email", async(req, res) => {
     const email = req.params.email;
     const name = await admin.deleteOne({ "email": email });
+    console.log(name);
     res.send(name);
 })
 app.use(router);

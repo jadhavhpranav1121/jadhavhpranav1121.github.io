@@ -45,7 +45,7 @@ export class CustomerOrdersComponent implements OnInit {
   getDataOfOrderFromDatabase(){
     this._dataservice.getDataOfOrders().subscribe((res) => {
      this.customerOrders = res;  
-     console.log(this.customerOrders);
+    //  console.log(this.customerOrders);
      for (let i = 0; i < this.customerOrders.length; i++) {
        if (this.customerOrders[i].email == this.customerData.name) {
          this.OrderDetails = this.customerOrders[i].orders;
@@ -57,20 +57,22 @@ export class CustomerOrdersComponent implements OnInit {
   
   ngOnInit(): void {
     this.SpinnerService.show(); 
-    console.log("sdf");
+    // console.log("sdf");
     this.getDataOfOrderFromDatabase();
     this.SpinnerService.hide(); 
   }
   cancelOrder(j:any){
     if(confirm("Are you sure to delete - Order No."+(j+1))){
       const data=this.OrderDetails[j];
-      this._dataservice.DeleteOrders(this.OrderDetails[j],this.customerData['name']).subscribe((res:any)=>{
-        console.log("Orders Deleted");
-        this.getDataOfOrderFromDatabase();
-      });
-      
+      this.SpinnerService.show();
+      setTimeout(()=>{
+        this._dataservice.DeleteOrders(this.OrderDetails[j],this.customerData['name']).subscribe((res:any)=>{
+          // console.log("Orders Deleted");
+          this.getDataOfOrderFromDatabase();
+        });
+        this.SpinnerService.hide();
+      },200); 
     }
-   
   }
   goToHome() {
     this._dataservice.OrderOpenOrNot.next(false);
