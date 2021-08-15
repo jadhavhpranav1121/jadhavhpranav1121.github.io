@@ -46,6 +46,7 @@ export class CustomerOrdersComponent implements OnInit {
   getDataOfOrderFromDatabase(){
     this._dataservice.getDataOfOrders().subscribe((res) => {
      this.customerOrders = res;  
+     console.log(this.customerOrders);
     //  console.log(this.customerOrders);
      for (let i = 0; i < this.customerOrders.length; i++) {
        if (this.customerOrders[i].email == localStorage.getItem('userDetails')) {
@@ -72,6 +73,7 @@ export class CustomerOrdersComponent implements OnInit {
     // console.log("sdf");
     this.getDataOfOrderFromDatabase();
     // console.log()
+    console.log(JSON.stringify(this.OrderDetails));
     this.SpinnerService.hide(); 
   }
   cancelOrder(j:any){

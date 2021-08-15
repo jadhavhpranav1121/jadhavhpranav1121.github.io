@@ -27,6 +27,7 @@ export class MenuComponent implements OnInit {
   isCustomerSigup: any;
   router: any;
   NewData: any;
+  loginDetailFromLocalStorage!: string | null;
 
   constructor(private _dataService:DataServiceService) { 
     this._dataService.adminloginOrNot.subscribe((res)=>{
@@ -53,6 +54,7 @@ export class MenuComponent implements OnInit {
     });
     this._dataService.BuyingCartDetail.subscribe((res)=>{
       this.BuyingCartDetail=res;
+      
     });
     this._dataService.customerdataToAdmin.subscribe((res)=>{
       this.customerdataToAdmin=res;
@@ -67,9 +69,18 @@ export class MenuComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this._dataService.CartDetails.subscribe((res:any)=>{
-      this.CartDetails=res;
-    })
+    console.log("BuyingCartDetails"+JSON.stringify(this.BuyingCartDetail));
+    console.log("CartDetails"+JSON.stringify(this.CartDetails));
+    for(let i=0;i<this.BuyingCartDetail.length;i++){
+      for(let j=0;j<this.CartDetails.length;j++){
+        if(this.CartDetails[j]['name']==this.BuyingCartDetail[i]['name']){
+          this.CartDetails[j]['count']=this.BuyingCartDetail[i]['count'];
+        }
+      }
+    }
+    this._dataService.BuyingCartDetail.next(this.BuyingCartDetail);
+    this.loginDetailFromLocalStorage=localStorage.getItem('userDetails');
+    
   }
   getDataOfCustomerInLogin(){
     this._dataService.getDataOfCustomer().subscribe((res)=>{
@@ -128,25 +139,30 @@ export class MenuComponent implements OnInit {
       this.NewData=Data;
       this.BuyingCartDetail.push(this.NewData);
       this.BuyingCartDetail[this.BuyingCartDetail.length-1]['count']++;
+      localStorage.setItem('cart',JSON.stringify(this.BuyingCartDetail));
       this._dataService.BuyingCartDetail.next(this.BuyingCartDetail);
   }
   decrease(item:any){
     for(let i=0;i<this.BuyingCartDetail.length;i++){
       if(this.BuyingCartDetail[i]['name']==item['name']){
         this.BuyingCartDetail[i]['count']--;
+        item['count']--;
         if(this.BuyingCartDetail[i]['count']<=0){
           this.BuyingCartDetail.splice(i,1);
         }
       }
     }
+    localStorage.setItem('cart',JSON.stringify(this.BuyingCartDetail));
     this._dataService.BuyingCartDetail.next(this.BuyingCartDetail);
   }
   increase(item:any){
     for(let i=0;i<this.BuyingCartDetail.length;i++){
       if(this.BuyingCartDetail[i]['name']==item['name']){
         this.BuyingCartDetail[i]['count']++;
+        item['count']++;
       }
     }
+    localStorage.setItem('cart',JSON.stringify(this.BuyingCartDetail));
     this._dataService.BuyingCartDetail.next(this.BuyingCartDetail);
   }
   

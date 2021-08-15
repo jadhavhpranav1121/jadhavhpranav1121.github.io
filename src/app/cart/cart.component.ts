@@ -71,6 +71,13 @@ export class CartComponent implements OnInit {
     this.customerloginOrNot=(localStorage.getItem('token')==null)?false:true;
     this.getDataOfPizza();
     this.getDataOfOrdersDetails();
+    console.log(this.BuyingCartDetail);
+    // console.log("localstroage"+JSON.parse(localStorage.getItem('cart')|| "{}"));
+    if(!!this.BuyingCartDetail){  
+      console.log("buy "+this.BuyingCartDetail);
+      this.BuyingCartDetail=JSON.parse(localStorage.getItem('cart')|| "{}");
+      this._dataservice.BuyingCartDetail.next(this.BuyingCartDetail);
+    }
     // console.log(this.BuyingCartDetail);
     for(let i=0;i<this.BuyingCartDetail.length;i++){
       this.BuyingCartDetail[i]['status']='Starting To delivery';
@@ -105,6 +112,7 @@ export class CartComponent implements OnInit {
       }
     }
     this.BuyingCartDetail.splice(i,1);
+    localStorage.setItem('cart',JSON.stringify(this.BuyingCartDetail));
     this._dataservice.CartDetails.next(this.CartDetails);
     this._dataservice.BuyingCartDetail.next(this.BuyingCartDetail);
     // this.SpinnerService.show();
@@ -124,14 +132,14 @@ export class CartComponent implements OnInit {
       this.NewData=this.BuyingCartDetail;
       // console.log(this.OrderDetailsFromDatabase);
       for(let i=0;i<this.OrderDetailsFromDatabase.length;i++){
-        if(this.OrderDetailsFromDatabase[i]['email']==this.customterData.name){
+        if(this.OrderDetailsFromDatabase[i]['email']==localStorage.getItem('userDetails')){
           for(let i=0;i<this.BuyingCartDetail.length;i++){
             this.tempDataForCart.push({"name":this.BuyingCartDetail[i].name,"count":this.BuyingCartDetail[i].count,"price":this.BuyingCartDetail[i].price,"Pass":this.BuyingCartDetail[i].Pass,"images":this.BuyingCartDetail[i].images,"status":this.BuyingCartDetail[i].status});
           } 
   
         }
       }
-      this._dataservice.updateOrders(this.tempDataForCart,this.customterData.name).subscribe((res)=>{
+      this._dataservice.updateOrders(this.tempDataForCart,localStorage.getItem('userDetails')).subscribe((res)=>{
         // console.log(res);
       })
       this._dataservice.BuyingCartDetail.next([]);
@@ -152,6 +160,7 @@ export class CartComponent implements OnInit {
         }
       }
     }
+    localStorage.setItem('cart',JSON.stringify(this.BuyingCartDetail));
     this._dataservice.BuyingCartDetail.next(this.BuyingCartDetail);
   }
   increase(item:any){
@@ -161,6 +170,7 @@ export class CartComponent implements OnInit {
         this.totalVariable+=this.BuyingCartDetail[i]['price'];
       }
     }
+    localStorage.setItem('cart',JSON.stringify(this.BuyingCartDetail));
     this._dataservice.BuyingCartDetail.next(this.BuyingCartDetail);
   }
 }

@@ -17,6 +17,7 @@ export class SettingcomponentComponent implements OnInit {
 
   constructor(private _dataservice:DataServiceService,private router:Router) { 
     this._dataservice.customerData.subscribe((res:any)=>{
+      console.log(res);
       this.customerData=res;
     })
     this._dataservice.CartDetails.subscribe((res:any)=>{
@@ -41,6 +42,8 @@ export class SettingcomponentComponent implements OnInit {
     this.customerloginOrNot=(localStorage.getItem('token')==null)?false:true;
   }
   logout(){
+    localStorage.removeItem('token');
+    localStorage.removeItem('userDetails');
     this._dataservice.customerdataToAdmin.next([]);
     this._dataservice.BuyOrNot.next(false);
     this._dataservice.BuyingCartDetail.next([]);
@@ -65,8 +68,9 @@ export class SettingcomponentComponent implements OnInit {
   deleteAccount(){
    if(confirm("Delete Your Account")){
     for(let i=0;i<this.OrderDetailsFromDatabase.length;i++){
-        if(this.OrderDetailsFromDatabase[i]['email']==this.customerData['name']){
-          this._dataservice.DeleteOrdersAccount(this.customerData['name']).subscribe((res:any)=>{
+        if(this.OrderDetailsFromDatabase[i]['email']==localStorage.getItem('userDetails')){
+          // this.logout();
+          this._dataservice.DeleteOrdersAccount(localStorage.getItem('userDetails')).subscribe((res:any)=>{
             this.getCustomerData();
           })
         }

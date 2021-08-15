@@ -21,7 +21,7 @@ function verifyToken(req, res, next) {
     req.userId = payload.subject
     next();
 }
-router.post("/orders", verifyToken, async(req, res) => {
+router.post("/orders", async(req, res) => {
     try {
         const newadmin = await new admin(req.body)
         console.log("Data" + newadmin);

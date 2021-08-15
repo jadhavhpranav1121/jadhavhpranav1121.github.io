@@ -13,11 +13,11 @@ import { SettingcomponentComponent } from './settingcomponent/settingcomponent.c
 // ,canActivate:[AuthGuard]
 const routes: Routes = [
   {path:'',component:BodyComponentComponent,pathMatch:'full'},
-  {path:'carts',component:CartComponent,pathMatch:'full'},
+  {path:'carts',component:CartComponent,pathMatch:'full',canActivate:[AuthGuard]},
   {path:'orders',component:CustomerOrdersComponent,pathMatch:'full'},
   {path:'Adminorders',component:AdminSideOrdersComponent,pathMatch:'full'},
   {path:'admin-home',component:AdminhomepageComponent,pathMatch:'full'},
-  {path:'settings',component:SettingcomponentComponent,pathMatch:'full'},
+  {path:'settings',component:SettingcomponentComponent,pathMatch:'full',canActivate:[AuthGuard]},
   {path:'menu',component:MenuComponent,pathMatch:'full'},
   {path:'setting-admin',component:SettingAdminComponent,pathMatch:'full'},
   {path:'**',component:Error404Component}

@@ -128,6 +128,7 @@ getDataOfCustomerInLogin(){
 ngOnInit(): void {
   this.customerloginOrNot=(localStorage.getItem('token')==null)?false:true;
   this.loginDetailFromLocalStorage=localStorage.getItem('userDetails');
+  console.log(this.loginDetailFromLocalStorage);
   this.loginReactiveForm=new FormGroup({
     'email':new FormControl('',[Validators.required,Validators.email]),
     'password':new FormControl('',[Validators.required,Validators.pattern("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$")])
@@ -163,12 +164,6 @@ ngOnInit(): void {
         console.log(res);
         localStorage.setItem('token',res['token']);
         // this.router.navigate(['menu'])
-    });
-  }
-  compare1(){
-    bcrypt.compare(this.loginReactiveForm.value.password,this.customerData1.Pass,(err, res) => {
-      this.temp=res;
-      console.log(this.temp);
     });
   }
     getadminLoginDataFromDatabase(){
@@ -303,12 +298,13 @@ ngOnInit(): void {
 verifyCustomer(){
   this.SpinnerService.show(); 
   this.getLoginDataFromDatabase();
+  
   // this.router.navigate['menu'];
    setTimeout(()=>{
     // console.log("password"+this.customerData1.Pass);/
     if(localStorage.getItem('token')==null){
       this.SpinnerService.hide();
-        alert("your account ris not found");
+        alert("your account is not found");
     }
     else{
       for(let i=0;i<this.customerDatabaseData.length;i++){
@@ -322,6 +318,7 @@ verifyCustomer(){
               "password":this.loginReactiveForm.value.password
       }
       localStorage.setItem('userDetails',this.loginReactiveForm.value.email);
+      this.loginDetailFromLocalStorage=localStorage.getItem('userDetails');
       this._dataService.customerloginOrNot.next(true);
             this._dataService.customerData.next(this.customerData);
             this.getDataOfItemsFromDatabase();
@@ -407,7 +404,7 @@ dataCustomer(){
   
      this._dataService.AddDataToCustomer({"first_name":this.signupReactiveForm.value.firstname,"last_name":this.signupReactiveForm.value.lastname,"email":this.signupReactiveForm.value.email,"Pass":this.signupReactiveForm.value.password,"phone_number":this.signupReactiveForm.value.phonenumber,"address":this.signupReactiveForm.value.address}).subscribe((res)=>{
        console.log(res);
-       localStorage.setItem('token',res["token"]);
+      //  localStorage.setItem('token',res["token"]);
       //  this.router.navigate(['']);
       this.getDataOfCustomerInLogin();
     },
