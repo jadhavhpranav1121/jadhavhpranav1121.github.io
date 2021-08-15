@@ -24,6 +24,11 @@ router.get("/admin", async(req, res) => {
     // console.log(newdata);
     res.send(newdata);
 })
+router.get("/admin/auth/:email", async(req, res) => {
+    const email = req.params.email;
+    const newdata = await admin.findOne({ "email": email });
+    res.send(newdata);
+})
 router.patch("/admin/:email", async(req, res) => {
     const email = req.params.email;
     const newdata = await admin.updateOne({ email }, req.body);

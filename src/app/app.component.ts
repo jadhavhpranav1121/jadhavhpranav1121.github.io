@@ -4,16 +4,24 @@ import { DataServiceService } from './dataService/data-service.service';
 import { NgbActiveModal, NgbCarousel, NgbModal, NgbSlideEvent, NgbSlideEventSource } from '@ng-bootstrap/ng-bootstrap';
 import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { async } from '@angular/core/testing';
-import { ActivatedRoute } from '@angular/router';
+import * as bcrypt from 'bcryptjs';
+import * as firebase from 'firebase';
+import { WindowService } from './dataService/window.service';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireStorage } from '@angular/fire/storage';
+import { collapseTextChangeRangesAcrossMultipleVersions } from 'typescript';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
+
 export class AppComponent {
   title = 'PIZZA HUNTER';
+  loginReactiveForm!:FormGroup;
+  signupReactiveForm!:FormGroup;
   loginData: any={};
   validatingForm!: FormGroup;
   CartDetails: any;
@@ -51,18 +59,22 @@ export class AppComponent {
   pauseOnFocus = true;
   isModelUse=false;
   lengthVariable=-1;
+ 
 
-
+// console.log(bcrypt);
   // carousel------------------------------------------------------------------------
   @ViewChild('carousel', { static: true })
   carousel!: NgbCarousel;
   contentIsOpenOrNot: boolean=false;
   DataOfAdmin: any;
   adminDataFromDatabase: any;
+  customerData1: any;
+  windowRef:any;
+  adminData1: any;
+  temp: any;
 
-
-  constructor(private router:Router,private _dataService:DataServiceService,private modalService: NgbModal,private SpinnerService:NgxSpinnerService,private route:ActivatedRoute){
-    // console.log(co`)
+  constructor( private afAuth: AngularFireAuth,private windowService:WindowService,private router:Router,private _dataService:DataServiceService,private modalService: NgbModal,private SpinnerService:NgxSpinnerService){
+    this.windowRef=this.windowService.windowRef;
     this._dataService.adminloginOrNot.subscribe((res)=>{
       this.adminloginOrNot=res;
     });
@@ -96,6 +108,7 @@ export class AppComponent {
   this._dataService.customerloginOrNot.subscribe((res)=>{
     this.customerloginOrNot=res;
   })
+
 } 
 getDataOfCustomerInLogin(){
   this._dataService.getDataOfCustomer().subscribe((res)=>{
@@ -108,6 +121,19 @@ getDataOfCustomerInLogin(){
 });
 }
 ngOnInit(): void {
+  // this.windowRef.recaptchVerifier=new auth.RecaptchaVerifier()
+  this.loginReactiveForm=new FormGroup({
+    'email':new FormControl('',[Validators.required,Validators.email]),
+    'password':new FormControl('',[Validators.required,Validators.pattern("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$")])
+  })
+  this.signupReactiveForm=new FormGroup({
+    'firstname':new FormControl('',[Validators.required]),
+    'lastname':new FormControl('',[Validators.required]),
+    'email':new FormControl('',[Validators.required,Validators.email]),
+    'password':new FormControl('',[Validators.required,Validators.pattern("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$")]),
+    'phonenumber':new FormControl('',[Validators.required,Validators.pattern("(0|91)?[7-9][0-9]{9}")]),
+    'address':new FormControl('',[Validators.required])
+  })
   this.getDataOfCustomerInLogin();
    this.getDataOfItemsFromDatabase();  
   this.getDataOfAdminFromDatabase();
@@ -117,7 +143,6 @@ ngOnInit(): void {
 }
 
 
-
     // User Defined Function-------------------------------------------------------
   getDataOfItemsFromDatabase(){
     this._dataService.getDataOfItems().subscribe((res)=>{
@@ -125,7 +150,24 @@ ngOnInit(): void {
       this._dataService.CartDetails.next(this.CartDetails);
   });
   }
-  
+    getLoginDataFromDatabase(){
+      this._dataService.getDataOfLoginUser(this.loginReactiveForm.value.email).subscribe((res:any)=>{
+      this.customerData1=res;
+      console.log(res);
+    });
+  }
+  compare1(){
+    bcrypt.compare(this.loginReactiveForm.value.password,this.customerData1.Pass,(err, res) => {
+      this.temp=res;
+      console.log(this.temp);
+    });
+  }
+    getadminLoginDataFromDatabase(){
+      this._dataService.getDataOfLoginAdmin(this.loginReactiveForm.value.email).subscribe((res:any)=>{
+      this.adminData1=res;
+      console.log(res);
+    });
+  }
   getDataOfAdminFromDatabase(){
   this._dataService.getDataOfAdmin().subscribe((res)=>{
     this.DataOfAdmin=res;
@@ -219,6 +261,8 @@ ngOnInit(): void {
   }
   closeModal(){
     this.isModelUse=false;
+    this.signupReactiveForm.reset(this.signupReactiveForm.value);
+    this.loginReactiveForm.reset(this.loginReactiveForm.value);
     this.modalService.dismissAll();
   }
   changeStateAdmin(){
@@ -244,103 +288,132 @@ ngOnInit(): void {
   closePop() {
   this.ispopUpShow = false;
   }
-  verifyCustomer(event:NgForm){
-  if(this.customerDatabaseData==null){
-    alert("Username does not Exist");
-  }
-  for(let i=0;i<this.customerDatabaseData.length;i++){
-    if(this.customerDatabaseData[i].email==event.value.mail && this.customerDatabaseData[i].Pass==event.value.password){
-    this._dataService.customerloginOrNot.next(true);  
-    this._dataService.customerData.next({
-      "id":this.customerDatabaseData[i]['_id'],
-      "name":event.value.mail,
-      "password":event.value.password
-    });
+ 
+verifyCustomer(){
+ 
+  this.SpinnerService.show(); 
+  this.getLoginDataFromDatabase();
+  setTimeout(()=>{
+    this.compare1();
+  },100);
+   setTimeout(()=>{
+    console.log(this.customerData1.Pass);
+   
+    if(this.customerData1==null){
+      this.SpinnerService.hide();
+      alert("your account ris not found");
+    }
+    else if(!this.temp){
+      this.SpinnerService.hide();
+      alert("Password is incorrect");
+    }
+    else if(this.temp && this.customerData1!=null){
+    this._dataService.customerloginOrNot.next(true);
     this.customerData={
-      "id":this.customerDatabaseData[i]['_id'],
-      "name":event.value.mail,
-      "password":event.value.password
-    }
-     this.customerloginOrNot=true;
-      if(this.customerloginOrNot==true){
-        this.closeModal();
-        this.modalService.dismissAll();
-      }
-      this.getDataOfItemsFromDatabase();
-      this.router.navigate(['menu']);
-    }
+          "id":this.customerData1['_id'],
+          "name":this.loginReactiveForm.value.email,
+          "password":this.loginReactiveForm.value.password
+        }
+    this._dataService.customerData.next(this.customerData);
+    this.getDataOfItemsFromDatabase();
+    
+    this.router.navigate(['menu']);
+    this.closeModal();
+    this.modalService.dismissAll();
+    this.SpinnerService.hide();
   }
-  if(this.customerloginOrNot==false){
-  alert("Please Enter Correct Email and Password");
+  
+   },2000);
+   
   }
-  }
-verifyAdmin(event:NgForm){
+verifyAdmin(){
   this.getDataOfAdminFromDatabase();
-  if(this.data==null){
-    alert("Username does not Exit");
-  }
-  for(let i=0;i<this.data.length;i++){
-    if(this.data[i].email==event.value.mail && this.data[i].Pass==event.value.password){
-      this._dataService.adminloginOrNot.next(true);
-      this.adminData={"id":this.data[i]['_id'],"name":event.value.mail,"password":event.value.password};
-      this._dataService.adminData.next(this.adminData); 
-      this.adminloginOrNot=true;
-      if(this.adminloginOrNot==true){
-        this.closeModal();
-        this.modalService.dismissAll();
-      }
-      this.router.navigate(['admin-home']);
+  // if(this.data==null){
+  //   alert("Username does not Exit");
+  // }
+  // console.log(this.loginReactiveForm.value.email+"/"+this.loginReactiveForm.value.password);
+  // for(let i=0;i<this.data.length;i++){
+  //   if(this.data[i].email==this.loginReactiveForm.value.email && this.data[i].Pass==this.loginReactiveForm.value.password){
+  //     this._dataService.adminloginOrNot.next(true);
+  //     this.adminData={"id":this.data[i]['_id'],"name":this.loginReactiveForm.value.email,"password":this.loginReactiveForm.value.password};
+  //     this._dataService.adminData.next(this.adminData); 
+  //     this.adminloginOrNot=true;
+  //     if(this.adminloginOrNot==true){
+  //       this.closeModal();
+  //       this.modalService.dismissAll();
+  //     }
+  //     this.router.navigate(['admin-home']);
+  //   }
+  // }
+  // if(this.adminloginOrNot==false){
+  // alert("Please Enter Correct Email and Password");
+  // }
+  this.SpinnerService.show(); 
+  this.getadminLoginDataFromDatabase();
+   setTimeout(()=>{
+    if(this.adminData1==null){
+      this.SpinnerService.hide();
+      alert("your account is not found");
     }
+    else{
+    this._dataService.adminloginOrNot.next(true);
+    this.adminData={
+          "id":this.adminData1['_id'],
+          "name":this.loginReactiveForm.value.email,
+          "password":this.loginReactiveForm.value.password
+        }
+    this._dataService.adminData.next(this.adminData);
+    this.router.navigate(['admin-home']);
+    this.closeModal();
+    this.modalService.dismissAll();
+    this.SpinnerService.hide();
   }
-  if(this.adminloginOrNot==false){
-  alert("Please Enter Correct Email and Password");
+   },2000);
+   
   }
-  }
-dataCustomer(event:NgForm){
-  const new1=event.value;
-  // this.dataarray=this._dataService.signDataCustomer.value;
+dataCustomer(){
   for(let i=0;i<this.customerDatabaseData.length;i++){
-    if(event.value.mail==this.customerDatabaseData[i]['email'] || event.value.password==this.customerDatabaseData[i]['password']){
+    if(this.signupReactiveForm.value.email==this.customerDatabaseData[i]['email'] || this.signupReactiveForm.value.password==this.customerDatabaseData[i]['password']){
       alert("Please Don't enter existing data");
       this.customerduplicateOrNot=true;
     }
   }
   if(this.customerduplicateOrNot==false){
-    //  this.dataarray.push(new1);
-     this._dataService.AddDataToCustomer({"first_name":event.value.first_name,"last_name":event.value.Last_name,"email":event.value.mail,"Pass":event.value.password,"phone_number":event.value.phonenumber,"address":event.value.address}).subscribe((res)=>{
+  
+     this._dataService.AddDataToCustomer({"first_name":this.signupReactiveForm.value.firstname,"last_name":this.signupReactiveForm.value.lastname,"email":this.signupReactiveForm.value.email,"Pass":this.signupReactiveForm.value.password,"phone_number":this.signupReactiveForm.value.phonenumber,"address":this.signupReactiveForm.value.address}).subscribe((res)=>{
       this.getDataOfCustomerInLogin();
     },
     (err)=>{
       console.log(err);
     })
-    this._dataService.AddDataToOrder({"email":event.value.mail,"orders":[]}).subscribe((res)=>{
+    this._dataService.AddDataToOrder({"email":this.signupReactiveForm.value.email,"orders":[]}).subscribe((res)=>{
     });
     this.modalService.dismissAll();
+    this.signupReactiveForm.reset(this.signupReactiveForm.value);
     this.closeModal();
-      alert("Account is Created!");
-      this.router.navigate(['']);   
-}
-this.customerduplicateOrNot=false;
+    alert("Account is Created!");
+    this.router.navigate(['']);   
   }
-dataAdmin(event:NgForm){
+  this.customerduplicateOrNot=false;
+  }
+dataAdmin(){
   for(let i=0;i<this.data.length;i++){
-    if(event.value.mail==this.data[i]['email'] && event.value.password==this.data[i]['Pass']){
+    if(this.signupReactiveForm.value.email==this.data[i]['email'] && this.signupReactiveForm.value.password==this.data[i]['Pass']){
       alert("Please Don't enter existing data");
       this.adminduplicateOrNot=true;
     }
   }
   if(this.adminduplicateOrNot==false){
-      this._dataService.AddDataToAdmin({"first_name":event.value.first_name,"last_name":event.value.Last_name,"email":event.value.mail,"Pass":event.value.password,"phone_number":event.value.phonenumber,"address":event.value.address}).subscribe((res)=>{
+      this._dataService.AddDataToAdmin({"first_name":this.signupReactiveForm.value.firstname,"last_name":this.signupReactiveForm.value.lastname,"email":this.signupReactiveForm.value.email,"Pass":this.signupReactiveForm.value.password,"phone_number":this.signupReactiveForm.value.phonenumber,"address":this.signupReactiveForm.value.address}).subscribe((res)=>{
         this.getDataOfAdminFromDatabase();
-      }
-      ,
+      },
       (err)=>{
         console.log(err);
       }
       )
       this.modalService.dismissAll();
       alert("Account is Created!");
-      
+     this.signupReactiveForm.reset(this.signupReactiveForm.value);
       this.closeModal();
       this.router.navigate(['']);   
 }
@@ -360,4 +433,34 @@ this.adminduplicateOrNot=false;
     }
 }
 }
+  
+
+
+
+
+  // LOGIN SYSTEM
+
+// if(this.customerDatabaseData==null){
+  //   alert("Username does not Exist");
+  // }
+  // for(let i=0;i<this.customerDatabaseData.length;i++){
+  //   if(this.customerDatabaseData[i].email==this.loginReactiveForm.value.email && bcrypt.compare(this.customerDatabaseData[i].Pass,this.loginReactiveForm.value.password)){
+  //   this._dataService.customerloginOrNot.next(true);  
+  //   this.customerData={
+  //     "id":this.customerDatabaseData[i]['_id'],
+  //     "name":this.loginReactiveForm.value.email,
+  //     "password":this.loginReactiveForm.value.password
+  //   };
+  //   this._dataService.customerData.next(this.customerData);
+  //    this.customerloginOrNot=true;
+  //     if(this.customerloginOrNot==true){
+  //       this.closeModal();
+  //         this.modalService.dismissAll();
+  //     }
+  //     this.router.navigate(['menu'])
+  //   }
+  // }
+  // if(this.customerloginOrNot==false){
+  //   alert("Please Enter Correct Email and Password");  
+  // }
   

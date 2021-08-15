@@ -63,10 +63,13 @@
             font-size: 2rem;
         }
         
-        .navigation .links a {
+        .navigation .links .login,
+        .navigation .links .signup {
             padding: 0.7rem;
             border-radius: 10px;
-            border: 0.1px solid rgba(0, 0, 0, 0.353);
+            display: flex;
+            flex-direction: column;
+            /* border: 0.1px solid rgba(0, 0, 0, 0.353); */
             margin-right: 5px;
             text-decoration: none;
             cursor: pointer;
@@ -77,13 +80,12 @@
             /* background-color: rgba(76, 241, 139, 0.527); */
             font-size: 1.3rem;
         }
-        
-        .navigation .links a:last-child {
+        /* .navigation .links a:last-child {
             background-color: rgb(245, 78, 128);
             color: white;
             margin-right: 0px;
             border: none;
-        }
+        } */
         
         @media screen and (max-width:716px) {
             .navigation .links a {
@@ -245,6 +247,15 @@
         .error {
             color: #FF3636;
             height: 30px;
+        }
+        
+        .field-wrapper input.ng-touched.ng-invalid {
+            border: 1px solid red;
+            box-shadow: 0 0 1px inset rgba(255, 0, 0, 0.2);
+        }
+        
+        .disabled1 {
+            opacity: 0.4;
         }
         
         .field-wrapper .field-placeholder {

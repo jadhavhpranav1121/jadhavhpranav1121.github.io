@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminSideOrdersComponent } from './admin-side-orders/admin-side-orders.component';
 import { AdminhomepageComponent } from './adminhomepage/adminhomepage.component';
+import { AuthGuard } from './auth/auth.guard';
 import { BodyComponentComponent } from './body-component/body-component.component';
 import { CartComponent } from './cart/cart.component';
 import { CustomerOrdersComponent } from './customer-orders/customer-orders.component';
@@ -12,7 +13,7 @@ import { SettingcomponentComponent } from './settingcomponent/settingcomponent.c
 
 const routes: Routes = [
   {path:'',component:BodyComponentComponent,pathMatch:'full'},
-  {path:'carts',component:CartComponent,pathMatch:'full'},
+  {path:'carts',component:CartComponent,pathMatch:'full',canActivate:[AuthGuard]},
   {path:'orders',component:CustomerOrdersComponent,pathMatch:'full'},
   {path:'Adminorders',component:AdminSideOrdersComponent,pathMatch:'full'},
   {path:'admin-home',component:AdminhomepageComponent,pathMatch:'full'},

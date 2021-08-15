@@ -1,3 +1,6 @@
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.6)" size="large" color="#0aafaf" type="ball-atom" [zIndex]=100000000000000>
+    <p style="color:white;margin-top:40px;">Please Wait</p>
+</ngx-spinner>
 <!-- navigation Part -->
 <nav class="navigation sticky">
     <div class="logo" (click)="GoTobodyComponent()">
@@ -5,8 +8,8 @@
         <span>Pizza Hunter</span>
     </div>
     <div class="links" *ngIf="!adminloginOrNot || !customerloginOrNot">
-        <a *ngIf="!customerloginOrNot && !adminloginOrNot" class="login" (click)="openVerticallyCentered(login)">Login</a>
-        <a *ngIf="!customerloginOrNot && !adminloginOrNot" class="signup" (click)="openVerticallyCentered(signup)">Sign Up</a>
+        <div *ngIf="!customerloginOrNot && !adminloginOrNot" class="login" (click)="openVerticallyCentered(login)">Login</div>
+        <div *ngIf="!customerloginOrNot && !adminloginOrNot" class="signup" (click)="openVerticallyCentered(signup)">Sign Up</div>
     </div>
     <div class="links" *ngIf="customerloginOrNot">
         <strong *ngIf="customerloginOrNot">Hello,</strong>
@@ -84,45 +87,45 @@
                     <button class="btn" [ngClass]="{'active':isCustomer==true}" (click)="changeStateCustomer()">Customer</button>
                     <button class="btn" [ngClass]="{'active':isAdmin==true}" (click)="changeStateAdmin()">Admin</button>
                 </div>
-                <form #f="ngForm" (ngSubmit)="verifyCustomer(f)" style="width: 80%;height: 80%;" *ngIf="isCustomer">
-                    <div class="field-wrapper ">
-                        <input type="email " name="email " ngModel placeholder="&nbsp;" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" name="mail" #mail="ngModel" required>
-                        <div class="field-placeholder "><span>Enter your email</span></div>
+                <!-- #f="ngForm" (ngSubmit)="verifyCustomer(f)" style="width: 80%;height: 80%;" *ngIf="isCustomer" -->
+                <form (ngSubmit)="verifyCustomer()" [formGroup]="loginReactiveForm" style="width: 80%;height: 80%;" *ngIf="isCustomer">
+                    <div class="field-wrapper">
+                        <input type="email" formControlName="email" autocomplete="off">
+                        <div class="field-placeholder"><span>Enter your email</span></div>
                     </div>
                     <div class="error">
-                        <div *ngIf="mail.invalid && (mail.dirty || mail.touched) || mail.errors?.pattern">Please Enter Mail</div>
+                        <div *ngIf="!loginReactiveForm.get('email')?.valid && loginReactiveForm.get('email')?.touched">Please Enter Mail</div>
                     </div>
                     <div class="field-wrapper">
-                        <input type="password" autocomplete="off" ngModel placeholder="&nbsp;" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$" #password="ngModel" name="password" required>
+                        <input type="password" formControlName="password" autocomplete="off">
                         <div class="field-placeholder"><span>Enter your password</span></div>
                     </div>
                     <div class="error">
-                        <div *ngIf="password.invalid && (password.dirty || password.touched) || password.errors?.pattern" style="font-size: 10px;text-align: center;">Please Enter Password in minimum 8 letters,at least one uppercase,one lowercase,one special character</div>
+                        <div *ngIf="!loginReactiveForm.get('password')?.valid && loginReactiveForm.get('password')?.touched" style="font-size: 10px;text-align: center;">Please Enter Password in minimum 8 letters,at least one uppercase,one lowercase,one special character</div>
                     </div>
 
                     <div class="field-wrapper">
-                        <!-- customerloginOrNot==true?:loginAlert() -->
-                        <button type="submit" style="color:white;" (click)="customerloginOrNot==true?closeModal():loginAlert()" [disabled]="f.invalid">Log in</button>
+                        <button type="submit" style="color:white;" (click)="customerloginOrNot==true?closeModal():loginAlert()" [disabled]="loginReactiveForm.invalid" [ngClass]="{disabled1:loginReactiveForm.invalid}">Log in</button>
                     </div>
                 </form>
-                <form #f="ngForm" (ngSubmit)="verifyAdmin(f)" style="width: 80%;height: 80%;" *ngIf="isAdmin">
+                <form (ngSubmit)="verifyAdmin()" [formGroup]="loginReactiveForm" style="width: 80%;height: 80%;" *ngIf="isAdmin">
                     <div class="field-wrapper">
-                        <input type="email " name="email " ngModel placeholder="&nbsp;" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" name="mail" #mail="ngModel" required>
-                        <div class="field-placeholder "><span>Admin your email</span></div>
+                        <input type="email" formControlName="email" autocomplete="off">
+                        <div class="field-placeholder"><span>Enter your email</span></div>
                     </div>
                     <div class="error">
-                        <div *ngIf="mail.invalid && (mail.dirty || mail.touched) || mail.errors?.pattern">Please Enter Mail</div>
+                        <div *ngIf="!loginReactiveForm.get('email')?.valid && loginReactiveForm.get('email')?.touched">Please Enter Mail</div>
                     </div>
                     <div class="field-wrapper">
-                        <input type="password" autocomplete="off" ngModel placeholder="&nbsp;" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$" #password="ngModel" name="password" required>
+                        <input type="password" formControlName="password" autocomplete="off">
                         <div class="field-placeholder"><span>Enter your password</span></div>
                     </div>
                     <div class="error">
-                        <div *ngIf="password.invalid && (password.dirty || password.touched) || password.errors?.pattern" style="font-size: 10px;text-align: center;">Please Enter Password in minimum 8 letters,at least one uppercase,one lowercase,one special character</div>
+                        <div *ngIf="!loginReactiveForm.get('password')?.valid && loginReactiveForm.get('password')?.touched" style="font-size: 10px;text-align: center;">Please Enter Password in minimum 8 letters,at least one uppercase,one lowercase,one special character</div>
                     </div>
 
                     <div class="field-wrapper">
-                        <button type="submit" style="color:white;" (click)="adminloginOrNot==true?closeModal():loginAlert()" [disabled]="f.invalid">Log in</button>
+                        <button type="submit" style="color:white;" (click)="adminloginOrNot==true?closeModal():loginAlert()" [disabled]="loginReactiveForm.invalid" [ngClass]="{disabled1:loginReactiveForm.invalid}">Log in</button>
                     </div>
                 </form>
             </div>
@@ -132,7 +135,6 @@
 </ng-template>
 
 <ng-template #signup let-modal>
-
     <div class="modal-header">
         <h4 class="modal-title">Sign Up</h4>
         <button type="button" class="close" aria-label="Close" (click)="closeModal()">
@@ -146,115 +148,109 @@
                     <button class="btn" [ngClass]="{'active':isCustomerSigup==true}" (click)="changeStateCustomerSigup()">Customer</button>
                     <button class="btn" [ngClass]="{'active':isAdminSigup==true}" (click)="changeStateAdminSigup()">Admin</button>
                 </div>
-                <form #f="ngForm" (ngSubmit)="dataCustomer(f)" style="width: 80%;height: 80%;" *ngIf="isCustomerSigup" ngNativeValidate>
-
+                <form (ngSubmit)="dataCustomer()" [formGroup]="signupReactiveForm" style="width: 80%;height: 80%;" *ngIf="isCustomerSigup">
                     <div class="field-wrapper">
-                        <input type="text" name="first_name" class="form-control" ngModel autocomplete="off" placeholder="&nbsp;" #firstname="ngModel" required>
+                        <input type="text" formControlName="firstname" autocomplete="off">
                         <div class="field-placeholder"><span>Enter your First Name</span></div>
                     </div>
                     <div class="error">
-                        <div *ngIf="firstname.invalid && (firstname.dirty || firstname.touched)">Please Enter first Name</div>
-                        <div *ngIf="!(firstname.invalid && (firstname.dirty || firstname.touched))" style="margin-bottom: 0px;"></div>
+                        <div *ngIf="!signupReactiveForm.get('firstname')?.valid && signupReactiveForm.get('firstname')?.touched">Please Enter first Name</div>
+                        <!-- <div *ngIf="!(firstname.invalid && (firstname.dirty || firstname.touched))" style="margin-bottom: 0px;"></div> -->
                     </div>
 
                     <div class="field-wrapper">
-                        <input type="mail" autocomplete="off" ngModel placeholder="&nbsp;" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" name="mail" #mail="ngModel" required>
+                        <input type="mail" autocomplete="off" formControlName="email">
                         <div class="field-placeholder"><span>Enter your mail</span></div>
                     </div>
                     <div class="error">
-                        <div *ngIf="mail.invalid && (mail.dirty || mail.touched) || mail.errors?.pattern">Please Enter Mail</div>
-                        <div *ngIf="!(mail.invalid && (mail.dirty || mail.touched))"></div>
+                        <div *ngIf="!signupReactiveForm.get('email')?.valid && signupReactiveForm.get('email')?.touched">Please Enter Mail</div>
+                        <!-- <div *ngIf="!(mail.invalid && (mail.dirty || mail.touched))"></div> -->
                     </div>
                     <div class="field-wrapper">
-                        <input type="number" autocomplete="off" ngModel placeholder="&nbsp;" name="phonenumber" pattern="^((\\+91-?) |0)?[0-9]{10}$" #phonenumber="ngModel" required>
+                        <input type="number" formControlName="phonenumber" autocomplete="off">
                         <div class="field-placeholder"><span>Enter your Phone Number</span></div>
                     </div>
                     <div class="error">
-                        <div *ngIf="phonenumber.invalid && (phonenumber.dirty || phonenumber.touched) || phonenumber.errors?.pattern">Please Enter phonenumber </div>
-                        <div *ngIf="!((phonenumber.invalid && (phonenumber.dirty || phonenumber.touched))|| phonenumber.errors?.pattern)" style="margin-bottom: 0px;"></div>
+                        <div *ngIf="!signupReactiveForm.get('phonenumber')?.valid && signupReactiveForm.get('phonenumber')?.touched">Please Enter phonenumber </div>
+                        <!-- <div *ngIf="!((phonenumber.invalid && (phonenumber.dirty || phonenumber.touched))|| phonenumber.errors?.pattern)" style="margin-bottom: 0px;"></div> -->
                     </div>
                     <div class="field-wrapper">
-                        <input type="text" autocomplete="off" ngModel placeholder="&nbsp;" #Last_name="ngModel" name="Last_name" required>
+                        <input type="text" formControlName="lastname" autocomplete="off">
                         <div class="field-placeholder"><span>Enter your Last Name</span></div>
                     </div>
                     <div class="error">
-                        <div *ngIf="Last_name.invalid && (Last_name.dirty || Last_name.touched)">Please Enter Last name</div>
-                        <div *ngIf="!(Last_name.invalid && (Last_name.dirty || Last_name.touched))" style="margin-bottom: 0px;"></div>
+                        <div *ngIf="!signupReactiveForm.get('lastname')?.valid && signupReactiveForm.get('lastname')?.touched">Please Enter Last name</div>
+                        <!-- <div *ngIf="!(Last_name.invalid && (Last_name.dirty || Last_name.touched))" style="margin-bottom: 0px;"></div> -->
                     </div>
                     <div class="field-wrapper">
-                        <input type="password" autocomplete="off" ngModel placeholder="&nbsp;" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$" #password="ngModel" name="password" required>
+                        <input type="password" autocomplete="off" formControlName="password">
                         <div class="field-placeholder"><span>Enter your password</span></div>
                     </div>
                     <div class="error">
-                        <div *ngIf="password.invalid && (password.dirty || password.touched) || password.errors?.pattern" style="font-size: 10px;text-align: center;">Please Enter Password in minimum 8 letters,at least one uppercase,one lowercase,one special character</div>
+                        <div *ngIf="!signupReactiveForm.get('password')?.valid && signupReactiveForm.get('password')?.touched" style="font-size: 10px;text-align: center;">Please Enter Password in minimum 8 letters,at least one uppercase,one lowercase,one special character</div>
                     </div>
                     <div class="field-wrapper">
-                        <input type="text" autocomplete="off" ngModel placeholder="&nbsp;" #address="ngModel" name="address" required>
+                        <input type="text" formControlName="address">
                         <div class="field-placeholder"><span>Enter your Address</span></div>
                     </div>
                     <div class="error">
-                        <div *ngIf="address.invalid && (address.dirty || address.touched)">Please Enter address</div>
-                        <div *ngIf="!(address.invalid && (address.dirty || address.touched))" style="margin-bottom: 0px;"></div>
+                        <div *ngIf="!signupReactiveForm.get('address')?.valid && signupReactiveForm.get('address')?.touched">Please Enter address</div>
                     </div>
-
-                    <div class="signup">
-                        <button type="submit" [disabled]="f.invalid" style="width: 90%;height:40px;border: none;background-color: #9d0000a0;border-radius: 10px;color:white;">Sign Up</button>
+                    <div class=" signup ">
+                        <button type="submit " [disabled]="signupReactiveForm.invalid " style="width: 90%;height:40px;border: none;background-color: #9d0000a0;border-radius: 10px;color:white; " [ngClass]="{ 'disabled':signupReactiveForm.invalid} ">Sign Up</button>
                     </div>
                 </form>
                 <h4 *ngIf="isAdminSigup && lengthVariable>=1">Already Admin are Signup</h4>
-                <form #f="ngForm" (ngSubmit)="dataAdmin(f)" style="width: 80%;height: 80%;" *ngIf="isAdminSigup && lengthVariable==0" ngNativeValidate>
+                <form (ngSubmit)="dataAdmin()" style="width: 80%;height: 80%;" *ngIf="isAdminSigup && lengthVariable==0">
                     <div class="field-wrapper">
-                        <input type="text" name="first_name" class="form-control" ngModel autocomplete="off" placeholder="&nbsp;" #firstname="ngModel" required>
+                        <input type="text" formControlName="firstname" autocomplete="off">
                         <div class="field-placeholder"><span>Enter your First Name</span></div>
                     </div>
                     <div class="error">
-                        <div *ngIf="firstname.invalid && (firstname.dirty || firstname.touched)">Please Enter first Name</div>
-                        <div *ngIf="!(firstname.invalid && (firstname.dirty || firstname.touched))" style="margin-bottom: 0px;"></div>
+                        <div *ngIf="!signupReactiveForm.get('firstname')?.valid && signupReactiveForm.get('firstname')?.touched">Please Enter first Name</div>
+                        <!-- <div *ngIf="!(firstname.invalid && (firstname.dirty || firstname.touched))" style="margin-bottom: 0px;"></div> -->
                     </div>
 
                     <div class="field-wrapper">
-                        <input type="mail" autocomplete="off" ngModel placeholder="&nbsp;" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" name="mail" #mail="ngModel" required>
+                        <input type="mail" autocomplete="off" formControlName="email">
                         <div class="field-placeholder"><span>Enter your mail</span></div>
                     </div>
                     <div class="error">
-                        <div *ngIf="mail.invalid && (mail.dirty || mail.touched) || mail.errors?.pattern">Please Enter Mail</div>
-                        <div *ngIf="!(mail.invalid && (mail.dirty || mail.touched))"></div>
+                        <div *ngIf="!signupReactiveForm.get('email')?.valid && signupReactiveForm.get('email')?.touched">Please Enter Mail</div>
+                        <!-- <div *ngIf="!(mail.invalid && (mail.dirty || mail.touched))"></div> -->
                     </div>
                     <div class="field-wrapper">
-                        <input type="number" autocomplete="off" ngModel placeholder="&nbsp;" name="phonenumber" pattern="^((\\+91-?) |0)?[0-9]{10}$" #phonenumber="ngModel" required>
+                        <input type="number" formControlName="phonenumber" autocomplete="off">
                         <div class="field-placeholder"><span>Enter your Phone Number</span></div>
                     </div>
                     <div class="error">
-                        <div *ngIf="phonenumber.invalid && (phonenumber.dirty || phonenumber.touched) || phonenumber.errors?.pattern">Please Enter phonenumber </div>
-                        <div *ngIf="!((phonenumber.invalid && (phonenumber.dirty || phonenumber.touched))|| phonenumber.errors?.pattern)" style="margin-bottom: 0px;"></div>
+                        <div *ngIf="!signupReactiveForm.get('phonenumber')?.valid && signupReactiveForm.get('phonenumber')?.touched">Please Enter phonenumber </div>
+                        <!-- <div *ngIf="!((phonenumber.invalid && (phonenumber.dirty || phonenumber.touched))|| phonenumber.errors?.pattern)" style="margin-bottom: 0px;"></div> -->
                     </div>
                     <div class="field-wrapper">
-                        <input type="text" autocomplete="off" ngModel placeholder="&nbsp;" #Last_name="ngModel" name="Last_name" required>
+                        <input type="text" formControlName="lastname" autocomplete="off">
                         <div class="field-placeholder"><span>Enter your Last Name</span></div>
                     </div>
                     <div class="error">
-                        <div *ngIf="Last_name.invalid && (Last_name.dirty || Last_name.touched)">Please Enter Last name</div>
-                        <div *ngIf="!(Last_name.invalid && (Last_name.dirty || Last_name.touched))" style="margin-bottom: 0px;"></div>
+                        <div *ngIf="!signupReactiveForm.get('lastname')?.valid && signupReactiveForm.get('lastname')?.touched">Please Enter Last name</div>
+                        <!-- <div *ngIf="!(Last_name.invalid && (Last_name.dirty || Last_name.touched))" style="margin-bottom: 0px;"></div> -->
                     </div>
-                    <!-- closeModal() -->
                     <div class="field-wrapper">
-                        <input type="password" autocomplete="off" ngModel placeholder="&nbsp;" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$" #password="ngModel" name="password" required>
+                        <input type="password" autocomplete="off" formControlName="password">
                         <div class="field-placeholder"><span>Enter your password</span></div>
                     </div>
                     <div class="error">
-                        <div *ngIf="password.invalid && (password.dirty || password.touched) || password.errors?.pattern" style="font-size: 10px;text-align: center;">Please Enter Password in minimum 8 letters,at least one uppercase,one lowercase,one special character</div>
+                        <div *ngIf="!signupReactiveForm.get('password')?.valid && signupReactiveForm.get('password')?.touched" style="font-size: 10px;text-align: center;">Please Enter Password in minimum 8 letters,at least one uppercase,one lowercase,one special character</div>
                     </div>
                     <div class="field-wrapper">
-                        <input type="text" autocomplete="off" ngModel placeholder="&nbsp;" #address="ngModel" name="address" required>
+                        <input type="text" formControlName="address">
                         <div class="field-placeholder"><span>Enter your Address</span></div>
                     </div>
                     <div class="error">
-                        <div *ngIf="address.invalid && (address.dirty || address.touched)">Please Enter address</div>
-                        <div *ngIf="!(address.invalid && (address.dirty || address.touched))" style="margin-bottom: 0px;"></div>
+                        <div *ngIf="!signupReactiveForm.get('address')?.valid && signupReactiveForm.get('address')?.touched">Please Enter address</div>
                     </div>
-
                     <div class="signup">
-                        <button type="submit" [disabled]="f.invalid" style="width: 90%;height:40px;border: none;color:white;background-color: #9d0000a0;border-radius: 10px;">Sign Up</button>
+                        <button type="submit" [disabled]="signupReactiveForm.invalid" style="width: 90%;height:40px;border: none;background-color: #9d0000a0;border-radius: 10px;color:white;" [ngClass]="{'disabled':signupReactiveForm.invalid}">Sign Up</button>
                     </div>
                 </form>
             </div>

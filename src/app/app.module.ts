@@ -15,6 +15,21 @@ import { NgxSpinnerModule } from "ngx-spinner";
 import { SettingcomponentComponent } from './settingcomponent/settingcomponent.component';
 import { MenuComponent } from './menu/menu.component';
 import { SettingAdminComponent } from './setting-admin/setting-admin.component';  
+import { ReactiveFormsModule } from '@angular/forms';
+import { WindowService } from './dataService/window.service';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireStorageModule } from '@angular/fire/storage';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+const config = {
+  apiKey: "AIzaSyB8AD5soww5Hlk_yZr-mYUN94zBUJ37B8w",
+  authDomain: "fir-91088.firebaseapp.com",
+  databaseURL: "https://fir-91088-default-rtdb.firebaseio.com",
+  projectId: "fir-91088",
+  storageBucket: "fir-91088.appspot.com",
+  messagingSenderId: "673242040467",
+  appId: "1:673242040467:web:df7cb767902086bc54e566"
+};
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,6 +39,7 @@ import { SettingAdminComponent } from './setting-admin/setting-admin.component';
     AdminhomepageComponent,
     Error404Component,
     BodyComponentComponent,
+    
     SettingcomponentComponent,
     MenuComponent,
     SettingAdminComponent
@@ -32,13 +48,18 @@ import { SettingAdminComponent } from './setting-admin/setting-admin.component';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
     NgbPaginationModule,
      NgbAlertModule,
      NgbModule,
      HttpClientModule,
-     NgxSpinnerModule
+     NgxSpinnerModule,
+     AngularFireModule.initializeApp(config),
+     AngularFirestoreModule, // firestore
+     AngularFireAuthModule, // auth
+     AngularFireStorageModule // storage
   ],
-  providers: [HttpClientModule],
+  providers: [HttpClientModule,WindowService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

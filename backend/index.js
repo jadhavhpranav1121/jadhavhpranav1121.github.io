@@ -1,4 +1,5 @@
 const express = require("express");
+const bcrypt = require("bcryptjs");
 require("./db/conn");
 const cors = require("cors");
 require("./router/adminRoutering");

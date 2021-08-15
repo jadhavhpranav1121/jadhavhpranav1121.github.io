@@ -56,10 +56,17 @@ export class DataServiceService {
   getDataOfItems(){
     return this.http.get(this.urlOfItems);
   }
+  getDataOfLoginAdmin(email:any){
+    return this.http.get(this.urlOfAdmin+"/auth/"+email);
+  }
+  getDataOfLoginUser(email:any){
+    return this.http.get(this.urlOfCustomer+"/auth/"+email);
+  }
   getDataOfOrders(){
     return this.http.get(this.urlOfOrders);
   }
   deleteItemsInDataBase(name:any){
+    
     return this.http.delete(this.urlOfItems+"/"+name);
   }
   deleteCustomerInDataBase(id:any){
@@ -74,6 +81,9 @@ export class DataServiceService {
   }
   updateItemInDataBase(req:any,id:any){
     return this.http.patch(this.urlOfItems+"/"+id,req);
+  }
+  loggedInOrNot(){
+    return this.customerloginOrNot;
   }
   customerdataToAdmin=new BehaviorSubject<Array<Object>>([]);
   customerloginOrNot=new BehaviorSubject<boolean>(false);

@@ -1,5 +1,5 @@
 import { Component, OnInit,ViewEncapsulation } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { DataServiceService } from '../dataService/data-service.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -11,6 +11,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 export class AdminhomepageComponent implements OnInit {
   adminloginOrNot: boolean=false;
+  itemsReactiveForm!:FormGroup;
   CartDetails:any;
   url:any;
   findThisItem: any;
@@ -28,6 +29,12 @@ export class AdminhomepageComponent implements OnInit {
     })
    }
   ngOnInit(): void {
+    this.itemsReactiveForm=new FormGroup({
+      'name':new FormControl('',[Validators.required]),
+      'images':new FormControl('',[Validators.required]),
+      'Pass':new FormControl('',[Validators.required]),
+      'price':new FormControl('',[Validators.pattern('^[0-9]*$'),Validators.required]),
+    })
     this.SpinnerService.show();
     this.getItemsFromDatabase();
     this.SpinnerService.hide();
@@ -41,7 +48,12 @@ export class AdminhomepageComponent implements OnInit {
   openVerticallyCenteredUpdate(content:any,i:any){
     this.modalService.open(content, { centered: true });
     this.findThisItem=this.CartDetails[i]["_id"];
-    // console.log(this.findThisItem);
+    this.itemsReactiveForm.setValue({
+      'name':this.CartDetails[i]['name'],
+      'images':this.CartDetails[i]['images'],
+      'Pass':this.CartDetails[i]['Pass'],
+      'price':this.CartDetails[i]['price']
+    })
     this._dataService.findItemInDataBase(this.findThisItem).subscribe((res:any)=>{
       this.updateData=res;
     })
@@ -54,9 +66,8 @@ export class AdminhomepageComponent implements OnInit {
       });
     }
   }
-  data(event:NgForm){
-    
-    this._dataService.AddDataToItems({"name":event.value.name,"images":this.url,"Pass":event.value.Pass,"count":event.value.count,"price":event.value.price}).subscribe((res:any)=>{
+  data(){
+    this._dataService.AddDataToItems({"name":this.itemsReactiveForm.value.name,"images":this.url,"Pass":this.itemsReactiveForm.value.Pass,"count":0,"price":this.itemsReactiveForm.value.price}).subscribe((res:any)=>{
           this.CartDetails.push(res);
           this._dataService.CartDetails.next(this.CartDetails);
         });
@@ -71,13 +82,12 @@ export class AdminhomepageComponent implements OnInit {
       reader.readAsDataURL(event.target.files[0]);
     }
 }
-  updateItem(f:NgForm){
-    this.updateItems["name"]=f.value.name;
+  updateItem(){
+    this.updateItems["name"]=this.itemsReactiveForm.value.name;
     this.updateItems["images"]=this.url;
-    this.updateItems["Pass"]=f.value.Pass;
+    this.updateItems["Pass"]=this.itemsReactiveForm.value.Pass;
     this.updateItems["count"]=0;
-    this.updateItems["price"]=f.value.price;
-    // console.log(this.updateItems);
+    this.updateItems["price"]=this.itemsReactiveForm.value.price;
       this._dataService.updateItemInDataBase(this.updateItems,this.findThisItem).subscribe((res:any)=>{
         this.getItemsFromDatabase();
       });
