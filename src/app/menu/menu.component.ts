@@ -33,6 +33,7 @@ export class MenuComponent implements OnInit {
     this._dataService.adminloginOrNot.subscribe((res)=>{
       this.adminloginOrNot=res;
     });
+    
     this._dataService.customerloginOrNot.subscribe((res)=>{
       this.customerloginOrNot=res;
       // console.log(res);
@@ -40,9 +41,7 @@ export class MenuComponent implements OnInit {
     this._dataService.customerloginOrNot.subscribe((res)=>{
       this.customerloginOrNot=res;
     })   
-    this._dataService.CartDetails.subscribe((res)=>{
-      this.CartDetails=res;
-    });
+   
     this._dataService.OrderOpenOrNot.subscribe((res)=>{
       this.OrderOpenOrNot=res;
     });
@@ -54,7 +53,16 @@ export class MenuComponent implements OnInit {
     });
     this._dataService.BuyingCartDetail.subscribe((res)=>{
       this.BuyingCartDetail=res;
+      console.log("BYI",this.BuyingCartDetail);
+      if(!!this.BuyingCartDetail){
+        this.BuyingCartDetail=JSON.parse(localStorage.getItem('cart') || "[]");
+      }
       
+    });
+    this._dataService.CartDetails.subscribe((res)=>{
+      this.CartDetails=res;
+      
+
     });
     this._dataService.customerdataToAdmin.subscribe((res)=>{
       this.customerdataToAdmin=res;
@@ -66,18 +74,32 @@ export class MenuComponent implements OnInit {
   this._dataService.customerloginOrNot.subscribe((res)=>{
     this.customerloginOrNot=res;
   })
+  // console.log("CARTDETAIL",JSON.stringify());
+      // console.log(this.BuyingCartDetail);
+      console.log("Constructor",JSON.stringify(this.CartDetails));
+      for(let i=0;i<this.BuyingCartDetail.length;i++){
+        for(let j=0;j<this.CartDetails.length;j++){
+          if(this.CartDetails[j]['name']==this.BuyingCartDetail[i]['name']){
+            this.CartDetails[j]['count']=this.BuyingCartDetail[i]['count'];
+            // console.log(this.CartDetails[j]['count']);
+          }
+        }
+      }
   }
 
   ngOnInit(): void {
-    console.log("BuyingCartDetails"+JSON.stringify(this.BuyingCartDetail));
-    console.log("CartDetails"+JSON.stringify(this.CartDetails));
-    for(let i=0;i<this.BuyingCartDetail.length;i++){
-      for(let j=0;j<this.CartDetails.length;j++){
-        if(this.CartDetails[j]['name']==this.BuyingCartDetail[i]['name']){
-          this.CartDetails[j]['count']=this.BuyingCartDetail[i]['count'];
-        }
-      }
-    }
+  
+    // console.log("BuyingCartDetails"+JSON.stringify(this.BuyingCartDetail));
+    console.log("init",this.CartDetails);  
+    // for(let i=0;i<this.BuyingCartDetail.length;i++){
+    //   for(let j=0;j<this.CartDetails.length;j++){
+    //     if(this.CartDetails[j]['name']==this.BuyingCartDetail[i]['name']){
+    //       this.CartDetails[j]['count']=this.BuyingCartDetail[i]['count'];
+    //       console.log(this.CartDetails[j]['count']);
+    //     }
+    //   }
+    // }
+    // console.log("init"+JSON.stringify(this.CartDetails));
     this._dataService.BuyingCartDetail.next(this.BuyingCartDetail);
     this.loginDetailFromLocalStorage=localStorage.getItem('userDetails');
     
