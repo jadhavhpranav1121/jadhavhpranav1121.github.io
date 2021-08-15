@@ -59,8 +59,8 @@ export class DataServiceService {
   getDataOfLoginAdmin(email:any){
     return this.http.get(this.urlOfAdmin+"/auth/"+email);
   }
-  getDataOfLoginUser(email:any){
-    return this.http.get(this.urlOfCustomer+"/auth/"+email);
+  getDataOfLoginUser(res:any){
+    return this.http.post(this.urlOfCustomer+"/auth/",res);
   }
   getDataOfOrders(){
     return this.http.get(this.urlOfOrders);
@@ -83,7 +83,10 @@ export class DataServiceService {
     return this.http.patch(this.urlOfItems+"/"+id,req);
   }
   loggedInOrNot(){
-    return this.customerloginOrNot;
+    return !!localStorage.getItem('token');
+  }
+  getToken(){
+    return localStorage.getItem('token');
   }
   customerdataToAdmin=new BehaviorSubject<Array<Object>>([]);
   customerloginOrNot=new BehaviorSubject<boolean>(false);

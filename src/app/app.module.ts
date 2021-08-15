@@ -8,7 +8,7 @@ import { CustomerOrdersComponent } from './customer-orders/customer-orders.compo
 import { AdminSideOrdersComponent } from './admin-side-orders/admin-side-orders.component';
 import { AdminhomepageComponent } from './adminhomepage/adminhomepage.component';
 import {NgbPaginationModule, NgbAlertModule, NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule,HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Error404Component } from './error404/error404.component';
 import { BodyComponentComponent } from './body-component/body-component.component';
 import { NgxSpinnerModule } from "ngx-spinner";
@@ -21,6 +21,8 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
+import { TokenInterceptorService } from './auth/token-interceptor.service';
+import { AuthGuard } from './auth/auth.guard';
 const config = {
   apiKey: "AIzaSyB8AD5soww5Hlk_yZr-mYUN94zBUJ37B8w",
   authDomain: "fir-91088.firebaseapp.com",
@@ -39,7 +41,7 @@ const config = {
     AdminhomepageComponent,
     Error404Component,
     BodyComponentComponent,
-    
+    // TokenInterceptorService,
     SettingcomponentComponent,
     MenuComponent,
     SettingAdminComponent
@@ -53,13 +55,18 @@ const config = {
      NgbAlertModule,
      NgbModule,
      HttpClientModule,
+    //  TokenInterceptorService,
      NgxSpinnerModule,
      AngularFireModule.initializeApp(config),
      AngularFirestoreModule, // firestore
      AngularFireAuthModule, // auth
      AngularFireStorageModule // storage
   ],
-  providers: [HttpClientModule,WindowService],
+  providers: [HttpClientModule,WindowService,AuthGuard,{
+    provide:HTTP_INTERCEPTORS,
+    useClass:TokenInterceptorService,
+    multi:true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

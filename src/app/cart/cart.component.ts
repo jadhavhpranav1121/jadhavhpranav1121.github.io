@@ -68,6 +68,7 @@ export class CartComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.customerloginOrNot=(localStorage.getItem('token')==null)?false:true;
     this.getDataOfPizza();
     this.getDataOfOrdersDetails();
     // console.log(this.BuyingCartDetail);

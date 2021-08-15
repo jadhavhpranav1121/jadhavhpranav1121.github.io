@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { DataServiceService } from '../dataService/data-service.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { isConstructorDeclaration } from 'typescript';
+import { HttpErrorResponse } from '@angular/common/http';
 @Component({
   selector: 'app-customer-orders',
   templateUrl: './customer-orders.component.html',
@@ -47,18 +48,30 @@ export class CustomerOrdersComponent implements OnInit {
      this.customerOrders = res;  
     //  console.log(this.customerOrders);
      for (let i = 0; i < this.customerOrders.length; i++) {
-       if (this.customerOrders[i].email == this.customerData.name) {
+       if (this.customerOrders[i].email == localStorage.getItem('userDetails')) {
          this.OrderDetails = this.customerOrders[i].orders;
          this.customerData['_id']=this.customerOrders[i]['_id'];  
        }
      }
-   });
+     
+   },
+   (err)=>{
+       if(err instanceof HttpErrorResponse){
+         if(err.status==401){
+           this.router.navigate(['']);
+         }
+       }
+  });
   }
   
   ngOnInit(): void {
+    
+    this.customerloginOrNot=(localStorage.getItem('token')==null)?false:true;
+    // console.log(this.customerloginOrNot);
     this.SpinnerService.show(); 
     // console.log("sdf");
     this.getDataOfOrderFromDatabase();
+    // console.log()
     this.SpinnerService.hide(); 
   }
   cancelOrder(j:any){
@@ -66,7 +79,7 @@ export class CustomerOrdersComponent implements OnInit {
       const data=this.OrderDetails[j];
       this.SpinnerService.show();
       setTimeout(()=>{
-        this._dataservice.DeleteOrders(this.OrderDetails[j],this.customerData['name']).subscribe((res:any)=>{
+        this._dataservice.DeleteOrders(this.OrderDetails[j],localStorage.getItem('userDetails')).subscribe((res:any)=>{
           // console.log("Orders Deleted");
           this.getDataOfOrderFromDatabase();
         });

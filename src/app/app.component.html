@@ -8,12 +8,13 @@
         <span>Pizza Hunter</span>
     </div>
     <div class="links" *ngIf="!adminloginOrNot || !customerloginOrNot">
+        <a *ngIf="!customerloginOrNot" routerLink="orders" class="Cart" (click)="ChangeOrdersOpeningStatus()">Orders</a>
         <div *ngIf="!customerloginOrNot && !adminloginOrNot" class="login" (click)="openVerticallyCentered(login)">Login</div>
         <div *ngIf="!customerloginOrNot && !adminloginOrNot" class="signup" (click)="openVerticallyCentered(signup)">Sign Up</div>
     </div>
     <div class="links" *ngIf="customerloginOrNot">
         <strong *ngIf="customerloginOrNot">Hello,</strong>
-        <p *ngIf="customerloginOrNot">{{customerData["name"]}}&nbsp;&nbsp;&nbsp;</p>
+        <p *ngIf="customerloginOrNot">{{loginDetailFromLocalStorage}}&nbsp;&nbsp;&nbsp;</p>
         <a *ngIf="customerloginOrNot" routerLink="carts" class="Cart cartCss" (click)="ChangeCartOpeningStatus()"><span class="ItemsNumber">{{BuyingCartDetail.length>0?BuyingCartDetail.length:''}}</span><svg  version="1.0" xmlns="http://www.w3.org/2000/svg"
                 width="20px" height="20px" viewBox="0 0 1201.000000 1033.000000"
                 preserveAspectRatio="xMidYMid meet">

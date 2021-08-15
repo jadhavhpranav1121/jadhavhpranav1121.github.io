@@ -13,6 +13,7 @@ export class SettingcomponentComponent implements OnInit {
   OrderDetails: any;
   OrderDetailsFromDatabase: any;
   customerDatabaseData: any;
+  customerloginOrNot:boolean=false;
 
   constructor(private _dataservice:DataServiceService,private router:Router) { 
     this._dataservice.customerData.subscribe((res:any)=>{
@@ -37,6 +38,7 @@ export class SettingcomponentComponent implements OnInit {
   });
   }
   ngOnInit(): void {
+    this.customerloginOrNot=(localStorage.getItem('token')==null)?false:true;
   }
   logout(){
     this._dataservice.customerdataToAdmin.next([]);

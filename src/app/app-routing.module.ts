@@ -10,10 +10,10 @@ import { Error404Component } from './error404/error404.component';
 import { MenuComponent } from './menu/menu.component';
 import { SettingAdminComponent } from './setting-admin/setting-admin.component';
 import { SettingcomponentComponent } from './settingcomponent/settingcomponent.component';
-
+// ,canActivate:[AuthGuard]
 const routes: Routes = [
   {path:'',component:BodyComponentComponent,pathMatch:'full'},
-  {path:'carts',component:CartComponent,pathMatch:'full',canActivate:[AuthGuard]},
+  {path:'carts',component:CartComponent,pathMatch:'full'},
   {path:'orders',component:CustomerOrdersComponent,pathMatch:'full'},
   {path:'Adminorders',component:AdminSideOrdersComponent,pathMatch:'full'},
   {path:'admin-home',component:AdminhomepageComponent,pathMatch:'full'},
@@ -24,7 +24,7 @@ const routes: Routes = [
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes,{
-    onSameUrlNavigation: 'reload'
+    // onSameUrlNavigation: 'reload'
   })],
   exports: [RouterModule]
 })

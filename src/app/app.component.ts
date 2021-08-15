@@ -31,7 +31,7 @@ export class AppComponent {
   customerData: any;
   adminData: any;
   adminloginOrNot: any;
-  customerloginOrNot: any;
+  customerloginOrNot: boolean=false;
   OrderOpenOrNot: boolean | undefined;
   OrderDetails: Object[][]=[];
   customerdataToAdmin: Object[]=[];
@@ -68,22 +68,27 @@ export class AppComponent {
   contentIsOpenOrNot: boolean=false;
   DataOfAdmin: any;
   adminDataFromDatabase: any;
-  customerData1: any;
+  customerData1: any={};
   windowRef:any;
   adminData1: any;
   temp: any;
+  loginDetailFromLocalStorage!: string | null;
 
   constructor( private afAuth: AngularFireAuth,private windowService:WindowService,private router:Router,private _dataService:DataServiceService,private modalService: NgbModal,private SpinnerService:NgxSpinnerService){
     this.windowRef=this.windowService.windowRef;
     this._dataService.adminloginOrNot.subscribe((res)=>{
       this.adminloginOrNot=res;
     });
+    this._dataService.customerData.subscribe((res:any)=>{
+      console.log(res);
+      this.customerData=res;
+    })
     this._dataService.customerloginOrNot.subscribe((res)=>{
       this.customerloginOrNot=res;
     });
-    this._dataService.customerloginOrNot.subscribe((res)=>{
-      this.customerloginOrNot=res;
-    })   
+    // this._dataService.customerloginOrNot.subscribe((res)=>{
+    //   this.customerloginOrNot=res;
+    // })   
     this._dataService.CartDetails.subscribe((res)=>{
       this.CartDetails=res;
     });
@@ -105,9 +110,9 @@ export class AppComponent {
   this._dataService.ErrorPage.subscribe((res:any)=>{
     this.ErrorPage=res;
   });
-  this._dataService.customerloginOrNot.subscribe((res)=>{
-    this.customerloginOrNot=res;
-  })
+  // this._dataService.customerloginOrNot.subscribe((res)=>{
+  //   this.customerloginOrNot=res;
+  // })
 
 } 
 getDataOfCustomerInLogin(){
@@ -121,7 +126,8 @@ getDataOfCustomerInLogin(){
 });
 }
 ngOnInit(): void {
-  // this.windowRef.recaptchVerifier=new auth.RecaptchaVerifier()
+  this.customerloginOrNot=(localStorage.getItem('token')==null)?false:true;
+  this.loginDetailFromLocalStorage=localStorage.getItem('userDetails');
   this.loginReactiveForm=new FormGroup({
     'email':new FormControl('',[Validators.required,Validators.email]),
     'password':new FormControl('',[Validators.required,Validators.pattern("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$")])
@@ -151,9 +157,12 @@ ngOnInit(): void {
   });
   }
     getLoginDataFromDatabase(){
-      this._dataService.getDataOfLoginUser(this.loginReactiveForm.value.email).subscribe((res:any)=>{
-      this.customerData1=res;
-      console.log(res);
+      // console.log(this.loginReactiveForm.getRawValue());
+      this._dataService.getDataOfLoginUser(this.loginReactiveForm.getRawValue()).subscribe((res:any)=>{
+        this.customerData=this.loginReactiveForm.getRawValue();
+        console.log(res);
+        localStorage.setItem('token',res['token']);
+        // this.router.navigate(['menu'])
     });
   }
   compare1(){
@@ -176,6 +185,8 @@ ngOnInit(): void {
   }
 
   logout(){
+    localStorage.removeItem('token');
+    localStorage.removeItem('userDetails');
     this._dataService.customerdataToAdmin.next([]);
     this._dataService.BuyOrNot.next(false);
     this._dataService.BuyingCartDetail.next([]);
@@ -290,39 +301,53 @@ ngOnInit(): void {
   }
  
 verifyCustomer(){
- 
   this.SpinnerService.show(); 
   this.getLoginDataFromDatabase();
-  setTimeout(()=>{
-    this.compare1();
-  },100);
+  // this.router.navigate['menu'];
    setTimeout(()=>{
-    console.log(this.customerData1.Pass);
-   
-    if(this.customerData1==null){
+    // console.log("password"+this.customerData1.Pass);/
+    if(localStorage.getItem('token')==null){
       this.SpinnerService.hide();
-      alert("your account ris not found");
+        alert("your account ris not found");
     }
-    else if(!this.temp){
-      this.SpinnerService.hide();
-      alert("Password is incorrect");
-    }
-    else if(this.temp && this.customerData1!=null){
-    this._dataService.customerloginOrNot.next(true);
-    this.customerData={
-          "id":this.customerData1['_id'],
-          "name":this.loginReactiveForm.value.email,
-          "password":this.loginReactiveForm.value.password
+    else{
+      for(let i=0;i<this.customerDatabaseData.length;i++){
+        if(this.customerDatabaseData[i]['email']==this.loginReactiveForm.value.email){
+          this.customerData1["_id"]=this.customerDatabaseData[i]['_id'];
         }
-    this._dataService.customerData.next(this.customerData);
-    this.getDataOfItemsFromDatabase();
+      }
+      this.customerData={
+              "id":this.customerData1['_id'],
+              "name":this.loginReactiveForm.value.email,
+              "password":this.loginReactiveForm.value.password
+      }
+      localStorage.setItem('userDetails',this.loginReactiveForm.value.email);
+      this._dataService.customerloginOrNot.next(true);
+            this._dataService.customerData.next(this.customerData);
+            this.getDataOfItemsFromDatabase();
+            this.router.navigate(['menu']);
+            this.closeModal();
+            this.modalService.dismissAll();
+            this.SpinnerService.hide();
+    }
+    // if(this.customerData1==null){
+    // 
+    // }
+    // else if(!this.temp){
+    //   this.SpinnerService.hide();
+    //   alert("Password is incorrect");
+    // }
+    // else if(this.temp && this.customerData1!=null){
+    // this._dataService.customerloginOrNot.next(true);
+    // 
+    // this._dataService.customerData.next(this.customerData);
+    // this.getDataOfItemsFromDatabase();
     
-    this.router.navigate(['menu']);
-    this.closeModal();
-    this.modalService.dismissAll();
-    this.SpinnerService.hide();
-  }
-  
+    // this.router.navigate(['menu']);
+    // this.closeModal();
+    // this.modalService.dismissAll();
+    // this.SpinnerService.hide();
+    //   }
    },2000);
    
   }
@@ -381,6 +406,9 @@ dataCustomer(){
   if(this.customerduplicateOrNot==false){
   
      this._dataService.AddDataToCustomer({"first_name":this.signupReactiveForm.value.firstname,"last_name":this.signupReactiveForm.value.lastname,"email":this.signupReactiveForm.value.email,"Pass":this.signupReactiveForm.value.password,"phone_number":this.signupReactiveForm.value.phonenumber,"address":this.signupReactiveForm.value.address}).subscribe((res)=>{
+       console.log(res);
+       localStorage.setItem('token',res["token"]);
+      //  this.router.navigate(['']);
       this.getDataOfCustomerInLogin();
     },
     (err)=>{
