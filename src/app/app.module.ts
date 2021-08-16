@@ -23,6 +23,7 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { TokenInterceptorService } from './auth/token-interceptor.service';
 import { AuthGuard } from './auth/auth.guard';
+import { CookieService } from 'ngx-cookie-service';
 const config = {
   apiKey: "AIzaSyB8AD5soww5Hlk_yZr-mYUN94zBUJ37B8w",
   authDomain: "fir-91088.firebaseapp.com",
@@ -66,7 +67,7 @@ const config = {
     provide:HTTP_INTERCEPTORS,
     useClass:TokenInterceptorService,
     multi:true
-  }],
+  },CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -104,7 +104,20 @@
                     <div class="error">
                         <div *ngIf="!loginReactiveForm.get('password')?.valid && loginReactiveForm.get('password')?.touched" style="font-size: 10px;text-align: center;">Please Enter Password in minimum 8 letters,at least one uppercase,one lowercase,one special character</div>
                     </div>
-
+                    <div class="field-wrapper">
+                        <input type="text" formControlName="phonenumber" autocomplete=" off">
+                        <div class="field-placeholder"><span>Enter your phonenumber</span></div>
+                    </div>
+                    <button type="button" class="btn btn-primary" *ngIf="OTPMESSAGE.error.verification==false" [disabled]="!loginReactiveForm.get('phonenumber')?.valid" (click)="openOTP()">Send OTP</button>
+                    <div class="field-wrapper" *ngIf="OTPopen">
+                        <input type="text" formControlName="otp" autocomplete="off">
+                        <div class="field-placeholder"><span>Enter Valid OTP</span></div>
+                    </div>
+                    <button type="button" class="btn btn-primary" *ngIf="OTPopen" (click)="verifyOTP()">Verify OTP</button>
+                    <p>{{OTPMESSAGE.error.msg}}</p>
+                    <div class="error">
+                        <div *ngIf="!loginReactiveForm.get('otp')?.valid && loginReactiveForm.get('otp')?.touched" style="font-size: 10px;text-align: center;">enter Correct Otp</div>
+                    </div>
                     <div class="field-wrapper">
                         <button type="submit" style="color:white;" (click)="customerloginOrNot==true?closeModal():loginAlert()" [disabled]="loginReactiveForm.invalid" [ngClass]="{disabled1:loginReactiveForm.invalid}">Log in</button>
                     </div>

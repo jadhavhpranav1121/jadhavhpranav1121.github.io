@@ -88,6 +88,18 @@ export class DataServiceService {
   getToken(){
     return localStorage.getItem('token');
   }
+  sendOTP(req:any){
+    return this.http.post("http://localhost:3000/sendOTP",req);
+  }
+  verifyOTP(req:any){
+    return this.http.post("http://localhost:3000/verifyOTP",req);
+  }
+  refreshOTP(req:any){
+    return this.http.post("http://localhost:3000/refresh",req);
+  }
+  logoutCookie(){
+    return this.http.get("http://localhost:3000/logout");
+  }
   customerdataToAdmin=new BehaviorSubject<Array<Object>>([]);
   customerloginOrNot=new BehaviorSubject<boolean>(false);
   BuyOrNot=new BehaviorSubject<boolean>(false);
