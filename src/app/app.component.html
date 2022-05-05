@@ -10,17 +10,18 @@
     <div class="links" *ngIf="!adminloginOrNot || !customerloginOrNot">
         <div *ngIf="!customerloginOrNot && !adminloginOrNot" class="login" (click)="openVerticallyCentered(login)">Login</div>
         <div *ngIf="!customerloginOrNot && !adminloginOrNot" class="signup" (click)="openVerticallyCentered(signup)">Sign Up</div>
+        <div *ngIf="!customerloginOrNot && !adminloginOrNot" [ngClass]="(isLoginModel==true)?'active':''" class="navigation_links" (click)="openVerticallyCentered(login,'login')">Login</div>
+        <div *ngIf="!customerloginOrNot && !adminloginOrNot" [ngClass]="(isSignupModel==true)?'active':''" class="navigation_links" (click)="openVerticallyCentered(signup,'signup')">Sign Up</div>
     </div>
     <div class="links" *ngIf="customerloginOrNot">
         <strong *ngIf="customerloginOrNot">Hello,</strong>
         <p *ngIf="customerloginOrNot">{{loginDetailFromLocalStorage}}&nbsp;&nbsp;&nbsp;</p>
-        <a *ngIf="customerloginOrNot" routerLink="carts" class="Cart cartCss" (click)="ChangeCartOpeningStatus()"><span class="ItemsNumber">{{BuyingCartDetail.length>0?BuyingCartDetail.length:''}}</span><svg  version="1.0" xmlns="http://www.w3.org/2000/svg"
-                width="20px" height="20px" viewBox="0 0 1201.000000 1033.000000"
-                preserveAspectRatio="xMidYMid meet">
+        <div *ngIf="customerloginOrNot" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" routerLink="menu" class="navigation_links"><i class="fas fa-pizza-slice"></i>Menu</div>
+        <div *ngIf="customerloginOrNot" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" routerLink="cart" class="navigation_links cartCss" (click)="ChangeCartOpeningStatus()"><span class="ItemsNumber">{{BuyingCartDetail.length>0?BuyingCartDetail.length:''}}</span><svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 1201.000000 1033.000000" preserveAspectRatio="xMidYMid meet">
                <metadata>
                </metadata>
-               <g transform="translate(0.000000,1033.000000) scale(0.100000,-0.100000)"
-               fill="#000000" stroke="none" >
+               <g transform="translate(0.000000,1033.000000) scale(0.080000,-0.080000)"
+               fill="rgb(255, 0, 0)" stroke="none" >
                <path d="M0 9760 l0 -560 778 0 777 0 18 -48 c10 -26 29 -74 42 -107 23 -57
                444 -1162 1175 -3075 188 -492 352 -922 365 -955 13 -33 35 -91 50 -130 14
                -38 32 -86 40 -105 7 -19 25 -64 38 -100 14 -36 37 -96 52 -135 14 -38 32 -86
@@ -57,19 +58,19 @@
                <path d="M10585 1625 c-309 -58 -566 -293 -645 -591 -119 -448 147 -901 595
                -1014 101 -25 275 -27 378 -4 149 33 314 129 422 246 146 158 215 336 215 558
                0 347 -200 635 -531 766 -129 50 -293 65 -434 39z"/>
-               </g>
-               </svg>Cart</a>
-        <a *ngIf="customerloginOrNot" routerLink="orders" class="Cart" (click)="ChangeOrdersOpeningStatus()">Orders</a>
-        <a *ngIf="customerloginOrNot" routerLink="settings" class="Cart">Settings</a>
-        <a *ngIf="customerloginOrNot" (click)="logout()">LogOut</a>
+               </g>otp
+               </svg>Cart</div>
+        <div *ngIf="customerloginOrNot" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" routerLink="orders" class="navigation_links" (click)="ChangeOrdersOpeningStatus()"><i class="fas fa-dolly"></i>Orders</div>
+        <div *ngIf="customerloginOrNot" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" routerLink="settings" class="navigation_links"><i class="fas fa-cog"></i>Settings</div>
+        <div *ngIf="customerloginOrNot" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="navigation_links" (click)="logout()"><i class="fas fa-sign-out-alt"></i>LogOut</div>
     </div>
     <div class="links" *ngIf="adminloginOrNot">
         <strong *ngIf="adminloginOrNot">Hello,
             </strong>
         <p *ngIf="adminloginOrNot">{{adminData["name"]}}&nbsp;&nbsp;&nbsp;</p>
-        <a *ngIf="adminloginOrNot" routerLink="Adminorders" class="Cart" (click)="ChangeCartOpeningStatus()">All Orders</a>
-        <a *ngIf="adminloginOrNot" routerLink="setting-admin" class="Cart">Settings</a>
-        <a *ngIf="adminloginOrNot" (click)="logout()">LogOut</a>
+        <div *ngIf="adminloginOrNot" routerLink="Adminorders" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="navigation_links" (click)="ChangeCartOpeningStatus()">All Orders</div>
+        <div *ngIf="adminloginOrNot" routerLink="setting-admin" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="navigation_links">Settings</div>
+        <div *ngIf="adminloginOrNot" (click)="logout()" class="navigation_links">LogOut</div>
     </div>
 </nav>
 
@@ -107,38 +108,38 @@
                         <input type="text" formControlName="phonenumber" autocomplete=" off">
                         <div class="field-placeholder"><span>Enter your phonenumber</span></div>
                     </div>
-                    <button type="button" class="btn btn-primary" *ngIf="OTPMESSAGE.error.verification==false" [disabled]="!loginReactiveForm.get('phonenumber')?.valid" (click)="openOTP()">Send OTP</button>
-                    <div class="field-wrapper" *ngIf="OTPopen">
+                    <button type="button" class="btn btn-primary" *ngIf="OTPMESSAGE?.error.verification==false" [disabled]="!loginReactiveForm.get('phonenumber')?.valid" (click)="openOTP()">Send OTP</button>
+                    <div class="field-wrapper" *ngIf="OTPopen" style="margin-top:15px;">
                         <input type="text" formControlName="otp" autocomplete="off">
                         <div class="field-placeholder"><span>Enter Valid OTP</span></div>
                     </div>
-                    <button type="button" class="btn btn-primary" *ngIf="OTPopen" (click)="verifyOTP()">Verify OTP</button>
+                    <button type="button" class="btn btn-primary" style="margin-top:15px;" *ngIf="OTPopen">Verify OTP</button>
                     <p>{{OTPMESSAGE.error.msg}}</p>
                     <div class="error">
                         <div *ngIf="!loginReactiveForm.get('otp')?.valid && loginReactiveForm.get('otp')?.touched" style="font-size: 10px;text-align: center;">enter Correct Otp</div>
                     </div>
                     <div class="field-wrapper">
-                        <button type="submit" style="color:white;" (click)="customerloginOrNot==true?closeModal():loginAlert()" [disabled]="loginReactiveForm.invalid" [ngClass]="{disabled1:loginReactiveForm.invalid}">Log in</button>
+                        <button type="submit" style="color:white;margin-bottom:15px;" (click)="customerloginOrNot==true?closeModal():loginAlert()" [disabled]="loginReactiveForm.invalid" [ngClass]="{disabled1:loginReactiveForm.invalid}">Log in</button>
                     </div>
                 </form>
-                <form (ngSubmit)="verifyAdmin()" [formGroup]="loginReactiveForm" style="width: 80%;height: 80%;" *ngIf="isAdmin">
+                <form (ngSubmit)="verifyAdmin()" [formGroup]="loginAdminReactiveForm" style="width: 80%;height: 80%;" *ngIf="isAdmin">
                     <div class="field-wrapper">
                         <input type="email" formControlName="email" autocomplete="off">
                         <div class="field-placeholder"><span>Enter your email</span></div>
                     </div>
                     <div class="error">
-                        <div *ngIf="!loginReactiveForm.get('email')?.valid && loginReactiveForm.get('email')?.touched">Please Enter Mail</div>
+                        <div *ngIf="!loginAdminReactiveForm.get('email')?.valid && loginAdminReactiveForm.get('email')?.touched">Please Enter Mail</div>
                     </div>
                     <div class="field-wrapper">
                         <input type="password" formControlName="password" autocomplete="off">
                         <div class="field-placeholder"><span>Enter your password</span></div>
                     </div>
                     <div class="error">
-                        <div *ngIf="!loginReactiveForm.get('password')?.valid && loginReactiveForm.get('password')?.touched" style="font-size: 10px;text-align: center;">Please Enter Password in minimum 8 letters,at least one uppercase,one lowercase,one special character</div>
+                        <div *ngIf="!loginAdminReactiveForm.get('password')?.valid && loginAdminReactiveForm.get('password')?.touched" style="font-size: 10px;text-align: center;">Please Enter Password in minimum 8 letters,at least one uppercase,one lowercase,one special character</div>
                     </div>
 
                     <div class="field-wrapper">
-                        <button type="submit" style="color:white;" (click)="adminloginOrNot==true?closeModal():loginAlert()" [disabled]="loginReactiveForm.invalid" [ngClass]="{disabled1:loginReactiveForm.invalid}">Log in</button>
+                        <button type="submit" style="color:white;" (click)="adminloginOrNot==true?closeModal():loginAlert()" [disabled]="loginAdminReactiveForm.invalid" [ngClass]="{disabled1:loginAdminReactiveForm.invalid}">Log in</button>
                     </div>
                 </form>
             </div>

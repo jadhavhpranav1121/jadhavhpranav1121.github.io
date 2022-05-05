@@ -10,6 +10,7 @@
             background-color: white;
             box-shadow: 0px 8px 8px -6px rgba(0, 0, 0, .5);
         }
+        
         /* navigation Bar */
         
         .navigation {
@@ -23,11 +24,6 @@
             /* box-shadow: 0.3px solid rgba(0, 0, 0, 0.5); */
         }
         
-        .navigation a {
-            text-decoration: none;
-            color: rgb(255, 0, 0);
-        }
-        
         .navigation .links p {
             margin: 0;
         }
@@ -37,8 +33,38 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            /* background-color: transparent; */
-            /* background-color: white; */
+        }
+        
+        .navigation .links .navigation_links {
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: #ffffff;
+            border: 0.01px solid rgba(0, 0, 0, 0.394);
+            border-radius: 10%;
+            color: rgb(255, 0, 0);
+            cursor: pointer;
+            margin-right: 1vw;
+            width: 80px;
+            height: 40px;
+        }
+        
+        .navigation .links .navigation_links:hover {
+            color: black;
+        }
+        
+        .navigation .links .navigation_links:hover>svg * {
+            fill: black;
+        }
+        
+        .navigation .links .navigation_links.active>svg * {
+            fill: black;
+        }
+        
+        .navigation .links .navigation_links.active {
+            color: black;
         }
         
         .navigation .logo {
@@ -54,8 +80,6 @@
         
         .navigation .logo span,
         .navigation .logo img {
-            /* background: white; */
-            /* background-color: transparent; */
             margin-left: 0.4vw;
         }
         
@@ -151,10 +175,9 @@
         .quantity {
             display: flex;
         }
-        
-        .active {
+        /* .active {
             height: 100vh;
-        }
+        } */
         
         section .dataShowing .cardData .card1 .bottomInfo .addToCart {
             width: 40%;
@@ -315,7 +338,8 @@
         .ItemsNumber {
             position: absolute;
             top: -1px;
-            left: 1.3em;
+            left: 45%;
+            font-size: 10px;
             z-index: 2;
         }
         

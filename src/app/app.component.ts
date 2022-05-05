@@ -78,6 +78,9 @@ export class AppComponent {
   OTPJSON: any;
   OTPDATA: any;
   OTPMESSAGE: any = { error: { verification: false, msg: '' } };
+  isLoginModel: any;
+  isSignupModel: any;
+  loginAdminReactiveForm!: FormGroup;
 
   constructor(private afAuth: AngularFireAuth, private windowService: WindowService, private router: Router, private _dataService: DataServiceService, private modalService: NgbModal, private SpinnerService: NgxSpinnerService, private cookieService: CookieService) {
     this.windowRef = this.windowService.windowRef;
@@ -138,7 +141,13 @@ export class AppComponent {
       'email': new FormControl('', [Validators.required, Validators.email]),
       'password': new FormControl('', [Validators.required, Validators.pattern("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$")]),
       'phonenumber': new FormControl('', [Validators.required, Validators.pattern("(0|91)?[7-9][0-9]{9}")]),
-      'otp': new FormControl('', [Validators.required, Validators.minLength(6)])
+      'otp': new FormControl('',[Validators.required])
+      // [Validators.required, Validators.minLength(6)]
+    })
+    this.loginAdminReactiveForm=new FormGroup({
+
+      'email': new FormControl('', [Validators.required, Validators.email]),
+      'password': new FormControl('', [Validators.required, Validators.pattern("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$")]),
     })
     this.signupReactiveForm = new FormGroup({
       'firstname': new FormControl('', [Validators.required]),
@@ -156,11 +165,7 @@ export class AppComponent {
     })
   }
   openOTP() {
-    this.OTPJSON = { "phone": this.loginReactiveForm.value.phonenumber };
-    this._dataService.sendOTP(this.OTPJSON).subscribe((res: any) => {
-      this.OTPDATA = res;
-      // console.log(res);
-    })
+
     this.OTPopen = true;
 
   }
@@ -199,9 +204,9 @@ export class AppComponent {
     });
   }
   getadminLoginDataFromDatabase() {
-    this._dataService.getDataOfLoginAdmin(this.loginReactiveForm.value.email).subscribe((res: any) => {
-      this.adminData1 = res;
-      console.log(res);
+    this._dataService.getDataOfLoginAdmin(this.loginAdminReactiveForm.getRawValue()).subscribe((res: any) => {
+      this.adminData1 = this.loginAdminReactiveForm.getRawValue();
+      localStorage.setItem('tokenAdmin',res['token']);
     });
   }
   getDataOfAdminFromDatabase() {
@@ -294,7 +299,14 @@ export class AppComponent {
       this.togglePaused();
     }
   }
-  openVerticallyCentered(content: any) {
+  openVerticallyCentered(content: any,data:any) {
+
+    if(data=="login" && this.isSignupModel==false){
+      this.isLoginModel=true
+    }
+    else if(data=="signup" && this.isLoginModel==false){
+      this.isSignupModel=true;
+    }
     this.getDataOfCustomerInLogin();
     if (this.isModelUse == false) {
       this.modalService.open(content, { centered: true, scrollable: true, backdrop: 'static', keyboard: false });
@@ -306,6 +318,8 @@ export class AppComponent {
     this.signupReactiveForm.reset(this.signupReactiveForm.value);
     this.loginReactiveForm.reset(this.loginReactiveForm.value);
     this.modalService.dismissAll();
+    this.isLoginModel=false;
+    this.isSignupModel=false;
   }
   changeStateAdmin() {
     this.isAdmin = true;
@@ -334,18 +348,9 @@ export class AppComponent {
   verifyCustomer() {
     this.SpinnerService.show();
     this.getLoginDataFromDatabase();
-    // this.router.navigate['menu'];
-    setTimeout(() => {
 
-      const accessToken = this.cookieService.get('authSession')
-      const refreshToken = this.cookieService.get('refreshTokenID');
-      if (!accessToken && refreshToken) {
-        this._dataService.refreshOTP({}).subscribe((res: any) => {
-          console.log(res);
-        })
-      }
-      // console.log("password"+this.customerData1.Pass);/
-      if (localStorage.getItem('token') == null || (!accessToken && !refreshToken)) {
+    setTimeout(() => {
+      if (localStorage.getItem('token') == null) {
         this.SpinnerService.hide();
         alert("your account is not found");
       }
@@ -392,31 +397,13 @@ export class AppComponent {
 
   }
   verifyAdmin() {
-    this.getDataOfAdminFromDatabase();
-    // if(this.data==null){
-    //   alert("Username does not Exit");
-    // }
-    // console.log(this.loginReactiveForm.value.email+"/"+this.loginReactiveForm.value.password);
-    // for(let i=0;i<this.data.length;i++){
-    //   if(this.data[i].email==this.loginReactiveForm.value.email && this.data[i].Pass==this.loginReactiveForm.value.password){
-    //     this._dataService.adminloginOrNot.next(true);
-    //     this.adminData={"id":this.data[i]['_id'],"name":this.loginReactiveForm.value.email,"password":this.loginReactiveForm.value.password};
-    //     this._dataService.adminData.next(this.adminData); 
-    //     this.adminloginOrNot=true;
-    //     if(this.adminloginOrNot==true){
-    //       this.closeModal();
-    //       this.modalService.dismissAll();
-    //     }
-    //     this.router.navigate(['admin-home']);
-    //   }
-    // }
-    // if(this.adminloginOrNot==false){
-    // alert("Please Enter Correct Email and Password");
-    // }
+    // this.getDataOfAdminFromDatabase();
     this.SpinnerService.show();
     this.getadminLoginDataFromDatabase();
+    
     setTimeout(() => {
-      if (this.adminData1 == null) {
+      // console.log(this.adminData1);
+      if (localStorage.getItem('tokenAdmin')== null) {
         this.SpinnerService.hide();
         alert("your account is not found");
       }
@@ -424,8 +411,8 @@ export class AppComponent {
         this._dataService.adminloginOrNot.next(true);
         this.adminData = {
           "id": this.adminData1['_id'],
-          "name": this.loginReactiveForm.value.email,
-          "password": this.loginReactiveForm.value.password
+          "name": this.loginAdminReactiveForm.value.email,
+          "password": this.loginAdminReactiveForm.value.password
         }
         this._dataService.adminData.next(this.adminData);
         this.router.navigate(['admin-home']);

@@ -19,6 +19,32 @@ router.post("/admin", async(req, res) => {
         console.log(e);
     }
 })
+router.post('/admin/auth', async(req, res) => {
+    let userData = req.body;
+    console.log(userData);
+    
+    admin.findOne({ email: userData.email }, async(error, user) => {
+        console.log(user);
+        if (error) {
+            console.log(error);
+        } else {
+
+            if (!user) {
+                res.status(401).send('invalid email');
+            } else {
+                // console.log(userData.password, user.Pass);
+                // const isMatch = await bcrypt.compare(userData.password, user.Pass);
+                // if (isMatch == false) {
+                //     res.status(401).send('Invalid Password')
+                // } else {
+                //     let payload = { subject: user._id };
+                //     let token = jwt.sign(payload, 'secretKey');
+                //     res.status(200).send({ token });
+                // }
+            }
+        }
+    });
+})
 router.get("/admin", async(req, res) => {
     const newdata = await admin.find();
     // console.log(newdata);

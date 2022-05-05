@@ -17,6 +17,7 @@ export class AdminhomepageComponent implements OnInit {
   findThisItem: any;
   updateData: any;
   updateItems:Object={};
+  itemsReactiveFormForAdd!: FormGroup;
   constructor(private _dataService:DataServiceService,private modalService: NgbModal,private SpinnerService:NgxSpinnerService) {
     this._dataService.adminloginOrNot.subscribe((res)=>{
       this.adminloginOrNot=res;
@@ -34,7 +35,13 @@ export class AdminhomepageComponent implements OnInit {
       'images':new FormControl('',[Validators.required]),
       'Pass':new FormControl('',[Validators.required]),
       'price':new FormControl('',[Validators.pattern('^[0-9]*$'),Validators.required]),
-    })
+    }),
+    this.itemsReactiveFormForAdd=new FormGroup({
+      'name':new FormControl('',[Validators.required]),
+      'images':new FormControl('',[Validators.required]),
+      'Pass':new FormControl('',[Validators.required]),
+      'price':new FormControl('',[Validators.pattern('^[0-9]*$'),Validators.required]),
+    }),
     this.SpinnerService.show();
     this.getItemsFromDatabase();
     this.SpinnerService.hide();
@@ -60,14 +67,14 @@ export class AdminhomepageComponent implements OnInit {
   }
   
   deleteItems(item:any) {
-    if(confirm("Are you sure to delete" +item['_id'])) {
+    if(confirm("Are you sure to delete" +item['name'])) {
       this._dataService.deleteItemsInDataBase(item['_id']).subscribe((res)=>{
         this.getItemsFromDatabase();
       });
     }
   }
   data(){
-    this._dataService.AddDataToItems({"name":this.itemsReactiveForm.value.name,"images":this.url,"Pass":this.itemsReactiveForm.value.Pass,"count":0,"price":this.itemsReactiveForm.value.price}).subscribe((res:any)=>{
+    this._dataService.AddDataToItems({"name":this.itemsReactiveFormForAdd.value.name,"images":this.url,"Pass":this.itemsReactiveFormForAdd.value.Pass,"count":0,"price":this.itemsReactiveFormForAdd.value.price}).subscribe((res:any)=>{
           this.CartDetails.push(res);
           this._dataService.CartDetails.next(this.CartDetails);
         });
@@ -84,7 +91,9 @@ export class AdminhomepageComponent implements OnInit {
 }
   updateItem(){
     this.updateItems["name"]=this.itemsReactiveForm.value.name;
+    if(this.url){
     this.updateItems["images"]=this.url;
+    }
     this.updateItems["Pass"]=this.itemsReactiveForm.value.Pass;
     this.updateItems["count"]=0;
     this.updateItems["price"]=this.itemsReactiveForm.value.price;

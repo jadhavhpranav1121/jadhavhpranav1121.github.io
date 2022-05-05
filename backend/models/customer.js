@@ -33,5 +33,5 @@ const customerScheme = new mongoose.Schema({
         trim: true,
     }
 })
-const customer = new mongoose.model('customer', customerScheme);
+const customer = new mongoose.model('customers', customerScheme);
 module.exports = customer;

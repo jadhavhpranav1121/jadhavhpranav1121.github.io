@@ -13,8 +13,8 @@ import { SettingcomponentComponent } from './settingcomponent/settingcomponent.c
 // ,canActivate:[AuthGuard]
 const routes: Routes = [
   {path:'',component:BodyComponentComponent,pathMatch:'full'},
-  {path:'carts',component:CartComponent,pathMatch:'full',canActivate:[AuthGuard]},
-  {path:'orders',component:CustomerOrdersComponent,pathMatch:'full'},
+  {path:'cart',component:CartComponent,pathMatch:'full',canActivate:[AuthGuard]},
+  {path:'orders',component:CustomerOrdersComponent,pathMatch:'full',canActivate:[AuthGuard]},
   {path:'Adminorders',component:AdminSideOrdersComponent,pathMatch:'full'},
   {path:'admin-home',component:AdminhomepageComponent,pathMatch:'full'},
   {path:'settings',component:SettingcomponentComponent,pathMatch:'full',canActivate:[AuthGuard]},

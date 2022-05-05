@@ -164,6 +164,16 @@ export class MenuComponent implements OnInit {
       localStorage.setItem('cart',JSON.stringify(this.BuyingCartDetail));
       this._dataService.BuyingCartDetail.next(this.BuyingCartDetail);
   }
+  clearItem(Data:any){
+    this.NewData=Data;
+    Data['count']=0;    
+    for(let i=0;i<this.BuyingCartDetail.length;i++){
+      if(this.BuyingCartDetail[i]['name']==Data['name']){
+        this.BuyingCartDetail.splice(i,1);
+        localStorage.setItem('cart',JSON.stringify(this.BuyingCartDetail));
+      }
+    }
+  }
   decrease(item:any){
     for(let i=0;i<this.BuyingCartDetail.length;i++){
       if(this.BuyingCartDetail[i]['name']==item['name']){

@@ -10,6 +10,7 @@
                 </div>
                 <div class="bottomInfo">
                     <div class="price"><strong>&#8377;{{item['price']}}</strong></div>
+                    <button class="addToCart" (click)="clearItem(item)" *ngIf="item['count']>0"><i class="far fa-window-close"></i></button>
                     <button class="addToCart" (click)="AddToBuyingCart(item)" *ngIf="item['count']<=0 ">Add To Cart</button>
                     <div class="quantity" style="margin-right: 8%;" *ngIf="item['count']>0">
                         <button class="styleButton" (click)="decrease(item)">-</button>

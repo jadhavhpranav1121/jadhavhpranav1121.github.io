@@ -5,20 +5,23 @@
         <div *ngIf="customerdataToAdmin.length==0">Order List is Empty</div>
         <div *ngFor="let first of customerdataToAdmin">
             <div style="margin-left:15px;margin-top:15px;font-size: 15px;"><strong>Customer ID:- </strong> {{first['email']}}</div>
-            <div *ngFor="let second of first['orders']">
-                <div style="margin-left:25px;margin-top:15px;"><strong>{{second.length}} :- </strong></div>
-                <div *ngFor="let third of second">
-                    <div style="margin-left:35px;margin-top:15px;"><strong>Product Name:- </strong>{{third['name']}}<br><strong>Quantity:- </strong>{{third['count']}}</div>
-                    <div style="margin-left:45px;margin-top:15px;">
-                        <strong> Status:- </strong>{{third['status']}}
-                        <br>
-                        <strong> Status Change Option:- </strong>
-                        <br>
-                        <div class="statusDiv">
-                            <button class="status" #status1 value="postponed" (click)=" valueChange1(status1.value,third,second,first)">postponed</button>
-                            <button class="status" #status2 value="Delivery Started" (click)="valueChange1(status2.value,third,second,first)">Delivery Started</button>
-                            <button class="status" #status3 value="Near You Home" (click)="valueChange1(status3.value,third,second,first)">Near You Home</button>
-                            <button class="status" #status4 value="Delivered" (click)="valueChange1(status4.value,third,second,first)">Delivered</button>
+            <div *ngIf="first['orders'].length==0">Order is Empty</div>
+            <div *ngIf="first['orders'].length!=0">
+                <div *ngFor="let second of first['orders']">
+                    <div style="margin-left:25px;margin-top:15px;"><strong>{{second.length}} :- </strong></div>
+                    <div *ngFor="let third of second">
+                        <div style="margin-left:35px;margin-top:15px;"><strong>Product Name:- </strong>{{third['name']}}<br><strong>Quantity:- </strong>{{third['count']}}</div>
+                        <div style="margin-left:45px;margin-top:15px;">
+                            <strong> Status:- </strong>{{third['status']}}
+                            <br>
+                            <strong> Status Change Option:- </strong>
+                            <br>
+                            <div class="statusDiv">
+                                <button class="status" #status1 value="postponed" (click)=" valueChange1(status1.value,third,second,first)">postponed</button>
+                                <button class="status" #status2 value="Delivery Started" (click)="valueChange1(status2.value,third,second,first)">Delivery Started</button>
+                                <button class="status" #status3 value="Near You Home" (click)="valueChange1(status3.value,third,second,first)">Near You Home</button>
+                                <button class="status" #status4 value="Delivered" (click)="valueChange1(status4.value,third,second,first)">Delivered</button>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -36,23 +36,23 @@ router.post("/orders", async(req, res) => {
         console.log(e);
     }
 })
-router.get("/orders", verifyToken, async(req, res) => {
+router.get("/orders", async(req, res) => {
     const newdata = await admin.find();
     res.send(newdata);
 })
-router.patch("/orders/:name", verifyToken, async(req, res) => {
+router.patch("/orders/:name", async(req, res) => {
     const email = req.params.name;
     const newdata = await admin.updateOne({ email }, { $push: { "orders": req.body } });
     res.send(newdata);
 })
-router.patch("/orders/changingStatus/:id", verifyToken, async(req, res) => {
+router.patch("/orders/changingStatus/:id", async(req, res) => {
     const id = req.params.id;
     const newdata = await admin.updateOne({ "_id": id }, { $set: { "orders": req.body } });
     res.send(newdata);
 })
 
 
-router.patch("/orders/:email/orders", verifyToken, async(req, res) => {
+router.patch("/orders/:email/orders", async(req, res) => {
         const email = req.params.email;
         // const order_number = req.params.order_number;
         console.log(req.body);
@@ -65,14 +65,14 @@ router.patch("/orders/:email/orders", verifyToken, async(req, res) => {
 
 //     res.send(newdata);
 // })
-router.put("/orders/:customer_id/orders/:product_id", verifyToken, async(req, res) => {
+router.put("/orders/:customer_id/orders/:product_id", async(req, res) => {
     const customer_id = req.params.customer_id;
     const product_id = req.params.product_id;
     console.log(customer_id + " " + product_id);
     // const newdata = await admin.updateOne({ _id: customer_id }, {{ $set: { "orders.$[i].0.1.status": req.body.status } },{arrayFilters: [{ "i._id": product_id }]});
 
 })
-router.delete("/orders/:email", verifyToken, async(req, res) => {
+router.delete("/orders/:email", async(req, res) => {
     const email = req.params.email;
     const name = await admin.deleteOne({ "email": email });
     console.log(name);

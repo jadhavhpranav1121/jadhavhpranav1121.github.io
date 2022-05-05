@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const adminScheme = new mongoose.Schema({
-    // _id: Number,
     first_name: {
         type: String,
         required: true,
@@ -33,5 +32,5 @@ const adminScheme = new mongoose.Schema({
         trim: true,
     }
 })
-const admin = new mongoose.model('admin', adminScheme);
+const admin = new mongoose.model('admins', adminScheme);
 module.exports = admin;

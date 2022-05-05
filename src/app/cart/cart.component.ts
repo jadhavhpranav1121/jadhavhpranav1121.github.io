@@ -149,6 +149,7 @@ export class CartComponent implements OnInit {
       this._dataservice.updateOrders(this.tempDataForCart,localStorage.getItem('userDetails')).subscribe((res)=>{
         // console.log(res);
       })
+      localStorage.setItem('cart',JSON.stringify([]));
       this._dataservice.BuyingCartDetail.next([]);
       this.BuyingCartDetail=[]; 
       this.CartDetails=this.newItems;

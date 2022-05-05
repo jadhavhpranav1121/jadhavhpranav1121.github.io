@@ -1,0 +1,11 @@
+.middle {
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    place-items: center;
+}
+
+.size {
+    width: 400px;
+    height: 200px;
+}

@@ -1,6 +1,6 @@
-<div>
+<div style="width:60vw;height:auto;margin:auto;">
     <h1 style="font-size: 30px;">Welcome Admin</h1>
-    <button class="btn btn-outline-primary mb-2 mr-2 " (click)="openVerticallyCentered(addMoreItems)">Add More Pizza</button>
+    <button class="btn btn-outline-primary mb-2 mr-2 " style="width:100px;height:50px;" (click)="openVerticallyCentered(addMoreItems)">Add More Pizza</button>
 </div>
 <div class="dataShowing">
     <div class="cardData">
@@ -29,7 +29,7 @@
       </button>
     </div>
     <div class="modal-body">
-        <form (ngSubmit)="data()" [formGroup]="itemsReactiveForm">
+        <form (ngSubmit)="data()" [formGroup]="itemsReactiveFormForAdd">
             <div class="form-add">
                 <div class="form-wrapper-outer">
                     <div class="field-wrapper">
@@ -37,21 +37,21 @@
                         <div class="field-placeholder"><span>Enter Pizza Name</span></div>
                     </div>
                     <div class="error">
-                        <div *ngIf="!itemsReactiveForm.get('name')?.valid && itemsReactiveForm.get('name')?.touched">Please Enter Pizza Name</div>
+                        <div *ngIf="!itemsReactiveFormForAdd.get('name')?.valid && itemsReactiveFormForAdd.get('name')?.touched">Please Enter Pizza Name</div>
                     </div>
                     <div class="field-wrapper">
                         <input type="file" id="images" formControlName="images" (change)="readUrl($event)">
-                        <div class="field-placeholder"><span>Add Image Of Pizza</span></div>
+                        <div class="field-placeholder" style="margin-bottom:15px;"><span>Add Image Of Pizza</span></div>
                     </div>
                     <div class="error">
-                        <div *ngIf="!itemsReactiveForm.get('images')?.valid && itemsReactiveForm.get('images')?.touched">Please Enter Image Link</div>
+                        <div *ngIf="!itemsReactiveFormForAdd.get('images')?.valid && itemsReactiveFormForAdd.get('images')?.touched">Please Enter Image Link</div>
                     </div>
                     <div class="field-wrapper">
                         <input type="text" formControlName="Pass" class="form-control">
                         <div class="field-placeholder"><span>Enter Details</span></div>
                     </div>
                     <div class="error">
-                        <div *ngIf="!itemsReactiveForm.get('Pass')?.valid && itemsReactiveForm.get('Pass')?.touched">Please Enter Details</div>
+                        <div *ngIf="!itemsReactiveFormForAdd.get('Pass')?.valid && itemsReactiveFormForAdd.get('Pass')?.touched">Please Enter Details</div>
 
                     </div>
                     <div class="field-wrapper">
@@ -59,12 +59,12 @@
                         <div class="field-placeholder"><span>Enter price</span></div>
                     </div>
                     <div class="error">
-                        <div *ngIf="!itemsReactiveForm.get('price')?.valid && itemsReactiveForm.get('price')?.touched">Please Enter prize</div>
+                        <div *ngIf="!itemsReactiveFormForAdd.get('price')?.valid && itemsReactiveFormForAdd.get('price')?.touched">Please Enter prize</div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-primary" (click)="itemsReactiveForm.valid==true?modal.close('Close click'):null">ADD</button>
+                <button type="submit" class="btn btn-primary" (click)="itemsReactiveFormForAdd.valid==true?modal.close('Close click'):null">ADD</button>
                 <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
             </div>
         </form>
@@ -90,7 +90,7 @@
                     </div>
                     <div class="field-wrapper">
                         <input type="file" id="images" formControlName="images" (change)="readUrl($event)">
-                        <div class="field-placeholder"><span>Add Image Of Pizza</span></div>
+                        <div class="field-placeholder" style="margin-bottom:15px;"><span>Add Image Of Pizza</span></div>
                     </div>
                     <div class="error">
                         <div *ngIf="!itemsReactiveForm.get('images')?.valid && itemsReactiveForm.get('images')?.touched">Please Enter Image Link</div>

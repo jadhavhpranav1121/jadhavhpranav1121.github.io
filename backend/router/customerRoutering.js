@@ -6,6 +6,7 @@ const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const customer = require("../models/customer");
+const orders = require("../models/customerOrder")
 const { consoleTestResultHandler } = require("tslint/lib/test");
 const app = express();
 app.use(cookieParser());
@@ -44,7 +45,7 @@ router.post('/sendOTP', (req, res) => {
     const fullhash = `${hash}.${expires}`;
     client.messages.create({
         body: `Your one Time Login Password For pizza hunter is ${otp}`,
-        from: +12088744766,
+        from: +15305573486,
         to: "+91" + phone
     }).then((messages) => console.log(messages)).catch((error) => {
         console.error(error);
@@ -137,9 +138,9 @@ router.post("/customer", async(req, res) => {
 
 router.post("/customer/auth", async(req, res) => {
     let userData = req.body;
-
-    customer.findOne({ "email": userData.email }, async(error, user) => {
-
+    console.log(userData.email);
+    customer.findOne({ email: userData.email }, async(error, user) => {
+        console.log(user);
         if (error) {
             console.log(error);
         } else {

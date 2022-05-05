@@ -1,13 +1,14 @@
 <section>
-    <div class="home" *ngIf="(!adminloginOrNot && !CartOpenOrNot && !customerloginOrNot && !OrderOpenOrNot && !ErrorPage)">
+    <div class="home">
         <ngb-carousel #carousel [interval]="10000" [pauseOnHover]="pauseOnHover" [pauseOnFocus]="pauseOnFocus" (slide)="onSlide($event)">
             <ng-template ngbSlide *ngFor="let img of images; index as i">
                 <a target="_blank" rel="nofollow noopener noreferrer">
                     <div class="picsum-img-wrapper">
-                        <img [src]="img" style=" width: 100%;height: auto;" alt="My image {{i + 1}} description">
+                        <img [src]="img" style=" width: 100%;height: 90.5vh;object-fit: cover;" alt="My image {{i + 1}} description">
                     </div>
                 </a>
             </ng-template>
         </ngb-carousel>
     </div>
 </section>
+<!-- *ngIf="(!adminloginOrNot && !CartOpenOrNot && !customerloginOrNot && !OrderOpenOrNot && !ErrorPage)" -->
