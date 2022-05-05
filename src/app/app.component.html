@@ -8,7 +8,6 @@
         <span>Pizza Hunter</span>
     </div>
     <div class="links" *ngIf="!adminloginOrNot || !customerloginOrNot">
-        <a *ngIf="!customerloginOrNot" routerLink="orders" class="Cart" (click)="ChangeOrdersOpeningStatus()">Orders</a>
         <div *ngIf="!customerloginOrNot && !adminloginOrNot" class="login" (click)="openVerticallyCentered(login)">Login</div>
         <div *ngIf="!customerloginOrNot && !adminloginOrNot" class="signup" (click)="openVerticallyCentered(signup)">Sign Up</div>
     </div>
