@@ -14,10 +14,10 @@ export class DataServiceService {
   loginOrNot: any;
   OrdersOpenOrNot: any;
 
-  urlOfAdmin="http://localhost:3000/admin";  
-  urlOfCustomer="http://localhost:3000/customer";
-  urlOfItems="http://localhost:3000/items";
-  urlOfOrders="http://localhost:3000/orders";
+  urlOfAdmin="https://pizza-hunter-01.herokuapp.com/admin";  
+  urlOfCustomer="https://pizza-hunter-01.herokuapp.com/customer";
+  urlOfItems="https://pizza-hunter-01.herokuapp.com/items";
+  urlOfOrders="https://pizza-hunter-01.herokuapp.com/orders";
   constructor(private http:HttpClient) { 
   }
   AddDataToAdmin(req:dataScheme){
@@ -89,16 +89,16 @@ export class DataServiceService {
     return localStorage.getItem('token');
   }
   sendOTP(req:any){
-    return this.http.post("http://localhost:3000/sendOTP",req);
+    return this.http.post("https://pizza-hunter-01.herokuapp.com/sendOTP",req);
   }
   verifyOTP(req:any){
-    return this.http.post("http://localhost:3000/verifyOTP",req);
+    return this.http.post("https://pizza-hunter-01.herokuapp.com/verifyOTP",req);
   }
   refreshOTP(req:any){
-    return this.http.post("http://localhost:3000/refresh",req);
+    return this.http.post("https://pizza-hunter-01.herokuapp.com/refresh",req);
   }
   logoutCookie(){
-    return this.http.get("http://localhost:3000/logout");
+    return this.http.get("https://pizza-hunter-01.herokuapp.com/logout");
   }
   customerdataToAdmin=new BehaviorSubject<Array<Object>>([]);
   customerloginOrNot=new BehaviorSubject<boolean>(false);
