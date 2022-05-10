@@ -13,7 +13,7 @@ export class DataServiceService {
   loginData: any;
   loginOrNot: any;
   OrdersOpenOrNot: any;
-
+  test:any;
   urlOfAdmin="https://pizza-hunter-01.herokuapp.com/admin";  
   urlOfCustomer="https://pizza-hunter-01.herokuapp.com/customer";
   urlOfItems="https://pizza-hunter-01.herokuapp.com/items";
