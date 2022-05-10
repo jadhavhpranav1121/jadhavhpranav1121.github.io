@@ -135,7 +135,7 @@ export class AppComponent {
   }
   ngOnInit(): void {
     this.customerloginOrNot = (localStorage.getItem('token') == null) ? false : true;
-    this.loginDetailFromLocalStorage = localStorage.getItem('use rDetails');
+    this.loginDetailFromLocalStorage = localStorage.getItem('userDetails');
     console.log(this.loginDetailFromLocalStorage);
     this.loginReactiveForm = new FormGroup({
       'email': new FormControl('', [Validators.required, Validators.email]),

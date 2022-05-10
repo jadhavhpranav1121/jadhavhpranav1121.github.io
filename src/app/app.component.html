@@ -116,7 +116,7 @@
                     <!-- <div class="error">
                         <div *ngIf="!loginReactiveForm.get('otp')?.valid && loginReactiveForm.get('otp')?.touched" style="font-size: 10px;text-align: center;">enter Correct Otp</div>
                     </div> -->
-                    <div class="field-wrapper">
+                    <div class="field-wrapper"> 
                         <button type="submit" style="color:white;margin-bottom:15px;" (click)="customerloginOrNot==true?closeModal():loginAlert()" [disabled]="loginReactiveForm.invalid" [ngClass]="{disabled1:loginReactiveForm.invalid}">Log in</button>
                     </div>
                 </form>
