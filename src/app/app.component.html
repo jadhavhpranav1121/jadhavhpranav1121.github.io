@@ -8,8 +8,6 @@
         <span>Pizza Hunter</span>
     </div>
     <div class="links" *ngIf="!adminloginOrNot || !customerloginOrNot">
-        <div *ngIf="!customerloginOrNot && !adminloginOrNot" class="login" (click)="openVerticallyCentered(login)">Login</div>
-        <div *ngIf="!customerloginOrNot && !adminloginOrNot" class="signup" (click)="openVerticallyCentered(signup)">Sign Up</div>
         <div *ngIf="!customerloginOrNot && !adminloginOrNot" [ngClass]="(isLoginModel==true)?'active':''" class="navigation_links" (click)="openVerticallyCentered(login,'login')">Login</div>
         <div *ngIf="!customerloginOrNot && !adminloginOrNot" [ngClass]="(isSignupModel==true)?'active':''" class="navigation_links" (click)="openVerticallyCentered(signup,'signup')">Sign Up</div>
     </div>
