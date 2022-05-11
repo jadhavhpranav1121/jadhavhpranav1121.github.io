@@ -6,7 +6,7 @@
     "version": 1,
     "newProjectRoot": "projects",
     "projects": {
-        "ShoppingPureCss": {
+        "pizza_hunter": {
             "projectType": "application",
             "schematics": {
                 "@schematics/angular:application": {
@@ -69,18 +69,18 @@
                 "serve": {
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "options": {
-                        "browserTarget": "ShoppingPureCss:build"
+                        "browserTarget": "pizza_hunter:build"
                     },
                     "configurations": {
                         "production": {
-                            "browserTarget": "ShoppingPureCss:build:production"
+                            "browserTarget": "pizza_hunter:build:production"
                         }
                     }
                 },
                 "extract-i18n": {
                     "builder": "@angular-devkit/build-angular:extract-i18n",
                     "options": {
-                        "browserTarget": "ShoppingPureCss:build"
+                        "browserTarget": "pizza_hunter:build"
                     }
                 },
                 "test": {
@@ -117,16 +117,16 @@
                     "builder": "@angular-devkit/build-angular:protractor",
                     "options": {
                         "protractorConfig": "e2e/protractor.conf.js",
-                        "devServerTarget": "ShoppingPureCss:serve"
+                        "devServerTarget": "pizza_hunter:serve"
                     },
                     "configurations": {
                         "production": {
-                            "devServerTarget": "ShoppingPureCss:serve:production"
+                            "devServerTarget": "pizza_hunter:serve:production"
                         }
                     }
                 }
             }
         }
     },
-    "defaultProject": "ShoppingPureCss"
+    "defaultProject": "pizza_hunter"
 }
