@@ -1,3 +1,76 @@
-section {
-    height: 90vh;
+.home_pizza{
+    background-repeat: no-repeat;
+    background-position: top;
+    background-size: 100% 100%;
+    height: 400px;
+    width: 100%;
+    object-fit: cover;
+    margin-bottom: 20px;
+}
+.typography-2 {
+    font-size: 1.8rem;
+}
+
+.typography-1, .typography-2 {
+    font-family: SharpSansBold,system-ui,BlinkMacSystemFont,Helvetica Neue,Helvetica,sans-serif;
+    line-height: 1;
+}
+.px-20{
+    padding-left: 20px;
+    padding-right: 20px;
+}
+.py-20 {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+.mx-10 {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.heading-hr, .heading-hr--dotted {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.heading-hr--dotted:before, .heading-hr:before {
+    margin-right: 10px;
+}
+.heading-hr--dotted:after, .heading-hr--dotted:before, .heading-hr:after, .heading-hr:before {
+    border: 1px solid #d9dde3;
+    flex: 1 1 0%;
+    position: relative;
+    content: "";
+    height: 1px;
+    top: -2px;
+}
+.heading-hr span{
+    font-size: 20px;
+    font-weight: 900;
+}
+.Image_size{
+    width: 45%;
+    height: 45%;
+}
+.view_all{
+    margin: 30px 20px;
+    width: calc(100% - 40px);
+}
+.bg-black{
+    -webkit-text-size-adjust: 100%;
+    font-family: Open Sans,system-ui,BlinkMacSystemFont,Helvetica Neue,Helvetica,sans-serif;
+    font-size: 14px;
+    line-height: 1.75;
+    --add-icon-height: 16px;
+    --add-icon-width: 16px;
+    color: #231f20;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    font-feature-settings: "liga","dlig";
+    border: 0 solid #e9ebee;
+    box-sizing: inherit;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    background-color: #000;
 }

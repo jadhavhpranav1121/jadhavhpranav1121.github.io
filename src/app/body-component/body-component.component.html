@@ -1,6 +1,6 @@
 <section>
     <div class="home">
-        <ngb-carousel #carousel [interval]="10000" [pauseOnHover]="pauseOnHover" [pauseOnFocus]="pauseOnFocus" (slide)="onSlide($event)">
+        <!-- <ngb-carousel #carousel [interval]="10000" [pauseOnHover]="pauseOnHover" [pauseOnFocus]="pauseOnFocus" (slide)="onSlide($event)">
             <ng-template ngbSlide *ngFor="let img of images; index as i">
                 <a target="_blank" rel="nofollow noopener noreferrer">
                     <div class="picsum-img-wrapper">
@@ -8,7 +8,118 @@
                     </div>
                 </a>
             </ng-template>
-        </ngb-carousel>
+        </ngb-carousel> -->
+        <img src="../../assets/imagesOfPizza/home_pizza.jpg" class="home_pizza">
+        <h2 class="typography-2 text-capitalize py-20 mx-10 text-center heading-hr"><span>&nbsp;Our most popular deals
+                &nbsp;</span></h2>
+        <div class="d-flex justify-content-around px-20">
+            <img src="../../assets/imagesOfPizza/firstOrder.jpg" class="Image_size">
+            <img src="../../assets/imagesOfPizza/secondOrder.jpg" class="Image_size">
+        </div>
+        <div class="w-100">
+            <button type="button" class="btn btn-primary view_all px-20">View all pizzas</button>
+        </div>
+    </div>
+    <div class="bg-black">
+        <div class="container">
+            <div class="flex justify-between py-30 flex-wrap">
+                <div class="p-20 pb-0">
+                    <div class="mb-20 ">
+                        <h4 class="text-white mb-5 typography-4"><span class=""><span>Order Now</span></span></h4><a
+                            href="/menu/deals" class="text-white typography-7 block" target="_self"><span
+                                class=""><span>Deals</span></span></a><a href="/menu/pizzas"
+                            class="text-white typography-7 block" target="_self"><span
+                                class=""><span>Pizza</span></span></a><a href="/menu/sides"
+                            class="text-white typography-7 block" target="_self"><span
+                                class=""><span>Sides</span></span></a><a href="/menu/drinks"
+                            class="text-white typography-7 block" target="_self"><span
+                                class=""><span>Drinks</span></span></a><a href="/menu/desserts"
+                            class="text-white typography-7 block" target="_self"><span
+                                class=""><span>Desserts</span></span></a>
+                    </div>
+                </div>
+                <div class="p-20 pb-0">
+                    <div class="mb-20 ">
+                        <h4 class="text-white mb-5 typography-4"><span class=""><span>About</span></span></h4><a
+                            href="/aboutus/" class="text-white typography-7 block" target="_self"><span
+                                class=""><span>About Us</span></span></a><a href="/contactlessdelivery/"
+                            class="text-white typography-7 block" target="_self"><span class=""><span>Contactless
+                                    delivery</span></span></a><a class="text-white typography-7 block" target="_self"
+                            href="/nutrition/"><span class=""><span>Nutrition</span></span></a>
+                    </div>
+                </div>
+                <div class="p-20 pb-0">
+                    <div class="mb-20 ">
+                        <h4 class="text-white mb-5 typography-4"><span class=""><span>Our Policies</span></span></h4><a
+                            class="text-white typography-7 block" target="_self" href="/privacy/"><span
+                                class=""><span>Privacy</span></span></a><a class="text-white typography-7 block"
+                            target="_self" href="/terms/"><span class=""><span>Terms &amp;
+                                    Conditions</span></span></a><a href="https://pizzahut.responsibledisclosure.com"
+                            class="text-white typography-7 block" target="_blank" rel="noopener"><span
+                                class=""><span>Responsible disclosure</span></span></a><a href="/faqs/"
+                            class="text-white typography-7 block" target="_self"><span class=""><span>FAQs &amp;
+                                    Help</span></span></a>
+                    </div>
+                </div>
+                <div class="p-20 pb-0">
+                    <div class="mb-20 ">
+                        <h4 class="text-white mb-5 typography-4"><span class=""><span>Visit Pizza Hut</span></span></h4>
+                        <a href="https://restaurants.pizzahut.co.in" class="text-white typography-7 block"
+                            target="_blank" rel="noopener"><span class=""><span>Locate a store</span></span></a><a
+                            href="http://blog.pizzahut.com/" class="text-white typography-7 block" target="_blank"
+                            rel="noopener"><span class=""><span>Global Blog</span></span></a>
+                    </div>
+                </div>
+            </div>
+            <div class="flex-center mb-20 qa-ios"><a href="https://apps.apple.com/in/app/pizza-hut-india/id1597873835"
+                    target="_blank" rel="noopener noreferrer"
+                    class="p-0 mr-20 screenreader-only text-white typography-7 icon-app-store-ios"><span>Download our
+                        iOS app</span></a><a href="https://play.google.com/store/apps/details?id=com.phdv.universal"
+                    target="_blank" rel="noopener noreferrer"
+                    class="p-0 mr-20 screenreader-only text-white typography-7 icon-app-store-google-play"><span>Download
+                        our Google Play app</span></a></div>
+            <div class="flex justify-between pt-0 mb-20 flex-wrap">
+                <div class="px-20 flex-grow flex">
+                    <div class="self-center text-white w-full text-center lg:text-left">
+                        <p class="inline-block align-middle typography-6">Help us in serving you better</p><button
+                            class="button button--secondary lg:max-w-2xs mt-10 lg:ml-20 lg:mt-0 inline-block align-middle"
+                            rel="noopener noreferrer" target="_blank"><span class="absolute inset-0 flex-center">Give
+                                Feedback</span></button>
+                    </div>
+                </div>
+                <div class="px-20 flex-grow lg:flex-shrink mt-20 md:mt-2">
+                    <div class="align-middle text-center w-full">
+                        <h3 class="text-white typography-5 mb-10"><span>Follow us</span></h3>
+                        <ul class="p-0 m-0 inline-flex">
+                            <li><a href="https://www.facebook.com/pizzahutindia" rel="noopener noreferrer"
+                                    target="_blank" class="mx-10"><i
+                                        class="icon-social-facebook--white icon--large"></i><span
+                                        class="hidden">Facebook</span></a></li>
+                            <li><a href="https://twitter.com/PizzaHutIN" rel="noopener noreferrer" target="_blank"
+                                    class="mx-10"><i class="icon-social-twitter--white icon--large"></i><span
+                                        class="hidden">Twitter</span></a></li>
+                            <li><a href="https://www.instagram.com/pizzahut_india" rel="noopener noreferrer"
+                                    target="_blank" class="mx-10"><i
+                                        class="icon-social-instagram--white icon--large"></i><span
+                                        class="hidden">Instagram</span></a></li>
+                            <li><a href="https://www.youtube.com/channel/UCOBjFMnb_0rfwV0plAYXsfQ"
+                                    rel="noopener noreferrer" target="_blank" class="mx-10"><i
+                                        class="icon-social-youtube--white icon--large"></i><span
+                                        class="hidden">Youtube</span></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <p class="text-grey text-center px-20 pb-5 text-11"><span>Order a delicious pizza on the go, anywhere,
+                    anytime. Pizza Hut is happy to assist you with your home delivery. Every time you order, you get a
+                    hot and fresh pizza delivered at your doorstep in less than thirty minutes. *T&amp;C
+                    Apply.</span><br><span>Hurry up and place your order now!</span></p>
+            <p class="text-grey text-center px-20 pb-5 text-11"><span>© 2022 Pizza Hut India. All rights reserved.
+                    License Number: 10017011004220</span></p>
+            <div class="flex justify-center"><img
+                    src="/order/images/footer/FSAAI-logo.cb99007614b9cff3e0150bce9711641d.svg" alt="fsaai"
+                    class="my-10 bg-white rounded" style="width: 72px; height: 72px;"></div>
+        </div>
     </div>
 </section>
 <!-- *ngIf="(!adminloginOrNot && !CartOpenOrNot && !customerloginOrNot && !OrderOpenOrNot && !ErrorPage)" -->
