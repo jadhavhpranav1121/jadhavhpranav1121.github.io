@@ -67,7 +67,7 @@ export class BodyComponentComponent implements OnInit {
    } 
   ngOnInit(): void {
   }
-  images = ["pizza-hunter/assets/imagesOfPizza/1.jpg","pizza-hunter/assets/imagesOfPizza/2.jpg","assets/imagesOfPizza/3.jpg","assets/imagesOfPizza/4.jpg"]
+  images = ["assets/imagesOfPizza/1.jpg","assets/imagesOfPizza/2.jpg","assets/imagesOfPizza/3.jpg","assets/imagesOfPizza/4.jpg"]
   paused = false;
   unpauseOnArrow = false;
   pauseOnIndicator = false;
