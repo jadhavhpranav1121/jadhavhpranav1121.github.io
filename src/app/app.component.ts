@@ -204,8 +204,10 @@ export class AppComponent {
     });
   }
   getadminLoginDataFromDatabase() {
-    this._dataService.getDataOfLoginAdmin(this.loginAdminReactiveForm.getRawValue()).subscribe((res: any) => {
+    // console.log(this.loginAdminReactiveForm.getRawValue());
+    this._dataService.getDataOfLoginAdmin(this.loginAdminReactiveForm.getRawValue().email).subscribe((res: any) => {
       this.adminData1 = this.loginAdminReactiveForm.getRawValue();
+      console.log(res);
       localStorage.setItem('tokenAdmin',res['token']);
     });
   }
@@ -337,6 +339,7 @@ export class AppComponent {
 
     this.isCustomerSigup = false;
     this.isAdminSigup = true;
+    this.signupReactiveForm.reset(this.signupReactiveForm.value);
   }
   closetoggle() {
     this.router.navigate(['']);
@@ -452,6 +455,7 @@ export class AppComponent {
     this.customerduplicateOrNot = false;
   }
   dataAdmin() {
+    console.log(this.signupReactiveForm)
     for (let i = 0; i < this.data.length; i++) {
       if (this.signupReactiveForm.value.email == this.data[i]['email'] && this.signupReactiveForm.value.password == this.data[i]['Pass']) {
         alert("Please Don't enter existing data");

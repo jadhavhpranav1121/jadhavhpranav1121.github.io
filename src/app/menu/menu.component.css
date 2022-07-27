@@ -159,9 +159,10 @@ section .dataShowing .cardData .card1 .bottomInfo .price {
 }
 
 section .dataShowing .cardData .card1 .bottomInfo .addToCart {
-    width: 40%;
+    width: 11%;
     height: 70%;
-    margin-right: 8%;
+    margin-right: -20%;
+    
     border: none;
     outline: red;
     background-color: rgb(211, 0, 0);

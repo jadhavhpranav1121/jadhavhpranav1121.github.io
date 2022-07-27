@@ -63,7 +63,15 @@
                                     "maximumError": "5mb"
                                 }
                             ]
-                        }
+                        },
+                        "development": { 
+                            "buildOptimizer": false,
+                            "optimization": false,
+                            "vendorChunk": true,
+                            "extractLicenses": false,
+                            "sourceMap": true,
+                            "namedChunks": true
+                      }
                     }
                 },
                 "serve": {
@@ -74,7 +82,10 @@
                     "configurations": {
                         "production": {
                             "browserTarget": "pizza_hunter:build:production"
-                        }
+                        },
+                        "development": {
+                            "browserTarget": "pizza_hunter:build:development"
+                          }
                     }
                 },
                 "extract-i18n": {

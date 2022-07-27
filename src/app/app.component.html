@@ -216,12 +216,14 @@
                     </div>
                 </form>
                 <h4 *ngIf="isAdminSigup && lengthVariable>=1">Already Admin are Signup</h4>
-                <form (ngSubmit)="dataAdmin()" style="width: 80%;height: 80%;" *ngIf="isAdminSigup && lengthVariable==0">
+                <form (ngSubmit)="dataAdmin()" [formGroup]="signupReactiveForm" style="width: 80%;height: 80%;" *ngIf="isAdminSigup && lengthVariable==0">
                     <div class="field-wrapper">
                         <input type="text" formControlName="firstname" autocomplete="off">
                         <div class="field-placeholder"><span>Enter your First Name</span></div>
                     </div>
+                    {{signupReactiveForm.get('firstname')?.value}}
                     <div class="error">
+                        
                         <div *ngIf="!signupReactiveForm.get('firstname')?.valid && signupReactiveForm.get('firstname')?.touched">Please Enter first Name</div>
                         <!-- <div *ngIf="!(firstname.invalid && (firstname.dirty || firstname.touched))" style="margin-bottom: 0px;"></div> -->
                     </div>
@@ -265,8 +267,9 @@
                         <div *ngIf="!signupReactiveForm.get('address')?.valid && signupReactiveForm.get('address')?.touched">Please Enter address</div>
                     </div>
                     <div class="signup">
-                        <button type="submit" [disabled]="signupReactiveForm.invalid" style="width: 90%;height:40px;border: none;background-color: #9d0000a0;border-radius: 10px;color:white;" [ngClass]="{'disabled':signupReactiveForm.invalid}">Sign Up</button>
+                        <button type="submit" style="width: 90%;height:40px;border: none;background-color: #9d0000a0;border-radius: 10px;color:white;" [ngClass]="{'disabled':signupReactiveForm.invalid}">Sign Up</button>
                     </div>
+                    <!-- [disabled]="signupReactiveForm.invalid" -->
                 </form>
             </div>
         </div>

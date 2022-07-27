@@ -25,6 +25,8 @@ import { TokenInterceptorService } from './auth/token-interceptor.service';
 import { AuthGuard } from './auth/auth.guard';
 import { CookieService } from 'ngx-cookie-service';
 import { FooterComponent } from './footer/footer.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 const config = {
   apiKey: "AIzaSyB8AD5soww5Hlk_yZr-mYUN94zBUJ37B8w",
   authDomain: "fir-91088.firebaseapp.com",
@@ -63,7 +65,8 @@ const config = {
      AngularFireModule.initializeApp(config),
      AngularFirestoreModule, // firestore
      AngularFireAuthModule, // auth
-     AngularFireStorageModule // storage
+     AngularFireStorageModule,
+     BrowserAnimationsModule
   ],
   providers: [HttpClientModule,WindowService,AuthGuard,{
     provide:HTTP_INTERCEPTORS,
