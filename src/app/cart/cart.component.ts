@@ -140,6 +140,8 @@ export class CartComponent implements OnInit {
       // console.log(this.OrderDetailsFromDatabase);
       for(let i=0;i<this.OrderDetailsFromDatabase.length;i++){
         if(this.OrderDetailsFromDatabase[i]['email']==localStorage.getItem('userDetails')){
+          console.log(this.OrderDetailsFromDatabase[i]['email']);
+          console.log(localStorage.getItem("userDetails"));
           for(let i=0;i<this.BuyingCartDetail.length;i++){
             this.tempDataForCart.push({"name":this.BuyingCartDetail[i].name,"count":this.BuyingCartDetail[i].count,"price":this.BuyingCartDetail[i].price,"Pass":this.BuyingCartDetail[i].Pass,"images":this.BuyingCartDetail[i].images,"status":this.BuyingCartDetail[i].status});
           } 
