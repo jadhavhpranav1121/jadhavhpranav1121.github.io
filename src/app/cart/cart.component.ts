@@ -71,9 +71,10 @@ export class CartComponent implements OnInit {
     this.customerloginOrNot=(localStorage.getItem('token')==null)?false:true;
     this.getDataOfPizza();
     this.getDataOfOrdersDetails();
+    // console.log(this.OrderDetailsFromDatabase)
     // console.log(this.BuyingCartDetail);
     // console.log("localstroage"+JSON.parse(localStorage.getItem('cart')|| "{}"));
-    if(!!this.BuyingCartDetail){  
+    if(!this.BuyingCartDetail){  
       // console.log("buy "+this.BuyingCartDetail);
       this.BuyingCartDetail=JSON.parse(localStorage.getItem('cart')|| "[]");
       this._dataservice.BuyingCartDetail.next(this.BuyingCartDetail);
@@ -91,6 +92,7 @@ export class CartComponent implements OnInit {
   }
   getDataOfOrdersDetails(){
     this._dataservice.getDataOfOrders().subscribe((res)=>{
+      console.log(res);
         this.OrderDetailsFromDatabase=res;
         // console.log(res);
     });
@@ -137,8 +139,11 @@ export class CartComponent implements OnInit {
     this.SpinnerService.show();
     setTimeout(()=>{
       this.NewData=this.BuyingCartDetail;
-      // console.log(this.OrderDetailsFromDatabase);
+      console.log(this.NewData);
+      console.log(this.OrderDetailsFromDatabase);
       for(let i=0;i<this.OrderDetailsFromDatabase.length;i++){
+        console.log(this.OrderDetailsFromDatabase[i]['email']);
+        console.log(localStorage.getItem('userDetails'));
         if(this.OrderDetailsFromDatabase[i]['email']==localStorage.getItem('userDetails')){
           console.log(this.OrderDetailsFromDatabase[i]['email']);
           console.log(localStorage.getItem("userDetails"));
