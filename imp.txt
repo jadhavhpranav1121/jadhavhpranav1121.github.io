@@ -1,0 +1,2 @@
+<base href="/pizza-hunter/">
+<script src="/pizza-hunter/runtime.4cf6bc339c9762e3392f.js" defer></script><script src="polyfills.49142b418d0a55851fe0.js" defer></script><script src="/pizza-hunter/scripts.fbd01adc1da0f52e7a7f.js" defer></script><script src="/pizza-hunter/main.ad2ae64b17db56fbd5fa.js" defer></script>
