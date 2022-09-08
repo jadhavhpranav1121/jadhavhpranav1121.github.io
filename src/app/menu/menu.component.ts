@@ -55,7 +55,6 @@ export class MenuComponent implements OnInit {
     });
     this.BuyingCartDetailSub=this._dataService.BuyingCartDetail.subscribe((res)=>{
       this.BuyingCartDetail=res;
-      // console.log("BYI",this.BuyingCartDetail);
       if(!this.BuyingCartDetail){
         this.BuyingCartDetail=JSON.parse(localStorage.getItem('cart') || "[]");
       }
@@ -76,14 +75,10 @@ export class MenuComponent implements OnInit {
   this._dataService.customerloginOrNot.subscribe((res)=>{
     this.customerloginOrNot=res;
   })
-  // console.log("CARTDETAIL",JSON.stringify());
-      // console.log(this.BuyingCartDetail);
-      // console.log("Constructor",JSON.stringify(this.CartDetails));
       for(let i=0;i<this.BuyingCartDetail.length;i++){
         for(let j=0;j<this.CartDetails.length;j++){
           if(this.CartDetails[j]['name']==this.BuyingCartDetail[i]['name']){
             this.CartDetails[j]['count']=this.BuyingCartDetail[i]['count'];
-            // console.log(this.CartDetails[j]['count']);
           }
         }
       }
@@ -91,17 +86,14 @@ export class MenuComponent implements OnInit {
 
   ngOnInit(): void {
   
-    // console.log("BuyingCartDetails"+JSON.stringify(this.BuyingCartDetail));
-    // console.log("init",this.CartDetails);  
+
     // for(let i=0;i<this.BuyingCartDetail.length;i++){
     //   for(let j=0;j<this.CartDetails.length;j++){
     //     if(this.CartDetails[j]['name']==this.BuyingCartDetail[i]['name']){
     //       this.CartDetails[j]['count']=this.BuyingCartDetail[i]['count'];
-    //       console.log(this.CartDetails[j]['count']);
     //     }
     //   }
     // }
-    // console.log("init"+JSON.stringify(this.CartDetails));
     this._dataService.BuyingCartDetail.next(this.BuyingCartDetail);
     this.loginDetailFromLocalStorage=localStorage.getItem('userDetails');
     
@@ -113,15 +105,12 @@ export class MenuComponent implements OnInit {
     
    this._dataService.getDataOfAdmin().subscribe((res)=>{
     this.data=res;
-    // console.log(this.data);
 });
-// this.SpinnerService.hide(); 
   }
   getDataOfAdminFromDatabase(){
   this._dataService.getDataOfAdmin().subscribe((res)=>{
     this.DataOfAdmin=res;
     this.lengthVariable=this.DataOfAdmin.length;
-    // console.log("Data Of Admin"+this.DataOfAdmin);
 });
   }
 
@@ -192,7 +181,6 @@ export class MenuComponent implements OnInit {
   increase(item:any){
     for(let i=0;i<this.BuyingCartDetail.length;i++){
       if(this.BuyingCartDetail[i]['name']==item['name']){
-        // console.log(item['count']);
         this.BuyingCartDetail[i]['count']++;
         // item['count']++;
       }

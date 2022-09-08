@@ -62,7 +62,7 @@ export class AppComponent {
   lengthVariable = -1;
 
 
-  // console.log(bcrypt);
+  
   // carousel------------------------------------------------------------------------
   @ViewChild('carousel', { static: true })
   carousel!: NgbCarousel;
@@ -88,7 +88,6 @@ export class AppComponent {
       this.adminloginOrNot = res;
     });
     this._dataService.customerData.subscribe((res: any) => {
-      console.log(res);
       this.customerData = res;
     })
     this._dataService.customerloginOrNot.subscribe((res) => {
@@ -136,7 +135,6 @@ export class AppComponent {
   ngOnInit(): void {
     this.customerloginOrNot = (localStorage.getItem('token') == null) ? false : true;
     this.loginDetailFromLocalStorage = localStorage.getItem('userDetails');
-    console.log(this.loginDetailFromLocalStorage);
     this.loginReactiveForm = new FormGroup({
       'email': new FormControl('', [Validators.required, Validators.email]),
       'password': new FormControl('', [Validators.required, Validators.pattern("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$")]),
@@ -173,14 +171,10 @@ export class AppComponent {
     this.OTPDATA.otp = this.loginReactiveForm.value.otp;
     this._dataService.verifyOTP(this.OTPDATA).subscribe((res: any) => {
       this.OTPMESSAGE = res;
-      // console.log(this.OTPMESSAGE.error.msg)
       if (this.OTPMESSAGE.error.verification == true) {
         this.OTPopen = false;
       }
-      // console.log(this.OTPMESSAGE);
     }, err => {
-      // console.log(err);
-      // console.log()
       this.OTPMESSAGE.error.verification = err.error.verification;
       this.OTPMESSAGE.error.msg = err.error.msg;
     })
@@ -195,19 +189,15 @@ export class AppComponent {
     });
   }
   getLoginDataFromDatabase() {
-    // console.log(this.loginReactiveForm.getRawValue());
     this._dataService.getDataOfLoginUser(this.loginReactiveForm.getRawValue()).subscribe((res: any) => {
       this.customerData = this.loginReactiveForm.getRawValue();
-      console.log(res);
       localStorage.setItem('token', res['token']);
       // this.router.navigate(['menu'])
     });
   }
   getadminLoginDataFromDatabase() {
-    // console.log(this.loginAdminReactiveForm.getRawValue());
     this._dataService.getDataOfLoginAdmin(this.loginAdminReactiveForm.getRawValue().email).subscribe((res: any) => {
       this.adminData1 = this.loginAdminReactiveForm.getRawValue();
-      console.log(res);
       localStorage.setItem('tokenAdmin',res['token']);
     });
   }
@@ -221,7 +211,6 @@ export class AppComponent {
   logout() {
     this.OTPMESSAGE = { error: { verification: false, msg: '' } };
     this._dataService.logoutCookie().subscribe((res: any) => {
-      console.log(res);
     })
     localStorage.removeItem('token');
     localStorage.removeItem('userDetails');
@@ -405,7 +394,6 @@ export class AppComponent {
     this.getadminLoginDataFromDatabase();
     
     setTimeout(() => {
-      // console.log(this.adminData1);
       if (localStorage.getItem('tokenAdmin')== null) {
         this.SpinnerService.hide();
         alert("your account is not found");
@@ -436,7 +424,6 @@ export class AppComponent {
     if (this.customerduplicateOrNot == false) {
 
       this._dataService.AddDataToCustomer({ "first_name": this.signupReactiveForm.value.firstname, "last_name": this.signupReactiveForm.value.lastname, "email": this.signupReactiveForm.value.email, "Pass": this.signupReactiveForm.value.password, "phone_number": this.signupReactiveForm.value.phonenumber, "address": this.signupReactiveForm.value.address }).subscribe((res) => {
-        console.log(res);
         //  localStorage.setItem('token',res["token"]);
         //  this.router.navigate(['']);
         this.getDataOfCustomerInLogin();
@@ -455,7 +442,6 @@ export class AppComponent {
     this.customerduplicateOrNot = false;
   }
   dataAdmin() {
-    console.log(this.signupReactiveForm)
     for (let i = 0; i < this.data.length; i++) {
       if (this.signupReactiveForm.value.email == this.data[i]['email'] && this.signupReactiveForm.value.password == this.data[i]['Pass']) {
         alert("Please Don't enter existing data");

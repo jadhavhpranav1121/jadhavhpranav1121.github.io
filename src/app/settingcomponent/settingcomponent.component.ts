@@ -17,7 +17,6 @@ export class SettingcomponentComponent implements OnInit {
 
   constructor(private _dataservice:DataServiceService,private router:Router) { 
     this._dataservice.customerData.subscribe((res:any)=>{
-      console.log(res);
       this.customerData=res;
     })
     this._dataservice.CartDetails.subscribe((res:any)=>{
@@ -28,7 +27,6 @@ export class SettingcomponentComponent implements OnInit {
     })
     this._dataservice.getDataOfOrders().subscribe((res)=>{
       this.OrderDetailsFromDatabase=res;
-      // console.log("database"+res);
   });
   this.getCustomerData();
   }
@@ -57,7 +55,7 @@ export class SettingcomponentComponent implements OnInit {
     this._dataservice.customerloginOrNot.next(false);
     this._dataservice.adminloginOrNot.next(false);
     this.getCustomerData();
-    // console.log("sdfafasfwerw"+JSON.stringify(this.customerDatabaseData));
+
     this._dataservice.OrderOpenOrNot.next(false);
     this._dataservice.adminData.next({});
     this._dataservice.customerData.next({});
@@ -82,7 +80,6 @@ export class SettingcomponentComponent implements OnInit {
     this._dataservice.customerData.next({});
     this.logout();  
   }
-  // console.log("function is called");
   this.getCustomerData();
   }
 }

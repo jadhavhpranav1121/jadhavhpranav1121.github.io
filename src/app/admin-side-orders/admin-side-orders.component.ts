@@ -19,16 +19,13 @@ export class AdminSideOrdersComponent implements OnInit {
 
   ngOnInit(): void {
     this._dataService.getDataOfOrders().subscribe((res)=>{
-      this.customerdataToAdmin=res;
-      // console.log(res);
-      // console.log(this.customerdataToAdmin.length);   
+      this.customerdataToAdmin=res;  
     })
   }
   
   valueChange1(value:any,third:any,second:any,first:any){
     alert("Status Updated");
     third['status']=value;
-    // console.log(first['orders']);
     this._dataService.updateOrdersStatus(first['orders'],first['_id']).subscribe((res:any)=>{});
     // second['total']-=(third['count'])*(third['price']);
   }

@@ -46,8 +46,6 @@ export class CustomerOrdersComponent implements OnInit {
   getDataOfOrderFromDatabase(){
     this._dataservice.getDataOfOrders().subscribe((res) => {
      this.customerOrders = res;  
-     console.log(this.customerOrders);
-    //  console.log(this.customerOrders);
      for (let i = 0; i < this.customerOrders.length; i++) {
        if (this.customerOrders[i].email == localStorage.getItem('userDetails')) {
          this.OrderDetails = this.customerOrders[i].orders;
@@ -68,12 +66,8 @@ export class CustomerOrdersComponent implements OnInit {
   ngOnInit(): void {
     
     this.customerloginOrNot=(localStorage.getItem('token')==null)?false:true;
-    // console.log(this.customerloginOrNot);
     this.SpinnerService.show(); 
-    // console.log("sdf");
     this.getDataOfOrderFromDatabase();
-    // console.log()
-    console.log(JSON.stringify(this.OrderDetails));
     this.SpinnerService.hide(); 
   }
   cancelOrder(j:any){
@@ -82,7 +76,7 @@ export class CustomerOrdersComponent implements OnInit {
       this.SpinnerService.show();
       setTimeout(()=>{
         this._dataservice.DeleteOrders(this.OrderDetails[j],localStorage.getItem('userDetails')).subscribe((res:any)=>{
-          // console.log("Orders Deleted");
+  
           this.getDataOfOrderFromDatabase();
         });
         this.SpinnerService.hide();
