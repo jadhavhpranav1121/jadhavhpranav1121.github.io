@@ -10,7 +10,8 @@
                 </div>
                 <div class="bottomInfo">
                     <div class="price"><strong>&#8377;{{item['price']}}</strong></div>
-                    <button class="addToCartClose" (click)="clearItem(item)" *ngIf="item['count']>0"></button>
+                    <button class="addToCartClose" (click)="clearItem(item)" *ngIf="item['count']>0"><svg fill="#ffffff" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 50 50" width="20px" height="20px"><path d="M 7.71875 6.28125 L 6.28125 7.71875 L 23.5625 25 L 6.28125 42.28125 L 7.71875 43.71875 L 25 26.4375 L 42.28125 43.71875 L 43.71875 42.28125 L 26.4375 25 L 43.71875 7.71875 L 42.28125 6.28125 L 25 23.5625 Z"/></svg>
+                    </button>
                     <button class="addToCart" (click)="AddToBuyingCart(item)" *ngIf="item['count']<=0 ">Add To Cart</button>
                     <div class="quantity" style="margin-right: 8%;" *ngIf="item['count']>0">
                         <button class="styleButton" (click)="decrease(item)">-</button>
