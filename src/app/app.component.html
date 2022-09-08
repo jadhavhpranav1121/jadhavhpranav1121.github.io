@@ -102,13 +102,13 @@
                     <div class="error">
                         <div *ngIf="!loginReactiveForm.get('password')?.valid && loginReactiveForm.get('password')?.touched" style="font-size: 10px;text-align: center;">Please Enter Password in minimum 8 letters,at least one uppercase,one lowercase,one special character</div>
                     </div>
-                    <div class="field-wrapper">
+                    <!-- <div class="field-wrapper">
                         <input type="text" formControlName="phonenumber" autocomplete=" off">
                         <div class="field-placeholder"><span>Enter your phonenumber</span></div>
                     </div>
                     <div class="error">
                         <div *ngIf="!loginReactiveForm.get('phonenumber')?.valid && loginReactiveForm.get('phonenumber')?.touched" style="font-size: 10px;text-align: center;">Enter Correct Phone number</div>
-                    </div>
+                    </div> -->
                     <!-- <button type="button" class="btn btn-primary" *ngIf="OTPMESSAGE?.error.verification==false" [disabled]="!loginReactiveForm.get('phonenumber')?.valid" (click)="openOTP()">Send OTP</button>
                     <div class="field-wrapper" *ngIf="OTPopen" style="margin-top:15px;">
                         <input type="text" formControlName="otp" autocomplete="off">

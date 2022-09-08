@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { DataServiceService } from '../dataService/data-service.service';
 
 @Component({
@@ -13,7 +14,8 @@ export class MenuComponent implements OnInit {
   OrderOpenOrNot: any;
   BuyOrNot: any;
   CartOpenOrNot: any;
-  BuyingCartDetail: any;
+  BuyingCartDetailSub: Subscription=Subscription.EMPTY;
+  BuyingCartDetail: any[] =[];
   customerdataToAdmin: any;
   ErrorPage: any;
   customerDatabaseData: any;
@@ -51,9 +53,9 @@ export class MenuComponent implements OnInit {
     this._dataService.CartOpenOrNot.subscribe((res)=>{
       this.CartOpenOrNot=res;
     });
-    this._dataService.BuyingCartDetail.subscribe((res)=>{
+    this.BuyingCartDetailSub=this._dataService.BuyingCartDetail.subscribe((res)=>{
       this.BuyingCartDetail=res;
-      console.log("BYI",this.BuyingCartDetail);
+      // console.log("BYI",this.BuyingCartDetail);
       if(!this.BuyingCartDetail){
         this.BuyingCartDetail=JSON.parse(localStorage.getItem('cart') || "[]");
       }
@@ -76,7 +78,7 @@ export class MenuComponent implements OnInit {
   })
   // console.log("CARTDETAIL",JSON.stringify());
       // console.log(this.BuyingCartDetail);
-      console.log("Constructor",JSON.stringify(this.CartDetails));
+      // console.log("Constructor",JSON.stringify(this.CartDetails));
       for(let i=0;i<this.BuyingCartDetail.length;i++){
         for(let j=0;j<this.CartDetails.length;j++){
           if(this.CartDetails[j]['name']==this.BuyingCartDetail[i]['name']){
@@ -90,7 +92,7 @@ export class MenuComponent implements OnInit {
   ngOnInit(): void {
   
     // console.log("BuyingCartDetails"+JSON.stringify(this.BuyingCartDetail));
-    console.log("init",this.CartDetails);  
+    // console.log("init",this.CartDetails);  
     // for(let i=0;i<this.BuyingCartDetail.length;i++){
     //   for(let j=0;j<this.CartDetails.length;j++){
     //     if(this.CartDetails[j]['name']==this.BuyingCartDetail[i]['name']){
@@ -178,7 +180,7 @@ export class MenuComponent implements OnInit {
     for(let i=0;i<this.BuyingCartDetail.length;i++){
       if(this.BuyingCartDetail[i]['name']==item['name']){
         this.BuyingCartDetail[i]['count']--;
-        item['count']--;
+        // item['count']--;
         if(this.BuyingCartDetail[i]['count']<=0){
           this.BuyingCartDetail.splice(i,1);
         }
@@ -190,13 +192,15 @@ export class MenuComponent implements OnInit {
   increase(item:any){
     for(let i=0;i<this.BuyingCartDetail.length;i++){
       if(this.BuyingCartDetail[i]['name']==item['name']){
-        console.log(this.BuyingCartDetail[i]['count']);
+        // console.log(item['count']);
         this.BuyingCartDetail[i]['count']++;
-        item['count']++;
+        // item['count']++;
       }
     }
     localStorage.setItem('cart',JSON.stringify(this.BuyingCartDetail));
     this._dataService.BuyingCartDetail.next(this.BuyingCartDetail);
   }
-  
+  ngDestory(){
+    this.BuyingCartDetailSub.unsubscribe();
+  }
 }

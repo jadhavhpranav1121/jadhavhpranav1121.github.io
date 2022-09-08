@@ -140,8 +140,8 @@ export class AppComponent {
     this.loginReactiveForm = new FormGroup({
       'email': new FormControl('', [Validators.required, Validators.email]),
       'password': new FormControl('', [Validators.required, Validators.pattern("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$")]),
-      'phonenumber': new FormControl('', [Validators.required, Validators.pattern("(0|91)?[7-9][0-9]{9}")]),
-      'otp': new FormControl('')
+      // 'phonenumber': new FormControl('', [Validators.required, Validators.pattern("(0|91)?[7-9][0-9]{9}")]),
+      // 'otp': new FormControl('')
       // [Validators.required, Validators.minLength(6)]
     })
     this.loginAdminReactiveForm=new FormGroup({
@@ -264,25 +264,25 @@ export class AppComponent {
     this.BuyingCartDetail[this.BuyingCartDetail.length - 1]['count']++;
     this._dataService.BuyingCartDetail.next(this.BuyingCartDetail);
   }
-  decrease(item: any) {
-    for (let i = 0; i < this.BuyingCartDetail.length; i++) {
-      if (this.BuyingCartDetail[i]['name'] == item['name']) {
-        this.BuyingCartDetail[i]['count']--;
-        if (this.BuyingCartDetail[i]['count'] <= 0) {
-          this.BuyingCartDetail.splice(i, 1);
-        }
-      }
-    }
-    this._dataService.BuyingCartDetail.next(this.BuyingCartDetail);
-  }
-  increase(item: any) {
-    for (let i = 0; i < this.BuyingCartDetail.length; i++) {
-      if (this.BuyingCartDetail[i]['name'] == item['name']) {
-        this.BuyingCartDetail[i]['count']++;
-      }
-    }
-    this._dataService.BuyingCartDetail.next(this.BuyingCartDetail);
-  }
+  // decrease(item: any) {
+  //   for (let i = 0; i < this.BuyingCartDetail.length; i++) { 
+  //     if (this.BuyingCartDetail[i]['name'] == item['name']) {
+  //       this.BuyingCartDetail[i]['count']--;
+  //       if (this.BuyingCartDetail[i]['count'] <= 0) {
+  //         this.BuyingCartDetail.splice(i, 1);
+  //       }
+  //     }
+  //   }
+  //   this._dataService.BuyingCartDetail.next(this.BuyingCartDetail);
+  // }
+  // increase(item: any) {
+  //   for (let i = 0; i < this.BuyingCartDetail.length; i++) {
+  //     if (this.BuyingCartDetail[i]['name'] == item['name']) {
+  //       this.BuyingCartDetail[i]['count']++;
+  //     }
+  //   }
+  //   this._dataService.BuyingCartDetail.next(this.BuyingCartDetail);
+  // }
   togglePaused() {
     if (this.paused) {
       this.carousel.cycle();
