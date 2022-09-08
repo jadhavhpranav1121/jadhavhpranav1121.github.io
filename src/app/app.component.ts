@@ -453,7 +453,7 @@ export class AppComponent {
         this.getDataOfAdminFromDatabase();
       },
         (err) => {
-          console.log(err);
+          console.log(err); 
         }
       )
       this.modalService.dismissAll();
