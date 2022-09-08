@@ -71,7 +71,7 @@ export class CartComponent implements OnInit {
     this.customerloginOrNot=(localStorage.getItem('token')==null)?false:true;
     this.getDataOfPizza();
     this.getDataOfOrdersDetails();
-    // console.log(this.OrderDetailsFromDatabase)
+    // console.log(this.OrderDetailsFromDatabase);
     // console.log(this.BuyingCartDetail);
     // console.log("localstroage"+JSON.parse(localStorage.getItem('cart')|| "{}"));
     if(!this.BuyingCartDetail){  
@@ -141,6 +141,10 @@ export class CartComponent implements OnInit {
       this.NewData=this.BuyingCartDetail;
       console.log(this.NewData);
       console.log(this.OrderDetailsFromDatabase);
+      if(!this.OrderDetailsFromDatabase){
+        this.SpinnerService.hide();
+        return;
+      }
       for(let i=0;i<this.OrderDetailsFromDatabase.length;i++){
         console.log(this.OrderDetailsFromDatabase[i]['email']);
         console.log(localStorage.getItem('userDetails'));
