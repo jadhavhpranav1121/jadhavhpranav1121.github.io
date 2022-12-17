@@ -14,10 +14,10 @@ export class DataServiceService {
   loginOrNot: any;
   OrdersOpenOrNot: any;
   test:any;
-  urlOfAdmin="https://pizza-hunter-01.herokuapp.com/admin";  
-  urlOfCustomer="https://pizza-hunter-01.herokuapp.com/customer";
-  urlOfItems="https://pizza-hunter-01.herokuapp.com/items";
-  urlOfOrders="https://pizza-hunter-01.herokuapp.com/orders";
+  urlOfAdmin="https://pizza-hunter-backend.onrender.com/admin";  
+  urlOfCustomer="https://pizza-hunter-backend.onrender.com/customer";
+  urlOfItems="https://pizza-hunter-backend.onrender.com/items";
+  urlOfOrders="https://pizza-hunter-backend.onrender.com/orders";
   constructor(private http:HttpClient) { 
   }
   AddDataToAdmin(req:dataScheme){
@@ -88,16 +88,16 @@ export class DataServiceService {
     return localStorage.getItem('token');
   }
   sendOTP(req:any){
-    return this.http.post("https://pizza-hunter-01.herokuapp.com/sendOTP",req);
+    return this.http.post("https://pizza-hunter-backend.onrender.com//sendOTP",req);
   }
   verifyOTP(req:any){
-    return this.http.post("https://pizza-hunter-01.herokuapp.com/verifyOTP",req);
+    return this.http.post("https://pizza-hunter-backend.onrender.com/verifyOTP",req);
   }
   refreshOTP(req:any){
-    return this.http.post("https://pizza-hunter-01.herokuapp.com/refresh",req);
+    return this.http.post("https://pizza-hunter-backend.onrender.com/refresh",req);
   }
   logoutCookie(){
-    return this.http.get("https://pizza-hunter-01.herokuapp.com/logout");
+    return this.http.get("https://pizza-hunter-backend.onrender.com/logout");
   }
   customerdataToAdmin=new BehaviorSubject<Array<Object>>([]);
   customerloginOrNot=new BehaviorSubject<boolean>(false);
